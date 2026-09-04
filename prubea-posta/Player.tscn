@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://cylvgu5fgwv5a"]
+
+[ext_resource type="Script" uid="uid://d2rnxmdt1fyy4" path="res://Player.cs" id="1_xhfnw"]
+[ext_resource type="PackedScene" uid="uid://bfptxfd2bdl3o" path="res://Bala.tscn" id="2_e80uo"]
+[ext_resource type="Texture2D" uid="uid://ddxvcxc7txgqs" path="res://Sprites/CarCannon.png" id="2_kne1u"]
+[ext_resource type="Texture2D" uid="uid://b60048qgdf50n" path="res://Sprites/Car.png" id="3_e80uo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rtybb"]
+size = Vector2(35, 18)
+
+[sub_resource type="ImageTexture" id="ImageTexture_2khly"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1095276273 node_paths=PackedStringArray("PuntoDeDisparo")]
+position = Vector2(0, 4)
+script = ExtResource("1_xhfnw")
+EscenaBala = ExtResource("2_e80uo")
+PuntoDeDisparo = NodePath("Marker2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=618514344]
+position = Vector2(-1.5, 0)
+shape = SubResource("RectangleShape2D_rtybb")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1157153169]
+texture_filter = 1
+position = Vector2(0, 4.5474735e-13)
+scale = Vector2(2.439, 1)
+texture = SubResource("ImageTexture_2khly")
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=274298949]
+position = Vector2(-3, -11.999999)
+rotation = -0.49741885
+
+[node name="TankCannon" type="Sprite2D" parent="Marker2D" unique_id=1541438773]
+texture_filter = 1
+position = Vector2(4.1434283, -3.4397678)
+scale = Vector2(-0.15, 0.15)
+texture = ExtResource("2_kne1u")
+
+[node name="Tank" type="Sprite2D" parent="." unique_id=1340381151]
+texture_filter = 1
+position = Vector2(-1.0000001, -1)
+scale = Vector2(-0.15296668, 0.15508118)
+texture = ExtResource("3_e80uo")
