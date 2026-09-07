@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://bo6pe3wawm87y"]
+
+[ext_resource type="Script" uid="uid://ccxusxhw8p3ok" path="res://Main.cs" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://cylvgu5fgwv5a" path="res://Player.tscn" id="2_lquwl"]
+[ext_resource type="Script" uid="uid://4kjy1wiocgjt" path="res://GameManager.cs" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://8jbu0pwjiiuy" path="res://TerrenoAleatorio.cs" id="5_lquwl"]
+
+[sub_resource type="Gradient" id="Gradient_1bvp3"]
+interpolation_mode = 2
+interpolation_color_space = 1
+offsets = PackedFloat32Array(0.1627907, 0.48255813, 0.872093)
+colors = PackedColorArray(0.26327473, 0.4399091, 0.9222351, 1, 0.8348509, 0.28549367, 0.7751899, 1, 0.9764915, 0.434061, 0.21861017, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rtybb"]
+gradient = SubResource("Gradient_1bvp3")
+width = 269
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rtybb"]
+size = Vector2(3379, 69)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7mycd"]
+font_size = 26
+outline_size = 11
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Main" type="Node2D" unique_id=266599211]
+script = ExtResource("1_ig7tw")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=536435531]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(571, 261)
+rotation = 1.5707964
+scale = Vector2(2.7014241, 1236.0176)
+texture = SubResource("GradientTexture1D_rtybb")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1868905685]
+anchor_mode = 0
+
+[node name="CharacterBody2D" parent="." unique_id=1095276273 instance=ExtResource("2_lquwl")]
+position = Vector2(153, 204)
+
+[node name="CharacterBody2D2" parent="." unique_id=9533790 instance=ExtResource("2_lquwl")]
+position = Vector2(653, 192)
+scale = Vector2(-1, 1)
+
+[node name="GameManager" type="Node2D" parent="." unique_id=1739410839 node_paths=PackedStringArray("Jugador1", "Jugador2", "TextoInfo", "Terreno")]
+script = ExtResource("4_1bvp3")
+Jugador1 = NodePath("../CharacterBody2D")
+Jugador2 = NodePath("../CharacterBody2D2")
+TextoInfo = NodePath("../HUD/Label")
+Terreno = NodePath("../Piso")
+
+[node name="Piso" type="StaticBody2D" parent="." unique_id=505431848]
+script = ExtResource("5_lquwl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Piso" unique_id=657793210]
+position = Vector2(641, 617)
+shape = SubResource("RectangleShape2D_rtybb")
+
+[node name="ColisionPoligono" type="CollisionPolygon2D" parent="Piso/CollisionShape2D" unique_id=1686709700]
+build_mode = 1
+
+[node name="lineaVisual" type="Line2D" parent="Piso/CollisionShape2D" unique_id=1318495475]
+position = Vector2(-117, 129)
+points = PackedVector2Array(-309, -36, -36, -36, 330, -36)
+width = 9.0
+default_color = Color(0.63307464, 0.36675835, 0.3691502, 1)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=773271717]
+offset = Vector2(1, 0)
+transform = Transform2D(1, 0, 0, 1, 1, 0)
+
+[node name="Label" type="Label" parent="HUD" unique_id=720208512]
+offset_left = 5.0
+offset_top = 9.0
+offset_right = 543.0
+offset_bottom = 55.0
+text = "Turno: Jugador 1 | Ángulo: 45° | Fuerza: 600"
+label_settings = SubResource("LabelSettings_7mycd")
