@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ccxusxhw8p3ok" path="res://Main.cs" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://cylvgu5fgwv5a" path="res://Player.tscn" id="2_lquwl"]
 [ext_resource type="Script" uid="uid://4kjy1wiocgjt" path="res://GameManager.cs" id="4_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://dhcy6mwy2mler" path="res://Menu/versus-SUS(1).png" id="5_7mycd"]
 [ext_resource type="Script" uid="uid://8jbu0pwjiiuy" path="res://TerrenoAleatorio.cs" id="5_lquwl"]
 
 [sub_resource type="Gradient" id="Gradient_1bvp3"]
@@ -19,8 +20,23 @@ width = 269
 size = Vector2(3379, 69)
 
 [sub_resource type="LabelSettings" id="LabelSettings_7mycd"]
-font_size = 26
+font_size = 29
 outline_size = 11
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5vw27"]
+font_size = 29
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_lquwl"]
+font_size = 31
+outline_size = 7
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_kek77"]
+font_size = 26
+outline_size = 9
 outline_color = Color(0, 0, 0, 1)
 
 [node name="Main" type="Node2D" unique_id=266599211]
@@ -44,12 +60,19 @@ position = Vector2(153, 204)
 position = Vector2(653, 192)
 scale = Vector2(-1, 1)
 
-[node name="GameManager" type="Node2D" parent="." unique_id=1739410839 node_paths=PackedStringArray("Jugador1", "Jugador2", "TextoInfo", "Terreno")]
+[node name="GameManager" type="Node2D" parent="." unique_id=1739410839 node_paths=PackedStringArray("Jugador1", "Jugador2", "Terreno", "LabelNombreJ1", "LabelNombreJ2", "LabelPuntajeJ1", "LabelPuntajeJ2", "LabelAngulo", "LabelFuerza")]
 script = ExtResource("4_1bvp3")
 Jugador1 = NodePath("../CharacterBody2D")
 Jugador2 = NodePath("../CharacterBody2D2")
-TextoInfo = NodePath("../HUD/Label")
 Terreno = NodePath("../Piso")
+LabelNombreJ1 = NodePath("../HUD/j1")
+LabelNombreJ2 = NodePath("../HUD/j2")
+LabelPuntajeJ1 = NodePath("../HUD/puntajej1")
+LabelPuntajeJ2 = NodePath("../HUD/puntajej2")
+LabelAngulo = NodePath("../HUD/Angulo")
+LabelFuerza = NodePath("../HUD/Fuerzza")
+ColorJugadorActivo = Color(1, 0.050000012, 0, 1)
+ColorJugadorInactivo = Color(1, 1, 1, 1)
 
 [node name="Piso" type="StaticBody2D" parent="." unique_id=505431848]
 script = ExtResource("5_lquwl")
@@ -71,10 +94,60 @@ default_color = Color(0.63307464, 0.36675835, 0.3691502, 1)
 offset = Vector2(1, 0)
 transform = Transform2D(1, 0, 0, 1, 1, 0)
 
-[node name="Label" type="Label" parent="HUD" unique_id=720208512]
-offset_left = 5.0
-offset_top = 9.0
-offset_right = 543.0
-offset_bottom = 55.0
-text = "Turno: Jugador 1 | Ángulo: 45° | Fuerza: 600"
+[node name="Sprite2D2" type="Sprite2D" parent="HUD" unique_id=1705650240]
+texture_filter = 1
+position = Vector2(575, 36.000004)
+scale = Vector2(1.4412502, 1.4068627)
+texture = ExtResource("5_7mycd")
+
+[node name="j1" type="Label" parent="HUD" unique_id=720208512]
+offset_left = 93.0
+offset_top = 13.0
+offset_right = 166.0
+offset_bottom = 53.0
+text = "J1"
 label_settings = SubResource("LabelSettings_7mycd")
+
+[node name="j2" type="Label" parent="HUD" unique_id=749201251]
+offset_left = 248.0
+offset_top = 13.0
+offset_right = 288.0
+offset_bottom = 53.0
+text = "J2"
+label_settings = SubResource("LabelSettings_5vw27")
+
+[node name="Angulo" type="Label" parent="HUD" unique_id=771270374]
+anchors_preset = -1
+anchor_right = 0.035
+offset_left = 742.0
+offset_top = 12.0
+offset_right = 772.68
+offset_bottom = 56.0
+text = "45"
+label_settings = SubResource("LabelSettings_lquwl")
+
+[node name="puntajej1" type="Label" parent="HUD" unique_id=296305794]
+offset_left = 979.0
+offset_top = 27.0
+offset_right = 1019.0
+offset_bottom = 63.0
+text = "0"
+label_settings = SubResource("LabelSettings_kek77")
+
+[node name="Fuerzza" type="Label" parent="HUD" unique_id=1592768805]
+anchors_preset = -1
+anchor_right = 0.035
+offset_left = 551.0
+offset_top = 12.0
+offset_right = 602.60004
+offset_bottom = 56.0
+text = "800"
+label_settings = SubResource("LabelSettings_lquwl")
+
+[node name="puntajej2" type="Label" parent="HUD" unique_id=1085046731]
+offset_left = 1092.0
+offset_top = 27.0
+offset_right = 1132.0
+offset_bottom = 63.0
+text = "0"
+label_settings = SubResource("LabelSettings_kek77")

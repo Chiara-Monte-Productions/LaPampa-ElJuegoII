@@ -2,12 +2,26 @@ using Godot;
 
 public partial class GameManager : Node
 {
+    [ExportGroup("Jugadores y Terreno")]
     [Export] public Player Jugador1 { get; set; }
     [Export] public Player Jugador2 { get; set; }
-    [Export] public Label TextoInfo { get; set; }
     [Export] public TerrenoAleatorio Terreno { get; set; }
 
-    // Ruta para regresar al Menú Principal con la tecla ESC
+    [ExportGroup("Elementos del HUD")]
+    [Export] public Label LabelNombreJ1 { get; set; } // Nombre/Texto del J1
+    [Export] public Label LabelNombreJ2 { get; set; } // Nombre/Texto del J2
+    [Export] public Label LabelPuntajeJ1 { get; set; }
+    [Export] public Label LabelPuntajeJ2 { get; set; }
+    [Export] public Label LabelTurno { get; set; }
+    [Export] public Label LabelAngulo { get; set; }
+    [Export] public Label LabelFuerza { get; set; }
+    [Export] public Label LabelEstado { get; set; }
+
+    [ExportGroup("Colores de Turno")]
+    [Export] public Color ColorJugadorActivo { get; set; } = Colors.Yellow; // Color al estar activo
+    [Export] public Color ColorJugadorInactivo { get; set; } = Colors.Gray;  // Color al estar inactivo
+
+    [ExportGroup("Navegación")]
     [Export] public string RutaMenuPrincipal = "res://MenuPrincipal.tscn";
 
     private static int _puntosJ1 = 0;
@@ -19,7 +33,6 @@ public partial class GameManager : Node
 
     public override async void _Ready()
     {
-        // Esperamos a que el motor físico procese la colisión del terreno antes de posicionar
         await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
 
         PosicionarJugadoresEnTerreno();
@@ -41,7 +54,6 @@ public partial class GameManager : Node
 
     public override void _UnhandledInput(InputEvent @event)
     {
-        // Detecta la tecla ESC (mapeada en Godot como "ui_cancel")
         if (@event.IsActionPressed("ui_cancel"))
         {
             VolverAlMenu();
@@ -50,10 +62,8 @@ public partial class GameManager : Node
 
     private void VolverAlMenu()
     {
-        // Reiniciamos los puntos globales al volver al menú
         _puntosJ1 = 0;
         _puntosJ2 = 0;
-
         GetTree().ChangeSceneToFile(RutaMenuPrincipal);
     }
 
@@ -72,12 +82,11 @@ public partial class GameManager : Node
     {
         var espacioFisico = GetTree().Root.World2D.DirectSpaceState;
 
-        // Lanzamos el rayo desde Y = 0 para no colisionar con elementos del HUD
         Vector2 desde = new Vector2(x, 0);
         Vector2 hasta = new Vector2(x, 1200);
 
         var parametrosRayo = PhysicsRayQueryParameters2D.Create(desde, hasta);
-        parametrosRayo.CollisionMask = 1; // Revisa únicamente la Capa 1 (Terreno)
+        parametrosRayo.CollisionMask = 1;
         parametrosRayo.Exclude = new Godot.Collections.Array<Rid> { jugador.GetRid() };
 
         var resultado = espacioFisico.IntersectRay(parametrosRayo);
@@ -98,7 +107,7 @@ public partial class GameManager : Node
     {
         if (!_balaEnVuelo && !_rondaFinalizada)
         {
-            ActualizarTextoHUD();
+            ActualizarHUD();
         }
     }
 
@@ -108,7 +117,6 @@ public partial class GameManager : Node
 
         _balaEnVuelo = false;
 
-        // Si el jugador del turno actual ya no existe, reevaluamos el estado de la partida
         Player jugadorActivo = (_turnoActual == 1) ? Jugador1 : Jugador2;
         if (!GodotObject.IsInstanceValid(jugadorActivo))
         {
@@ -127,21 +135,33 @@ public partial class GameManager : Node
             if (GodotObject.IsInstanceValid(Jugador2)) Jugador2.EsMiTurno = true;
         }
 
-        ActualizarTextoHUD();
+        if (LabelEstado != null) LabelEstado.Text = "Esperando disparo...";
+        ActualizarHUD();
     }
 
-    private void ActualizarTextoHUD()
+    private void ActualizarHUD()
     {
-        if (TextoInfo == null) return;
+        if (LabelPuntajeJ1 != null) LabelPuntajeJ1.Text = $"{_puntosJ1}";
+        if (LabelPuntajeJ2 != null) LabelPuntajeJ2.Text = $"{_puntosJ2}";
+        if (LabelTurno != null) LabelTurno.Text = $"{_turnoActual}";
+
+        // Cambiar color de las etiquetas de los jugadores según el turno
+        if (LabelNombreJ1 != null)
+        {
+            LabelNombreJ1.SelfModulate = (_turnoActual == 1) ? ColorJugadorActivo : ColorJugadorInactivo;
+        }
+
+        if (LabelNombreJ2 != null)
+        {
+            LabelNombreJ2.SelfModulate = (_turnoActual == 2) ? ColorJugadorActivo : ColorJugadorInactivo;
+        }
 
         Player jugadorActivo = (_turnoActual == 1) ? Jugador1 : Jugador2;
 
         if (GodotObject.IsInstanceValid(jugadorActivo))
         {
-            float angulo = jugadorActivo.ObtenerAngulo();
-            float fuerza = Mathf.Round(jugadorActivo.FuerzaDisparo);
-
-            TextoInfo.Text = $"[J1: {_puntosJ1} pts | J2: {_puntosJ2} pts]  -  Turno: Jugador {_turnoActual}  |  Ángulo: {angulo}°  |  Fuerza: {fuerza}";
+            if (LabelAngulo != null) LabelAngulo.Text = $"{jugadorActivo.ObtenerAngulo()}";
+            if (LabelFuerza != null) LabelFuerza.Text = $"{Mathf.Round(jugadorActivo.FuerzaDisparo)}";
         }
     }
 
@@ -152,10 +172,7 @@ public partial class GameManager : Node
         if (GodotObject.IsInstanceValid(Jugador1)) Jugador1.EsMiTurno = false;
         if (GodotObject.IsInstanceValid(Jugador2)) Jugador2.EsMiTurno = false;
 
-        if (TextoInfo != null)
-        {
-            TextoInfo.Text = $"[J1: {_puntosJ1} pts | J2: {_puntosJ2} pts]  -  Bala en vuelo...";
-        }
+        if (LabelEstado != null) LabelEstado.Text = "Bala en vuelo...";
 
         bala.TreeExited += OnBalaDestruida;
     }
@@ -183,19 +200,20 @@ public partial class GameManager : Node
 
             if (!j1Vivo && !j2Vivo)
             {
-                if (TextoInfo != null) TextoInfo.Text = "¡EMPATE! Reiniciando ronda...";
+                if (LabelEstado != null) LabelEstado.Text = "¡EMPATE!";
             }
             else if (!j1Vivo)
             {
                 _puntosJ2++;
-                if (TextoInfo != null) TextoInfo.Text = $"¡JUGADOR 2 GANA LA RONDA! [{_puntosJ1} - {_puntosJ2}]";
+                if (LabelEstado != null) LabelEstado.Text = "¡JUGADOR 2 GANA!";
             }
             else if (!j2Vivo)
             {
                 _puntosJ1++;
-                if (TextoInfo != null) TextoInfo.Text = $"¡JUGADOR 1 GANA LA RONDA! [{_puntosJ1} - {_puntosJ2}]";
+                if (LabelEstado != null) LabelEstado.Text = "¡JUGADOR 1 GANA!";
             }
 
+            ActualizarHUD();
             GetTree().CreateTimer(2.0f).Timeout += ReiniciarRonda;
             return;
         }
