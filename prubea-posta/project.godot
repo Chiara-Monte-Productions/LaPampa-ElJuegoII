@@ -12,7 +12,7 @@ config_version=5
 
 config/name="PrubeaPosta"
 run/main_scene="uid://b4qvoilm5lx8n"
-config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
+config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [display]

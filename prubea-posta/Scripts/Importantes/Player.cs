@@ -1,27 +1,26 @@
 using Godot;
 
-public partial class Player : CharacterBody2D
+public partial class Player : CharacterBody2D, Angulo, DanoProyectil
 {
     [Signal] public delegate void DisparoRealizadoEventHandler(Bala bala);
-    [Signal] public delegate void JugadorMuertoEventHandler(Player jugador); // Nueva señal
+    [Signal] public delegate void JugadorMuertoEventHandler(Player jugador);
 
     [Export] public PackedScene EscenaBala { get; set; }
     [Export] public Node2D PuntoDeDisparo { get; set; }
 
-    [Export] public float FuerzaDisparo = 600.0f;
-    [Export] public float FuerzaMinima = 200.0f;
-    [Export] public float FuerzaMaxima = 1200.0f;
+    [Export] public float FuerzaDisparo { get; private set; } = 600.0f;
+    [Export] public float FuerzaMinima { get; set; } = 200.0f;
+    [Export] public float FuerzaMaxima { get; set; } = 1200.0f;
 
-    [Export] public float VelocidadRotacion = 2.0f;
-    [Export] public float VelocidadCargaFuerza = 400.0f;
+    [Export] public float VelocidadRotacion { get; set; } = 2.0f;
+    [Export] public float VelocidadCargaFuerza { get; set; } = 400.0f;
 
     public bool EsMiTurno { get; set; } = false;
 
     public float ObtenerAngulo()
     {
         if (PuntoDeDisparo == null) return 0f;
-        float anguloGrados = -PuntoDeDisparo.RotationDegrees; 
-        return Mathf.Round(anguloGrados);
+        return Mathf.Round(-PuntoDeDisparo.RotationDegrees);
     }
 
     public override void _Process(double delta)
@@ -32,11 +31,8 @@ public partial class Player : CharacterBody2D
 
         if (PuntoDeDisparo != null)
         {
-            if (Input.IsActionPressed("ui_up"))
-                PuntoDeDisparo.Rotate(-VelocidadRotacion * dt);
-
-            if (Input.IsActionPressed("ui_down"))
-                PuntoDeDisparo.Rotate(VelocidadRotacion * dt);
+            if (Input.IsActionPressed("ui_up")) PuntoDeDisparo.Rotate(-VelocidadRotacion * dt);
+            if (Input.IsActionPressed("ui_down")) PuntoDeDisparo.Rotate(VelocidadRotacion * dt);
         }
 
         if (Input.IsActionPressed("ui_right"))
@@ -73,7 +69,6 @@ public partial class Player : CharacterBody2D
         }
     }
 
-    // Llamá a este método cuando la bala impacte y destruya al tanque
     public void Destruir()
     {
         EmitSignal(SignalName.JugadorMuerto, this);

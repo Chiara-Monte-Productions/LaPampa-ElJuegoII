@@ -1,16 +1,16 @@
 [gd_scene format=3 uid="uid://bfptxfd2bdl3o"]
 
-[ext_resource type="Script" uid="uid://cbclhquk40p35" path="res://Bala.cs" id="1_pu3jq"]
+[ext_resource type="Script" uid="uid://cbclhquk40p35" path="res://Scripts/Importantes/Bala.cs" id="1_pu3jq"]
 [ext_resource type="Texture2D" uid="uid://lf6n3qb6a565" path="res://Sprites/bala.png" id="2_jql1f"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rtybb"]
-radius = 4.1231055
+radius = 3.0
 
 [node name="Area2D" type="Area2D" unique_id=1812148747]
 script = ExtResource("1_pu3jq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=967508469]
-position = Vector2(3, 0)
+position = Vector2(4, 0)
 shape = SubResource("CircleShape2D_rtybb")
 
 [node name="Bala" type="Sprite2D" parent="." unique_id=605412137]
