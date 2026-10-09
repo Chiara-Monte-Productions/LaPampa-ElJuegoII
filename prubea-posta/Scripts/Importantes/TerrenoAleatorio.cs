@@ -10,9 +10,12 @@ public partial class TerrenoAleatorio : StaticBody2D, PosicionTerreno
 
     [ExportGroup("Parámetros del Terreno")]
     [Export] public int AnchoTerreno { get; set; } = 0; // 0 para autoadaptarse al ancho de pantalla
-    [Export] public int AlturaBase { get; set; } = 400;
-    [Export] public int Amplitud { get; set; } = 100;
-    [Export] public int Resolucion { get; set; } = 30;
+    [Export] public int AlturaBase { get; set; } = 450; // Bajamos un poco la base para dar más espacio a los tanques
+    [Export] public int Amplitud { get; set; } = 80;   // Menos altura en los picos
+    [Export] public int Resolucion { get; set; } = 60; // Más puntos para que las curvas se vean suaves
+
+    [ExportGroup("Estilo Scorched Earth (Colinas Anchas)")]
+    [Export] public float FrecuenciaMontanas { get; set; } = 0.005f; // Controla cuán anchas son las montañas (valores más bajos = colinas más anchas)
 
     [ExportGroup("Texturas de Terreno")]
     [Export] public Godot.Collections.Array<Texture2D> TexturasTerreno { get; set; } = new();
@@ -29,44 +32,48 @@ public partial class TerrenoAleatorio : StaticBody2D, PosicionTerreno
     {
         _puntosTerreno.Clear();
 
-        // 1. Obtener el ancho real de la pantalla si AnchoTerreno está en 0
         Vector2 tamanoPantalla = GetViewport().GetVisibleRect().Size;
         float anchoEfectivo = AnchoTerreno > 0 ? AnchoTerreno : tamanoPantalla.X;
-        float altoEfectivo = tamanoPantalla.Y + 200f; // Asegura cubrir el fondo inferior
+        float altoEfectivo = tamanoPantalla.Y + 200f;
 
-        // 2. Generar la curva superior del mapa
+        // Semilla o desfase aleatorio para que cada mapa sea diferente
+        float desfaseSemilla = (float)GD.RandRange(0f, 1000f);
+
+        // 1. Generar colinas anchas mediante curvas suaves (Seno/Coseno)
         float paso = anchoEfectivo / Resolucion;
         for (int i = 0; i <= Resolucion; i++)
         {
             float x = i * paso;
-            float y = AlturaBase + (float)GD.RandRange(-Amplitud, Amplitud);
+            
+            // Fórmula tipo Scorched Earth: combina ondas suaves + un toque de variación
+            float elevacionOnda = Mathf.Sin((x * FrecuenciaMontanas) + desfaseSemilla) * Amplitud;
+            float elevacionSecundaria = Mathf.Cos((x * FrecuenciaMontanas * 2.5f) + desfaseSemilla) * (Amplitud * 0.3f);
+            
+            float y = AlturaBase + elevacionOnda + elevacionSecundaria;
             _puntosTerreno.Add(new Vector2(x, y));
         }
 
-        // 3. Cerrar el polígono hacia el borde inferior de la pantalla
+        // 2. Cerrar el polígono hacia el fondo de pantalla
         List<Vector2> puntosPoligono = new List<Vector2>(_puntosTerreno);
-        puntosPoligono.Add(new Vector2(anchoEfectivo, altoEfectivo)); // Esquina inferior derecha
-        puntosPoligono.Add(new Vector2(0, altoEfectivo));            // Esquina inferior izquierda
+        puntosPoligono.Add(new Vector2(anchoEfectivo, altoEfectivo));
+        puntosPoligono.Add(new Vector2(0, altoEfectivo));
 
         Vector2[] arregloPuntos = puntosPoligono.ToArray();
-
         Texture2D texturaElegida = null;
 
-        // 4. Asignar geometría y textura aleatoria al Polygon2D visual
+        // 3. Polygon2D (Visual)
         if (PoligonoVisual != null)
         {
             PoligonoVisual.Polygon = arregloPuntos;
 
             if (TexturasTerreno != null && TexturasTerreno.Count > 0)
             {
-                // Seleccionar textura aleatoria del arreglo
                 int indiceAleatorio = GD.RandRange(0, TexturasTerreno.Count - 1);
                 texturaElegida = TexturasTerreno[indiceAleatorio];
 
                 PoligonoVisual.Texture = texturaElegida;
                 PoligonoVisual.TextureRepeat = CanvasItem.TextureRepeatEnum.Enabled;
 
-                // Coordenadas UV para evitar que la imagen se deforme
                 Vector2[] uvs = new Vector2[arregloPuntos.Length];
                 for (int i = 0; i < arregloPuntos.Length; i++)
                 {
@@ -77,13 +84,13 @@ public partial class TerrenoAleatorio : StaticBody2D, PosicionTerreno
             }
         }
 
-        // 5. Asignar la colisión física
+        // 4. Colisión Física
         if (PoligonoColision != null)
         {
             PoligonoColision.Polygon = arregloPuntos;
         }
 
-        // 6. Asignar el borde superior en Line2D y aplicar textura si existe
+        // 5. Línea de Contorno (Line2D)
         if (LineaSuperficie != null)
         {
             LineaSuperficie.Points = _puntosTerreno.ToArray();

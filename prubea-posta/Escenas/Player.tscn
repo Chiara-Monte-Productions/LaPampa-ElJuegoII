@@ -4,20 +4,21 @@
 [ext_resource type="PackedScene" uid="uid://bfptxfd2bdl3o" path="res://Escenas/Bala.tscn" id="2_e80uo"]
 [ext_resource type="Texture2D" uid="uid://ddxvcxc7txgqs" path="res://Sprites/CarCannon.png" id="2_kne1u"]
 [ext_resource type="Texture2D" uid="uid://b60048qgdf50n" path="res://Sprites/Car.png" id="3_e80uo"]
+[ext_resource type="Script" uid="uid://c5asgasrgp3of" path="res://Scripts/TanqueApuntado.cs" id="5_5hhfp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rtybb"]
-size = Vector2(25, 16)
+size = Vector2(20.5, 11)
 
 [sub_resource type="ImageTexture" id="ImageTexture_2khly"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1095276273 node_paths=PackedStringArray("PuntoDeDisparo")]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1095276273 node_paths=PackedStringArray("ComponenteApuntado")]
 position = Vector2(0, 4)
 script = ExtResource("1_xhfnw")
 EscenaBala = ExtResource("2_e80uo")
-PuntoDeDisparo = NodePath("Marker2D")
+ComponenteApuntado = NodePath("apuntado")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=618514344]
-position = Vector2(-1.5, 1)
+position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_rtybb")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1157153169]
@@ -27,17 +28,21 @@ scale = Vector2(2.439, 1)
 texture = SubResource("ImageTexture_2khly")
 
 [node name="Marker2D" type="Marker2D" parent="." unique_id=274298949]
-position = Vector2(-3, -11.999999)
+position = Vector2(-0.9999999, -6.9999995)
 rotation = -0.49741885
 
 [node name="TankCannon" type="Sprite2D" parent="Marker2D" unique_id=1541438773]
 texture_filter = 1
-position = Vector2(4.1434283, -3.4397678)
-scale = Vector2(-0.15, 0.15)
+position = Vector2(2.7874525, -3.0381098)
+scale = Vector2(-0.13252002, 0.13519223)
 texture = ExtResource("2_kne1u")
 
 [node name="Tank" type="Sprite2D" parent="." unique_id=1340381151]
 texture_filter = 1
-position = Vector2(-1.0000001, -1)
-scale = Vector2(-0.15296668, 0.15508118)
+position = Vector2(0, 1)
+scale = Vector2(-0.09654642, 0.11588295)
 texture = ExtResource("3_e80uo")
+
+[node name="apuntado" type="Node2D" parent="." unique_id=1381376831 node_paths=PackedStringArray("PivoteCanon")]
+script = ExtResource("5_5hhfp")
+PivoteCanon = NodePath("../Marker2D")

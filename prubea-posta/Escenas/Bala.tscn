@@ -15,5 +15,6 @@ shape = SubResource("CircleShape2D_rtybb")
 
 [node name="Bala" type="Sprite2D" parent="." unique_id=605412137]
 texture_filter = 1
-scale = Vector2(0.1, 0.099)
+position = Vector2(1, 0)
+scale = Vector2(0.07941177, 0.08422222)
 texture = ExtResource("2_jql1f")
