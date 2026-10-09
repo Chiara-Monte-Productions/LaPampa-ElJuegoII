@@ -9,12 +9,16 @@
 [ext_resource type="Texture2D" uid="uid://dhcy6mwy2mler" path="res://Menu/versus-SUS(1).png" id="5_7mycd"]
 [ext_resource type="Script" uid="uid://cq03xwnci8w3v" path="res://Scripts/Importantes/HUDManager.cs" id="5_272bh"]
 [ext_resource type="Texture2D" uid="uid://bc8muqbpuj5ua" path="res://Fondos/sky32-dithered.png" id="5_c7rjx"]
-[ext_resource type="Script" uid="uid://8jbu0pwjiiuy" path="res://Scripts/Importantes/TerrenoAleatorio.cs" id="5_lquwl"]
 [ext_resource type="Texture2D" uid="uid://cenydy1c6ip78" path="res://Fondos/sky-dithered.png" id="6_3pd83"]
 [ext_resource type="Script" uid="uid://dvj074741gkei" path="res://Scripts/Importantes/Posicionador.cs" id="7_5vw27"]
 [ext_resource type="Texture2D" uid="uid://cctkwjhqnuvjr" path="res://Fondos/tree-dithered.png" id="7_c8ola"]
+[ext_resource type="Script" uid="uid://cryo0w4lyt04l" path="res://Scripts/GeneradorTerreno.cs" id="13_i4rd6"]
+[ext_resource type="Script" uid="uid://ctf8kobid5koa" path="res://Scripts/Importantes/CalculadorAlturaTerreno.cs" id="14_7ndum"]
+[ext_resource type="Texture2D" uid="uid://b88n7p1rbmr8g" path="res://Terrenos/concreto.jpeg" id="14_c8ola"]
 [ext_resource type="Texture2D" uid="uid://wokm3vfwldrc" path="res://Terrenos/gravel_orig.jpg" id="14_i4rd6"]
 [ext_resource type="Texture2D" uid="uid://br2tdy4kxavag" path="res://Terrenos/dirt11_s.jpg" id="15_7ndum"]
+[ext_resource type="Texture2D" uid="uid://cxvwbly525os3" path="res://Terrenos/tierra.jpeg" id="17_y8e5y"]
+[ext_resource type="Script" uid="uid://dg510nx7mdwru" path="res://Scripts/ControladorNavegacion.cs" id="19_y8e5y"]
 
 [sub_resource type="Gradient" id="Gradient_4yntb"]
 
@@ -64,7 +68,7 @@ TexturasFondo = Array[Texture2D]([ExtResource("3_i4rd6"), ExtResource("4_7ndum")
 
 [node name="Posicionador" type="Node" parent="." unique_id=1657357469 node_paths=PackedStringArray("Terreno")]
 script = ExtResource("7_5vw27")
-Terreno = NodePath("../Piso")
+Terreno = NodePath("../Piso/Node")
 
 [node name="GameManager" type="Node2D" parent="." unique_id=1739410839 node_paths=PackedStringArray("Jugador1", "Jugador2", "HUD", "PosicionadorTerreno", "ServicioFondo")]
 script = ExtResource("4_1bvp3")
@@ -179,12 +183,11 @@ label_settings = SubResource("LabelSettings_kek77")
 modulate = Color(1, 1, 1, 0.9098039)
 light_mask = 9
 position = Vector2(0, -1)
-script = ExtResource("5_lquwl")
+script = ExtResource("13_i4rd6")
 PoligonoVisual = NodePath("Polygon2D")
 PoligonoColision = NodePath("CollisionPolygon2D")
 LineaSuperficie = NodePath("Polygon2D/Line2D")
-Amplitud = 100
-TexturasTerreno = Array[Texture2D]([ExtResource("14_i4rd6"), ExtResource("15_7ndum")])
+TexturasTerreno = Array[Texture2D]([ExtResource("14_c8ola"), ExtResource("15_7ndum"), ExtResource("14_i4rd6"), ExtResource("17_y8e5y")])
 EscalaTextura = Vector2(2, 2)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Piso" unique_id=1427621876]
@@ -196,3 +199,10 @@ shape = SubResource("RectangleShape2D_wwtk3")
 [node name="Polygon2D" type="Polygon2D" parent="Piso" unique_id=812656660]
 
 [node name="Line2D" type="Line2D" parent="Piso/Polygon2D" unique_id=46804601]
+
+[node name="Node" type="Node" parent="Piso" unique_id=1285662308 node_paths=PackedStringArray("Terreno")]
+script = ExtResource("14_7ndum")
+Terreno = NodePath("..")
+
+[node name="ControladorNavegacion" type="Node" parent="." unique_id=1177852346]
+script = ExtResource("19_y8e5y")
