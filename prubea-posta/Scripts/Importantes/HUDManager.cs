@@ -30,9 +30,10 @@ public partial class HUDManager : Node
         if (LabelNombreJ2 != null)
             LabelNombreJ2.SelfModulate = (turnoActual == 2) ? ColorJugadorActivo : ColorJugadorInactivo;
 
+        // Cumple LSP: Depende únicamente de la interfaz Angulo recibida por parámetro
         if (jugadorActivo != null)
         {
-            if (LabelAngulo != null) LabelAngulo.Text = $"{jugadorActivo.ObtenerAngulo()}";
+            if (LabelAngulo != null) LabelAngulo.Text = $"{Mathf.Round(jugadorActivo.ObtenerAngulo())}°";
             if (LabelFuerza != null) LabelFuerza.Text = $"{Mathf.Round(jugadorActivo.FuerzaDisparo)}";
         }
     }

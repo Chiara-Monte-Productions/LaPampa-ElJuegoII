@@ -2,7 +2,13 @@ using Godot;
 
 public partial class Posicionador : Node, PosicionTerreno
 {
-    [Export] public TerrenoAleatorio Terreno { get; set; }
+    // Godot no puede exportar interfaces, cambiamos a la clase concreta CalculadorAlturaTerreno
+    [Export] public CalculadorAlturaTerreno Terreno { get; set; }
+
+    public float ObtenerAlturaEnX(float x)
+    {
+        return Terreno != null ? Terreno.ObtenerAlturaEnX(x) : 450f;
+    }
 
     public void AjustarObjetoAlPiso(Node2D objeto, float x)
     {
@@ -10,7 +16,6 @@ public partial class Posicionador : Node, PosicionTerreno
 
         var espacioFisico = objeto.GetTree().Root.World2D.DirectSpaceState;
         
-        // El raycast inicia desde Y=0 hasta Y=2000 para cubrir toda la pantalla
         Vector2 desde = new Vector2(x, 0);
         Vector2 hasta = new Vector2(x, 2000);
 
@@ -31,7 +36,6 @@ public partial class Posicionador : Node, PosicionTerreno
         }
         else if (Terreno != null)
         {
-            // Respaldo directo si el motor de física aún no procesó la colisión
             float y = Terreno.ObtenerAlturaEnX(x);
             objeto.GlobalPosition = new Vector2(x, y - 20.0f);
         }
