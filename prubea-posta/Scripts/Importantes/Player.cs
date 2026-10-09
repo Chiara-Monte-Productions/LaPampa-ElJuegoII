@@ -5,41 +5,54 @@ public partial class Player : CharacterBody2D, Angulo, DanoProyectil
     [Signal] public delegate void DisparoRealizadoEventHandler(Bala bala);
     [Signal] public delegate void JugadorMuertoEventHandler(Player jugador);
 
+    [ExportGroup("Componentes y Referencias")]
     [Export] public PackedScene EscenaBala { get; set; }
-    [Export] public Node2D PuntoDeDisparo { get; set; }
+    [Export] public TanqueApuntado ComponenteApuntado { get; set; } 
 
-    [Export] public float FuerzaDisparo { get; private set; } = 600.0f;
-    [Export] public float FuerzaMinima { get; set; } = 200.0f;
-    [Export] public float FuerzaMaxima { get; set; } = 1200.0f;
+    private bool _esMiTurno = false;
 
-    [Export] public float VelocidadRotacion { get; set; } = 2.0f;
-    [Export] public float VelocidadCargaFuerza { get; set; } = 400.0f;
+    [ExportGroup("Estado de Turno")]
+    [Export] 
+    public bool EsMiTurno 
+    { 
+        get => _esMiTurno;
+        set
+        {
+            _esMiTurno = value;
+            // Sincroniza el estado del turno con el componente de apuntado
+            if (ComponenteApuntado != null)
+            {
+                ComponenteApuntado.EsMiTurno = value;
+            }
+        }
+    }
 
-    public bool EsMiTurno { get; set; } = false;
+    // --- IMPLEMENTACIÓN DE LA INTERFAZ 'Angulo' ---
 
     public float ObtenerAngulo()
     {
-        if (PuntoDeDisparo == null) return 0f;
-        return Mathf.Round(-PuntoDeDisparo.RotationDegrees);
+        return ComponenteApuntado != null ? ComponenteApuntado.AnguloActual : 0f;
+    }
+
+    public float FuerzaDisparo
+    {
+        get => ComponenteApuntado != null ? ComponenteApuntado.FuerzaActual : 0f;
+    }
+
+    // ----------------------------------------------
+
+    public override void _Ready()
+    {
+        // Aseguramos sincronización inicial al instanciar el objeto
+        if (ComponenteApuntado != null)
+        {
+            ComponenteApuntado.EsMiTurno = EsMiTurno;
+        }
     }
 
     public override void _Process(double delta)
     {
         if (!EsMiTurno) return;
-
-        float dt = (float)delta;
-
-        if (PuntoDeDisparo != null)
-        {
-            if (Input.IsActionPressed("ui_up")) PuntoDeDisparo.Rotate(-VelocidadRotacion * dt);
-            if (Input.IsActionPressed("ui_down")) PuntoDeDisparo.Rotate(VelocidadRotacion * dt);
-        }
-
-        if (Input.IsActionPressed("ui_right"))
-            FuerzaDisparo = Mathf.Min(FuerzaDisparo + VelocidadCargaFuerza * dt, FuerzaMaxima);
-
-        if (Input.IsActionPressed("ui_left"))
-            FuerzaDisparo = Mathf.Max(FuerzaDisparo - VelocidadCargaFuerza * dt, FuerzaMinima);
 
         if (Input.IsActionJustPressed("ui_accept"))
         {
@@ -49,10 +62,15 @@ public partial class Player : CharacterBody2D, Angulo, DanoProyectil
 
     private void Disparar()
     {
-        if (EscenaBala == null) return;
+        if (EscenaBala == null || ComponenteApuntado == null) return;
 
-        Vector2 posOrigen = PuntoDeDisparo != null ? PuntoDeDisparo.GlobalPosition : GlobalPosition;
-        float rotOrigen = PuntoDeDisparo != null ? PuntoDeDisparo.GlobalRotation : GlobalRotation;
+        Vector2 posOrigen = ComponenteApuntado.PivoteCanon != null 
+            ? ComponenteApuntado.PivoteCanon.GlobalPosition 
+            : GlobalPosition;
+
+        float rotOrigen = ComponenteApuntado.PivoteCanon != null 
+            ? ComponenteApuntado.PivoteCanon.GlobalRotation 
+            : GlobalRotation;
 
         Node instancia = EscenaBala.Instantiate();
 
@@ -64,7 +82,7 @@ public partial class Player : CharacterBody2D, Angulo, DanoProyectil
 
             GetParent().AddChild(bala);
 
-            EsMiTurno = false;
+            EsMiTurno = false; // Al quitar el turno se deshabilita la entrada del componente
             EmitSignal(SignalName.DisparoRealizado, bala);
         }
     }
