@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://cylvgu5fgwv5a"]
 
-[ext_resource type="Script" uid="uid://d2rnxmdt1fyy4" path="res://Player.cs" id="1_xhfnw"]
-[ext_resource type="PackedScene" uid="uid://bfptxfd2bdl3o" path="res://Bala.tscn" id="2_e80uo"]
+[ext_resource type="Script" uid="uid://d2rnxmdt1fyy4" path="res://Scripts/Importantes/Player.cs" id="1_xhfnw"]
+[ext_resource type="PackedScene" uid="uid://bfptxfd2bdl3o" path="res://Escenas/Bala.tscn" id="2_e80uo"]
 [ext_resource type="Texture2D" uid="uid://ddxvcxc7txgqs" path="res://Sprites/CarCannon.png" id="2_kne1u"]
 [ext_resource type="Texture2D" uid="uid://b60048qgdf50n" path="res://Sprites/Car.png" id="3_e80uo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rtybb"]
-size = Vector2(35, 18)
+size = Vector2(25, 16)
 
 [sub_resource type="ImageTexture" id="ImageTexture_2khly"]
 
@@ -17,7 +17,7 @@ EscenaBala = ExtResource("2_e80uo")
 PuntoDeDisparo = NodePath("Marker2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=618514344]
-position = Vector2(-1.5, 0)
+position = Vector2(-1.5, 1)
 shape = SubResource("RectangleShape2D_rtybb")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1157153169]

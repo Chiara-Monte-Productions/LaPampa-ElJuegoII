@@ -1,0 +1,193 @@
+[gd_scene format=3 uid="uid://bo6pe3wawm87y"]
+
+[ext_resource type="Script" uid="uid://ccxusxhw8p3ok" path="res://Scripts/Importantes/Main.cs" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://c3qvwd4gtq6mx" path="res://Scripts/Importantes/GestorFondo.cs" id="2_5vw27"]
+[ext_resource type="PackedScene" uid="uid://cylvgu5fgwv5a" path="res://Escenas/Player.tscn" id="2_lquwl"]
+[ext_resource type="Texture2D" uid="uid://beyuoiq1rubv2" path="res://Fondos/64-dithered.png" id="3_i4rd6"]
+[ext_resource type="Script" uid="uid://4kjy1wiocgjt" path="res://Scripts/Importantes/GameManager.cs" id="4_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://bf57536v3bh2t" path="res://Fondos/building-dithered.png" id="4_7ndum"]
+[ext_resource type="Texture2D" uid="uid://dhcy6mwy2mler" path="res://Menu/versus-SUS(1).png" id="5_7mycd"]
+[ext_resource type="Script" uid="uid://cq03xwnci8w3v" path="res://Scripts/Importantes/HUDManager.cs" id="5_272bh"]
+[ext_resource type="Texture2D" uid="uid://bc8muqbpuj5ua" path="res://Fondos/sky32-dithered.png" id="5_c7rjx"]
+[ext_resource type="Script" uid="uid://8jbu0pwjiiuy" path="res://Scripts/Importantes/TerrenoAleatorio.cs" id="5_lquwl"]
+[ext_resource type="Texture2D" uid="uid://cenydy1c6ip78" path="res://Fondos/sky-dithered.png" id="6_3pd83"]
+[ext_resource type="Script" uid="uid://dvj074741gkei" path="res://Scripts/Importantes/Posicionador.cs" id="7_5vw27"]
+[ext_resource type="Texture2D" uid="uid://cctkwjhqnuvjr" path="res://Fondos/tree-dithered.png" id="7_c8ola"]
+[ext_resource type="Texture2D" uid="uid://cxvwbly525os3" path="res://Terrenos/tierra.jpeg" id="14_i4rd6"]
+
+[sub_resource type="Gradient" id="Gradient_4yntb"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rtybb"]
+gradient = SubResource("Gradient_4yntb")
+width = 269
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_le4xx"]
+
+[sub_resource type="Gradient" id="Gradient_l8mww"]
+offsets = PackedFloat32Array(0.9622642, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_y8e5y"]
+gradient = SubResource("Gradient_l8mww")
+
+[sub_resource type="LabelSettings" id="LabelSettings_7mycd"]
+font_size = 29
+outline_size = 11
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5vw27"]
+font_size = 29
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_lquwl"]
+font_size = 31
+outline_size = 7
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_kek77"]
+font_size = 26
+outline_size = 9
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wwtk3"]
+size = Vector2(1481, 83)
+
+[node name="Main" type="Node2D" unique_id=266599211]
+script = ExtResource("1_ig7tw")
+
+[node name="GestorFondo" type="Node" parent="." unique_id=1448288281 node_paths=PackedStringArray("NodoFondo")]
+script = ExtResource("2_5vw27")
+NodoFondo = NodePath("../fondo")
+TexturasFondo = Array[Texture2D]([ExtResource("3_i4rd6"), ExtResource("4_7ndum"), ExtResource("5_c7rjx"), ExtResource("6_3pd83"), ExtResource("7_c8ola")])
+
+[node name="Posicionador" type="Node" parent="." unique_id=1657357469 node_paths=PackedStringArray("Terreno")]
+script = ExtResource("7_5vw27")
+Terreno = NodePath("../Piso")
+
+[node name="GameManager" type="Node2D" parent="." unique_id=1739410839 node_paths=PackedStringArray("Jugador1", "Jugador2", "HUD", "PosicionadorTerreno", "ServicioFondo")]
+script = ExtResource("4_1bvp3")
+Jugador1 = NodePath("../CharacterBody2D")
+Jugador2 = NodePath("../CharacterBody2D2")
+HUD = NodePath("../HUD")
+PosicionadorTerreno = NodePath("../Posicionador")
+ServicioFondo = NodePath("../GestorFondo")
+
+[node name="fondo" type="Sprite2D" parent="." unique_id=536435531]
+texture_filter = 4
+texture_repeat = 1
+position = Vector2(555.00006, 275)
+scale = Vector2(4.4523077, 711.00006)
+texture = SubResource("GradientTexture1D_rtybb")
+
+[node name="fondo2" type="Sprite2D" parent="." unique_id=1843700450]
+modulate = Color(1, 1, 1, 0.5294118)
+self_modulate = Color(1, 1, 1, 0.59607846)
+oversampling_with_scale = 1
+texture_filter = 1
+texture_repeat = 1
+material = SubResource("CanvasItemMaterial_le4xx")
+position = Vector2(565.99994, 290.00003)
+scale = Vector2(5.226154, 830.5001)
+texture = SubResource("GradientTexture1D_y8e5y")
+
+[node name="CharacterBody2D2" parent="." unique_id=9533790 instance=ExtResource("2_lquwl")]
+position = Vector2(653, 192)
+rotation = 3.1415927
+scale = Vector2(1, -1)
+
+[node name="CharacterBody2D" parent="." unique_id=1095276273 instance=ExtResource("2_lquwl")]
+position = Vector2(153, 204)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1868905685]
+anchor_mode = 0
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=773271717 node_paths=PackedStringArray("LabelNombreJ1", "LabelNombreJ2", "LabelPuntajeJ1", "LabelPuntajeJ2", "LabelAngulo", "LabelFuerza")]
+offset = Vector2(1, 0)
+transform = Transform2D(1, 0, 0, 1, 1, 0)
+script = ExtResource("5_272bh")
+LabelNombreJ1 = NodePath("j1")
+LabelNombreJ2 = NodePath("j2")
+LabelPuntajeJ1 = NodePath("puntajej1")
+LabelPuntajeJ2 = NodePath("puntajej2")
+LabelAngulo = NodePath("Angulo")
+LabelFuerza = NodePath("Fuerzza")
+ColorJugadorActivo = Color(0.96, 0, 0.015999755, 1)
+ColorJugadorInactivo = Color(1, 1, 1, 1)
+
+[node name="Sprite2D2" type="Sprite2D" parent="HUD" unique_id=1705650240]
+texture_filter = 1
+position = Vector2(575, 36.000004)
+scale = Vector2(1.4412502, 1.4068627)
+texture = ExtResource("5_7mycd")
+
+[node name="j1" type="Label" parent="HUD" unique_id=720208512]
+offset_left = 93.0
+offset_top = 13.0
+offset_right = 166.0
+offset_bottom = 53.0
+text = "J1"
+label_settings = SubResource("LabelSettings_7mycd")
+metadata/_edit_use_anchors_ = true
+
+[node name="j2" type="Label" parent="HUD" unique_id=749201251]
+offset_left = 248.0
+offset_top = 13.0
+offset_right = 288.0
+offset_bottom = 53.0
+text = "J2"
+label_settings = SubResource("LabelSettings_5vw27")
+
+[node name="Angulo" type="Label" parent="HUD" unique_id=771270374]
+anchors_preset = -1
+anchor_right = 0.035
+offset_left = 742.0
+offset_top = 12.0
+offset_right = 772.68
+offset_bottom = 56.0
+text = "45"
+label_settings = SubResource("LabelSettings_lquwl")
+
+[node name="puntajej1" type="Label" parent="HUD" unique_id=296305794]
+offset_left = 979.0
+offset_top = 27.0
+offset_right = 1019.0
+offset_bottom = 63.0
+text = "0"
+label_settings = SubResource("LabelSettings_kek77")
+
+[node name="Fuerzza" type="Label" parent="HUD" unique_id=1592768805]
+anchors_preset = -1
+anchor_right = 0.035
+offset_left = 551.0
+offset_top = 12.0
+offset_right = 602.60004
+offset_bottom = 56.0
+text = "800"
+label_settings = SubResource("LabelSettings_lquwl")
+
+[node name="puntajej2" type="Label" parent="HUD" unique_id=1085046731]
+offset_left = 1092.0
+offset_top = 27.0
+offset_right = 1132.0
+offset_bottom = 63.0
+text = "0"
+label_settings = SubResource("LabelSettings_kek77")
+
+[node name="Piso" type="StaticBody2D" parent="." unique_id=731279113 node_paths=PackedStringArray("PoligonoVisual", "PoligonoColision", "LineaSuperficie")]
+script = ExtResource("5_lquwl")
+PoligonoVisual = NodePath("Polygon2D")
+PoligonoColision = NodePath("CollisionPolygon2D")
+LineaSuperficie = NodePath("Polygon2D/Line2D")
+TexturasTerreno = Array[Texture2D]([ExtResource("14_i4rd6")])
+EscalaTextura = Vector2(2, 2)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Piso" unique_id=1427621876]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Piso" unique_id=650608864]
+position = Vector2(425, 644)
+shape = SubResource("RectangleShape2D_wwtk3")
+
+[node name="Polygon2D" type="Polygon2D" parent="Piso" unique_id=812656660]
+
+[node name="Line2D" type="Line2D" parent="Piso/Polygon2D" unique_id=46804601]
