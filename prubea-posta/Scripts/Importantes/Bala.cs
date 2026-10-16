@@ -31,17 +31,17 @@ public partial class Bala : Area2D
 
     private void OnBodyEntered(Node2D body)
     {
-        // Evita que explote con el propio jugador durante los primeros 0.1s de vuelo
-        if (_tiempoEnAire < 0.1f && body is Player) return;
-
-        // Si impacta contra un jugador, lo destruye
-        if (body is Player jugador)
+        // Si implementa la interfaz de daño (como Player u otro objetivo destructible)
+        if (body is DanoProyectil entidadDestruible)
         {
-            GD.Print("¡Jugador destruido!");
-            jugador.QueueFree();
+            // Evita destruirlo durante los primeros 0.1s de vuelo (salida del cañón)
+            if (_tiempoEnAire < 0.1f) return;
+
+            GD.Print("¡Objetivo destruido!");
+            entidadDestruible.Destruir();
         }
 
-        // Se destruye al tocar cualquier superficie sólida o jugador
+        // Se destruye al tocar cualquier superficie sólida o entidad destructible
         QueueFree();
     }
 }
