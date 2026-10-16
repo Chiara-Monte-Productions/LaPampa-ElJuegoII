@@ -15,6 +15,12 @@
 [ext_resource type="Texture2D" uid="uid://cctkwjhqnuvjr" path="res://Fondos/tree-dithered.png" id="7_c8ola"]
 [ext_resource type="Texture2D" uid="uid://wokm3vfwldrc" path="res://Terrenos/gravel_orig.jpg" id="14_i4rd6"]
 [ext_resource type="Texture2D" uid="uid://br2tdy4kxavag" path="res://Terrenos/dirt11_s.jpg" id="15_7ndum"]
+<<<<<<< Updated upstream
+=======
+[ext_resource type="Texture2D" uid="uid://cxvwbly525os3" path="res://Terrenos/tierra.jpeg" id="17_y8e5y"]
+[ext_resource type="Script" uid="uid://dg510nx7mdwru" path="res://Scripts/ControladorNavegacion.cs" id="19_y8e5y"]
+[ext_resource type="Script" uid="uid://bj5swm13toc4y" path="res://Scripts/GestorAudio.cs" id="20_le4xx"]
+>>>>>>> Stashed changes
 
 [sub_resource type="Gradient" id="Gradient_4yntb"]
 
@@ -92,13 +98,15 @@ position = Vector2(565.99994, 290.00003)
 scale = Vector2(5.226154, 830.5001)
 texture = SubResource("GradientTexture1D_y8e5y")
 
-[node name="CharacterBody2D2" parent="." unique_id=9533790 instance=ExtResource("2_lquwl")]
+[node name="CharacterBody2D2" parent="." unique_id=9533790 node_paths=PackedStringArray("ServicioAudio") instance=ExtResource("2_lquwl")]
 position = Vector2(653, 192)
 rotation = 3.1415927
 scale = Vector2(1, -1)
+ServicioAudio = NodePath("../GestorAudio")
 
-[node name="CharacterBody2D" parent="." unique_id=1095276273 instance=ExtResource("2_lquwl")]
+[node name="CharacterBody2D" parent="." unique_id=1095276273 node_paths=PackedStringArray("ServicioAudio") instance=ExtResource("2_lquwl")]
 position = Vector2(153, 204)
+ServicioAudio = NodePath("../GestorAudio")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1868905685]
 anchor_mode = 0
@@ -196,3 +204,16 @@ shape = SubResource("RectangleShape2D_wwtk3")
 [node name="Polygon2D" type="Polygon2D" parent="Piso" unique_id=812656660]
 
 [node name="Line2D" type="Line2D" parent="Piso/Polygon2D" unique_id=46804601]
+<<<<<<< Updated upstream
+=======
+
+[node name="Node" type="Node" parent="Piso" unique_id=1285662308 node_paths=PackedStringArray("Terreno")]
+script = ExtResource("14_7ndum")
+Terreno = NodePath("..")
+
+[node name="ControladorNavegacion" type="Node" parent="." unique_id=1177852346]
+script = ExtResource("19_y8e5y")
+
+[node name="GestorAudio" type="Node" parent="." unique_id=207429783]
+script = ExtResource("20_le4xx")
+>>>>>>> Stashed changes
