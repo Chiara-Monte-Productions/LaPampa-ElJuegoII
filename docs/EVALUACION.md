@@ -3,7 +3,7 @@
 
 > Documento **generado automáticamente** por la cátedra de Programación II (RepoSense + análisis de calidad POO/SOLID). **No editar a mano**: se regenera en cada evaluación.
 > Rama evaluada: `main`. Análisis **heurístico** (regex + métricas): es una criba para orientar la revisión, **no una nota**.
-> Generado: 2026-10-17.
+> Generado: 2026-10-19.
 
 ## 1. Veredicto
 
@@ -15,7 +15,7 @@
 | Clases (bien usadas) | 16 (3 OK) |
 | Código dentro de clases (%POO) | 98% |
 | Funciones fuera de clases | 0 |
-| Duplicación | 24.7% |
+| Duplicación lógica | 18.7% |
 | Señales S/O/L/I/D | 7/3/2/0/3 |
 | Tope duro aplicado | `DUP>=15%` → índice ≤ 50 |
 
@@ -35,7 +35,7 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 | Criterio | Requisito | Tu resultado | Cumple |
 |---|---|---|---|
 | Código dentro de clases (%POO) | ≥ 85% | 98% | sí |
-| Duplicación | ≤ 10% | 20.6% | no |
+| Duplicación lógica | ≤ 10% | 18.7% | no |
 | Funciones fuera de clases | ≤ 1 | 0 | sí |
 | Señales POO/SOLID críticas | ninguna | Baja cohesión (LCOM), Complejidad alta, Acoplamiento alto (CBO), Override vacío / 'no implementado' (LSP) | no |
 
@@ -44,7 +44,7 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 | Criterio | Requisito | Tu resultado | Cumple |
 |---|---|---|---|
 | Código dentro de clases (%POO) | ≥ 95% | 98% | sí |
-| Duplicación | ≤ 5% | 24.7% | no |
+| Duplicación lógica | ≤ 5% | 18.7% | no |
 | Funciones fuera de clases | ≤ 0 | 0 | sí |
 | Señales POO/SOLID críticas | ninguna | Clase demasiado grande (SRP), Baja cohesión (LCOM), Complejidad alta, Acoplamiento alto (CBO), Switch sobre tipos (OCP), Override vacío / 'no implementado' (LSP) | no |
 | Índice de calidad POO/SOLID | ≥ 60 | 5/100 | no |
@@ -67,11 +67,11 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 - **Por qué importa:** Ordena y prioriza la revisión: un índice bajo indica varias señales que conviene mirar juntas.
 - **Tu resultado:** índice **5/100**
 
-### 2. Duplicación (DRY) (duplicacion) — con señales
+### 2. Duplicación lógica (DRY) (duplicacion) — con señales
 
-- **Qué mide:** Porcentaje de bloques de código repetidos (similitud) en el repositorio.
-- **Por qué importa:** Cada copia se mantiene por separado: un arreglo hay que repetirlo y los defectos se multiplican.
-- **Tu resultado:** **24.7%** de duplicación
+- **Qué mide:** Porcentaje de bloques de LÓGICA repetidos. Quedan fuera imports/includes, anotaciones, declaraciones de campos y comentarios/Javadoc/docstrings: esos bloques son boilerplate, no lógica.
+- **Por qué importa:** Cada copia de lógica se mantiene por separado: un arreglo hay que repetirlo y los defectos se multiplican.
+- **Tu resultado:** **18.7%** de duplicación lógica
 - **Para investigar la causa:**
     - ¿El trabajo se repartió por pantallas o archivos y se integró copiando y pegando bloques?
     - ¿Qué zonas del sistema cambiaron juntas más de una vez (señal de lógica compartida)?
@@ -267,9 +267,9 @@ xychart-beta
 | 1 | 2026-08-14 | `ef6c398` | antunez | 0 | 0 | 0% | 0.0% | 0 |
 | 2 | 2026-08-24 | `557cbaf` | dqmdz-etec | 0 | 0 | 0% | 0.0% | 0 |
 | 3 | 2026-09-07 | `044bd9e` | antunez | 394 | 8 | 98% | 0.0% | 0 |
-| 4 | 2026-10-09 | `a5c4628` | antunez | 670 | 4 | 98% | 30.0% | 0 |
-| 5 | 2026-10-09 | `ae54964` | xX-ApoloCool-Xx | 603 | 6 | 98% | 2.8% | 0 |
-| 6 | 2026-10-16 | `2bbbdaf` | xX-ApoloCool-Xx | 709 | 5 | 98% | 24.7% | 0 |
+| 4 | 2026-10-09 | `a5c4628` | antunez | 670 | 4 | 98% | 21.7% | 0 |
+| 5 | 2026-10-09 | `ae54964` | xX-ApoloCool-Xx | 603 | 6 | 98% | 0.0% | 0 |
+| 6 | 2026-10-16 | `2bbbdaf` | xX-ApoloCool-Xx | 709 | 5 | 98% | 18.7% | 0 |
 
 ---
 _Informe generado por la cátedra. Los criterios y umbrales de medición corresponden al perfil `exigente` de `calidad.py`; el semáforo de aprobación, a `CRITERIOS-CALIDAD.md` (ver `README.md`). Ante dudas, revisá el archivo señalado._
