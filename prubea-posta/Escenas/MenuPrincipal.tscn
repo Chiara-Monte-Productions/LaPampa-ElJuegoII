@@ -5,6 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://dp7f7qtwvcykh" path="res://Menu/logo.png" id="3_pi62y"]
 [ext_resource type="Texture2D" uid="uid://bevxdhwgt48ea" path="res://Menu/Buttons/Jugar.png" id="3_shwl5"]
 [ext_resource type="Texture2D" uid="uid://dbh5cbxfy1bxf" path="res://Menu/Buttons/salir.png" id="4_gdyll"]
+[ext_resource type="Texture2D" uid="uid://c5g0g7gk32ow" path="res://Menu/Buttons/Jugar32.png" id="4_jmp4w"]
+[ext_resource type="Texture2D" uid="uid://b1np3dbak7usn" path="res://Menu/Buttons/salir32.png" id="6_vmlkd"]
 
 [node name="Control" type="Control" unique_id=508273805 node_paths=PackedStringArray("BotonJugar", "BotonSalir")]
 layout_mode = 3
@@ -21,6 +23,7 @@ BotonJugar = NodePath("TextureButton")
 BotonSalir = NodePath("TextureButton2")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1464747751]
+modulate = Color(1, 1, 1, 0.92156863)
 position = Vector2(231.00002, 71)
 scale = Vector2(1.4475001, 1.5383333)
 texture = ExtResource("2_5dpk2")
@@ -32,6 +35,7 @@ offset_top = 167.0
 offset_right = 343.0
 offset_bottom = 232.0
 texture_normal = ExtResource("3_shwl5")
+texture_hover = ExtResource("4_jmp4w")
 ignore_texture_size = true
 stretch_mode = 0
 
@@ -42,32 +46,10 @@ offset_top = 273.0
 offset_right = 342.0
 offset_bottom = 338.0
 texture_normal = ExtResource("4_gdyll")
+texture_hover = ExtResource("6_vmlkd")
 ignore_texture_size = true
 stretch_mode = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1444113650]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.088
-offset_left = 451.0
-offset_top = 216.0
-offset_right = 383.0
-offset_bottom = 103.51199
-alignment = 1
-
-[node name="BotonJugar" type="Button" parent="VBoxContainer" unique_id=1124230858]
-custom_minimum_size = Vector2(1, 0)
-layout_mode = 2
-text = "Jugar epicamente"
-
-[node name="BotonSalir" type="Button" parent="VBoxContainer" unique_id=1761781881]
-layout_mode = 2
-text = "Salir como perdedor"
 
 [node name="Sprite2D2" type="Sprite2D" parent="." unique_id=218954682]
 position = Vector2(255, 52)
 texture = ExtResource("3_pi62y")
-
-[connection signal="pressed" from="VBoxContainer/BotonJugar" to="." method="OnBotonJugarPressed"]
-[connection signal="pressed" from="VBoxContainer/BotonSalir" to="." method="OnBotonSalirPressed"]

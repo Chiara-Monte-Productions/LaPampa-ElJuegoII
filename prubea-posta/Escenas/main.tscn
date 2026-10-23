@@ -19,6 +19,9 @@
 [ext_resource type="Texture2D" uid="uid://br2tdy4kxavag" path="res://Terrenos/dirt11_s.jpg" id="15_7ndum"]
 [ext_resource type="Texture2D" uid="uid://cxvwbly525os3" path="res://Terrenos/tierra.jpeg" id="17_y8e5y"]
 [ext_resource type="Script" uid="uid://dg510nx7mdwru" path="res://Scripts/ControladorNavegacion.cs" id="19_y8e5y"]
+[ext_resource type="Script" uid="uid://bj5swm13toc4y" path="res://Scripts/GestorAudio.cs" id="20_le4xx"]
+[ext_resource type="Texture2D" uid="uid://cxvwbly525os3" path="res://Terrenos/tierra.jpeg" id="17_y8e5y"]
+[ext_resource type="Script" uid="uid://dg510nx7mdwru" path="res://Scripts/ControladorNavegacion.cs" id="19_y8e5y"]
 
 [sub_resource type="Gradient" id="Gradient_4yntb"]
 
@@ -96,13 +99,15 @@ position = Vector2(565.99994, 290.00003)
 scale = Vector2(5.226154, 830.5001)
 texture = SubResource("GradientTexture1D_y8e5y")
 
-[node name="CharacterBody2D2" parent="." unique_id=9533790 instance=ExtResource("2_lquwl")]
+[node name="CharacterBody2D2" parent="." unique_id=9533790 node_paths=PackedStringArray("ServicioAudio") instance=ExtResource("2_lquwl")]
 position = Vector2(653, 192)
 rotation = 3.1415927
 scale = Vector2(1, -1)
+ServicioAudio = NodePath("../GestorAudio")
 
-[node name="CharacterBody2D" parent="." unique_id=1095276273 instance=ExtResource("2_lquwl")]
+[node name="CharacterBody2D" parent="." unique_id=1095276273 node_paths=PackedStringArray("ServicioAudio") instance=ExtResource("2_lquwl")]
 position = Vector2(153, 204)
+ServicioAudio = NodePath("../GestorAudio")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1868905685]
 anchor_mode = 0
@@ -139,7 +144,7 @@ metadata/_edit_use_anchors_ = true
 offset_left = 248.0
 offset_top = 13.0
 offset_right = 288.0
-offset_bottom = 53.0
+https://github.com/Chiara-Monte-Productions/LaPampa-ElJuegoII/pull/17/conflict?name=prubea-posta%252FEscenas%252Fmain.tscn&ancestor_oid=64e0146d1c73217293daa97a3855e6048274ca7a&base_oid=f1b458808e58e902faf88e22e69165eef1b5dc6f&head_oid=b49024053242440b7dd12a261f42f9e6634290b4offset_bottom = 53.0
 text = "J2"
 label_settings = SubResource("LabelSettings_5vw27")
 
@@ -206,3 +211,6 @@ Terreno = NodePath("..")
 
 [node name="ControladorNavegacion" type="Node" parent="." unique_id=1177852346]
 script = ExtResource("19_y8e5y")
+
+[node name="GestorAudio" type="Node" parent="." unique_id=207429783]
+script = ExtResource("20_le4xx")

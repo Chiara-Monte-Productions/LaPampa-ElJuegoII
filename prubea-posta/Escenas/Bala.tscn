@@ -8,6 +8,9 @@ radius = 3.0
 
 [node name="Area2D" type="Area2D" unique_id=1812148747]
 script = ExtResource("1_pu3jq")
+TiempoDeVida = 2.0
+ColorRastro = Color(0.904, 1, 0.04000002, 1)
+AnchoRastro = 2.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=967508469]
 position = Vector2(4, 0)

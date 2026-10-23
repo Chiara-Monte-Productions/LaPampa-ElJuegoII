@@ -8,6 +8,7 @@ public partial class Player : CharacterBody2D, Angulo, DanoProyectil
     [ExportGroup("Componentes y Referencias")]
     [Export] public PackedScene EscenaBala { get; set; }
     [Export] public TanqueApuntado ComponenteApuntado { get; set; } 
+    [Export] public GestorAudio ServicioAudio { get; set; }
 
     private bool _esMiTurno = false;
 
@@ -19,15 +20,12 @@ public partial class Player : CharacterBody2D, Angulo, DanoProyectil
         set
         {
             _esMiTurno = value;
-            // Sincroniza el estado del turno con el componente de apuntado
             if (ComponenteApuntado != null)
             {
                 ComponenteApuntado.EsMiTurno = value;
             }
         }
     }
-
-    // --- IMPLEMENTACIÓN DE LA INTERFAZ 'Angulo' ---
 
     public float ObtenerAngulo()
     {
@@ -39,11 +37,8 @@ public partial class Player : CharacterBody2D, Angulo, DanoProyectil
         get => ComponenteApuntado != null ? ComponenteApuntado.FuerzaActual : 0f;
     }
 
-    // ----------------------------------------------
-
     public override void _Ready()
     {
-        // Aseguramos sincronización inicial al instanciar el objeto
         if (ComponenteApuntado != null)
         {
             ComponenteApuntado.EsMiTurno = EsMiTurno;
@@ -78,11 +73,14 @@ public partial class Player : CharacterBody2D, Angulo, DanoProyectil
         {
             bala.GlobalPosition = posOrigen;
             bala.GlobalRotation = rotOrigen;
+            bala.ServicioAudio = ServicioAudio;
             bala.Inicializar(FuerzaDisparo);
 
             GetParent().AddChild(bala);
 
-            EsMiTurno = false; // Al quitar el turno se deshabilita la entrada del componente
+            ServicioAudio?.ReproducirDisparo();
+
+            EsMiTurno = false;
             EmitSignal(SignalName.DisparoRealizado, bala);
         }
     }
