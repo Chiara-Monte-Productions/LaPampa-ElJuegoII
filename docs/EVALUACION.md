@@ -3,20 +3,20 @@
 
 > Documento **generado automáticamente** por la cátedra de Programación II (RepoSense + análisis de calidad POO/SOLID). **No editar a mano**: se regenera en cada evaluación.
 > Rama evaluada: `main`. Análisis **heurístico** (regex + métricas): es una criba para orientar la revisión, **no una nota**.
-> Generado: 2026-10-19.
+> Generado: 2026-10-25.
 
 ## 1. Veredicto
 
 | Aspecto | Resultado |
 |---|---|
 | Índice de calidad POO/SOLID | **5/100** |
-| Código (LOC) | 709 |
-| Archivos de código | 16 |
-| Clases (bien usadas) | 16 (3 OK) |
+| Código (LOC) | 971 |
+| Archivos de código | 21 |
+| Clases (bien usadas) | 21 (5 OK) |
 | Código dentro de clases (%POO) | 98% |
 | Funciones fuera de clases | 0 |
-| Duplicación lógica | 18.7% |
-| Señales S/O/L/I/D | 7/3/2/0/3 |
+| Duplicación lógica | 15.3% |
+| Señales S/O/L/I/D | 9/3/4/0/3 |
 | Tope duro aplicado | `DUP>=15%` → índice ≤ 50 |
 
 > Este informe **describe** lo que el análisis midió con los criterios ya establecidos de la materia. No es una nota.
@@ -35,16 +35,16 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 | Criterio | Requisito | Tu resultado | Cumple |
 |---|---|---|---|
 | Código dentro de clases (%POO) | ≥ 85% | 98% | sí |
-| Duplicación lógica | ≤ 10% | 18.7% | no |
+| Duplicación lógica | ≤ 10% | 15.3% | no |
 | Funciones fuera de clases | ≤ 1 | 0 | sí |
-| Señales POO/SOLID críticas | ninguna | Baja cohesión (LCOM), Complejidad alta, Acoplamiento alto (CBO), Override vacío / 'no implementado' (LSP) | no |
+| Señales POO/SOLID críticas | ninguna | Baja cohesión (LCOM), Complejidad alta, Acoplamiento alto (CBO), Switch sobre tipos (OCP), Override vacío / 'no implementado' (LSP) | no |
 
 **Criterios para destacar**
 
 | Criterio | Requisito | Tu resultado | Cumple |
 |---|---|---|---|
 | Código dentro de clases (%POO) | ≥ 95% | 98% | sí |
-| Duplicación lógica | ≤ 5% | 18.7% | no |
+| Duplicación lógica | ≤ 5% | 15.3% | no |
 | Funciones fuera de clases | ≤ 0 | 0 | sí |
 | Señales POO/SOLID críticas | ninguna | Clase demasiado grande (SRP), Baja cohesión (LCOM), Complejidad alta, Acoplamiento alto (CBO), Switch sobre tipos (OCP), Override vacío / 'no implementado' (LSP) | no |
 | Índice de calidad POO/SOLID | ≥ 60 | 5/100 | no |
@@ -53,7 +53,8 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 
 | Autor | Commits | Código (LOC) | Tests (LOC) | Docs (LOC) | Días activos | % del código |
 |---|---:|---:|---:|---:|---:|---:|
-| Bau-ti | 3 | 534 | 0 | 1 | 5 | 100% |
+| Apolo Fernández | 4 | 663 | 0 | 0 | 3 | 55% |
+| Bau-ti | 3 | 532 | 0 | 1 | 5 | 45% |
 
 > _El LOC de autoría lo calcula RepoSense sobre el historial y puede diferir del LOC de código del análisis de calidad (que mira solo el estado de `main`)._
 
@@ -71,7 +72,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Porcentaje de bloques de LÓGICA repetidos. Quedan fuera imports/includes, anotaciones, declaraciones de campos y comentarios/Javadoc/docstrings: esos bloques son boilerplate, no lógica.
 - **Por qué importa:** Cada copia de lógica se mantiene por separado: un arreglo hay que repetirlo y los defectos se multiplican.
-- **Tu resultado:** **18.7%** de duplicación lógica
+- **Tu resultado:** **15.3%** de duplicación lógica
 - **Para investigar la causa:**
     - ¿El trabajo se repartió por pantallas o archivos y se integró copiando y pegando bloques?
     - ¿Qué zonas del sistema cambiaron juntas más de una vez (señal de lógica compartida)?
@@ -81,7 +82,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Qué porción del código vive dentro de clases (no de funciones sueltas).
 - **Por qué importa:** El diseño orientado a objetos es el eje de la materia: el comportamiento debería vivir como método de una clase.
-- **Tu resultado:** **97.5%** del código dentro de clases
+- **Tu resultado:** **97.7%** del código dentro de clases
 
 ### 4. Funciones fuera de clases (sueltas) — sin señales
 
@@ -103,7 +104,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Métodos y campos de una clase que casi no se relacionan entre sí.
 - **Por qué importa:** Una unidad que cambia por motivos distintos y comparte poca información suele esconder más de una responsabilidad.
-- **Tu resultado:** **2** clase(s) con baja cohesión
+- **Tu resultado:** **3** clase(s) con baja cohesión
 - **Para investigar la causa:**
     - ¿Qué métodos de la clase no comparten estado con el resto?
     - ¿Cambian por motivos distintos según la tarea?
@@ -113,7 +114,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Complejidad ciclomática: cantidad de caminos posibles dentro de un método o función (condicionales, bucles, casos).
 - **Por qué importa:** Muchos caminos = difícil de seguir y de probar; suelen esconderse casos sin cubrir.
-- **Tu resultado:** **6** método(s)/función(es) con complejidad alta
+- **Tu resultado:** **7** método(s)/función(es) con complejidad alta
 - **Para investigar la causa:**
     - ¿Se agregaron condiciones a medida que aparecían casos nuevos?
     - ¿Se probaron todos los caminos o solo el caso principal?
@@ -133,7 +134,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Cuánto depende una clase de otros tipos del proyecto.
 - **Por qué importa:** Piezas muy enlazadas hacen que un cambio se propague y que sea difícil reemplazar partes.
-- **Tu resultado:** **12** clase(s) muy acoplada(s)
+- **Tu resultado:** **14** clase(s) muy acoplada(s)
 - **Para investigar la causa:**
     - ¿La clase conoce detalles internos de muchas otras?
     - ¿Se puede cambiar una parte sin tocar las demás?
@@ -165,7 +166,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Métodos sobrescritos que quedan vacíos o lanzan 'no implementado'.
 - **Por qué importa:** Suele indicar que la jerarquía no representa bien el problema y rompe la sustitución entre clases.
-- **Tu resultado:** **2** override(s) vacío(s) o 'no implementado'
+- **Tu resultado:** **4** override(s) vacío(s) o 'no implementado'
 - **Para investigar la causa:**
     - ¿Por qué ese método no tiene comportamiento en esa clase?
     - ¿La clase hereda algo que en realidad no le corresponde?
@@ -206,14 +207,16 @@ Archivos donde el análisis encontró cada señal (sin número de línea, a prop
 **Clase demasiado grande (SRP) (god)** — 1 archivo(s):
 - `prubea-posta/Scripts/Importantes/GameManager.cs`
 
-**Baja cohesión (LCOM) (cohesion)** — 2 archivo(s):
+**Baja cohesión (LCOM) (cohesion)** — 3 archivo(s):
+- `prubea-posta/Scripts/Importantes/Bala.cs`
 - `prubea-posta/Scripts/Importantes/GameManager.cs`
 - `prubea-posta/Scripts/Importantes/Player.cs`
 
-**Complejidad alta (complejidad)** — 5 archivo(s):
+**Complejidad alta (complejidad)** — 6 archivo(s):
 - `prubea-posta/Scripts/GeneradorTerreno.cs`
 - `prubea-posta/Scripts/Importantes/GameManager.cs`
 - `prubea-posta/Scripts/Importantes/HUDManager.cs`
+- `prubea-posta/Scripts/Importantes/Player.cs`
 - `prubea-posta/Scripts/Importantes/TerrenoAleatorio.cs`
 - `prubea-posta/Scripts/TanqueApuntado.cs`
 
@@ -223,9 +226,11 @@ Archivos donde el análisis encontró cada señal (sin número de línea, a prop
 - `prubea-posta/Scripts/Importantes/TerrenoAleatorio.cs`
 - `prubea-posta/Scripts/TanqueApuntado.cs`
 
-**Acoplamiento alto (CBO) (acoplamiento)** — 12 archivo(s):
+**Acoplamiento alto (CBO) (acoplamiento)** — 14 archivo(s):
 - `prubea-posta/Scripts/ControladorNavegacion.cs`
+- `prubea-posta/Scripts/EfectoImpacto.cs`
 - `prubea-posta/Scripts/GeneradorTerreno.cs`
+- `prubea-posta/Scripts/GestorAudio.cs`
 - `prubea-posta/Scripts/Importantes/Bala.cs`
 - `prubea-posta/Scripts/Importantes/CalculadorAlturaTerreno.cs`
 - `prubea-posta/Scripts/Importantes/GameManager.cs`
@@ -242,7 +247,8 @@ Archivos donde el análisis encontró cada señal (sin número de línea, a prop
 - `prubea-posta/Scripts/Importantes/Player.cs`
 - `prubea-posta/Scripts/Importantes/Posicionador.cs`
 
-**Override vacío o 'no implementado' (LSP) (lsp)** — 1 archivo(s):
+**Override vacío o 'no implementado' (LSP) (lsp)** — 2 archivo(s):
+- `prubea-posta/Escenas/EfectoMuerteJugador.cs`
 - `prubea-posta/Scripts/Importantes/Main.cs`
 
 **Dependencia de concretos y falta de abstracciones (DIP) (dip)** — 3 archivo(s):
@@ -252,14 +258,14 @@ Archivos donde el análisis encontró cada señal (sin número de línea, a prop
 
 ## 5. Evolución por commit
 
-Métricas calculadas sobre el estado de `main` en **cada commit** (6 commits con trabajo), del primero al último. La calidad usa el perfil `exigente`; el aporte de código lo mide RepoSense. El índice puede **bajar** al crecer el proyecto: se acumulan señales.
+Métricas calculadas sobre el estado de `main` en **cada commit** (8 commits con trabajo), del primero al último. La calidad usa el perfil `exigente`; el aporte de código lo mide RepoSense. El índice puede **bajar** al crecer el proyecto: se acumulan señales.
 
 ```mermaid
 xychart-beta
     title "Índice POO/SOLID a lo largo de los commits"
-    x-axis ["ef6c398", "557cbaf", "044bd9e", "a5c4628", "ae54964", "2bbbdaf"]
+    x-axis ["ef6c398", "557cbaf", "044bd9e", "a5c4628", "ae54964", "2bbbdaf", "77ea52d", "e36c61b"]
     y-axis "Índice" 0 --> 100
-    line [0, 0, 8, 4, 6, 5]
+    line [0, 0, 8, 4, 6, 5, 6, 5]
 ```
 
 | # | Fecha | Commit | Autor | LOC | Índice | %POO | Duplic. | Sueltas |
@@ -270,6 +276,8 @@ xychart-beta
 | 4 | 2026-10-09 | `a5c4628` | antunez | 670 | 4 | 98% | 21.7% | 0 |
 | 5 | 2026-10-09 | `ae54964` | xX-ApoloCool-Xx | 603 | 6 | 98% | 0.0% | 0 |
 | 6 | 2026-10-16 | `2bbbdaf` | xX-ApoloCool-Xx | 709 | 5 | 98% | 18.7% | 0 |
+| 7 | 2026-10-23 | `77ea52d` | xX-ApoloCool-Xx | 936 | 6 | 98% | 14.0% | 0 |
+| 8 | 2026-10-23 | `e36c61b` | xX-ApoloCool-Xx | 971 | 5 | 98% | 15.3% | 0 |
 
 ---
 _Informe generado por la cátedra. Los criterios y umbrales de medición corresponden al perfil `exigente` de `calidad.py`; el semáforo de aprobación, a `CRITERIOS-CALIDAD.md` (ver `README.md`). Ante dudas, revisá el archivo señalado._
