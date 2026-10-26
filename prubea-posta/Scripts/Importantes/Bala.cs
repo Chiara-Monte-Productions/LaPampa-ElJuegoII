@@ -6,18 +6,15 @@ public partial class Bala : Area2D
     [Export] public float TiempoDeVida = 5.0f;
     [Export] public float AnchoRastro { get; set; } = 2.0f;
     [Export] public PackedScene EscenaEfectoImpacto { get; set; }
-    [Export] public GestorAudio ServicioAudio { get; set; }
+
+    // Abstracción inyectada o resuelta localmente (DIP)
+    public IServicioAudio ServicioAudio { get; set; }
 
     [Export] 
     public Godot.Collections.Array<Color> PaletaColores { get; set; } = new()
     {
-        Colors.Cyan,
-        Colors.Yellow,
-        Colors.Magenta,
-        Colors.Orange,
-        Colors.Lime,
-        Colors.Coral,
-        Colors.LightSkyBlue
+        Colors.Cyan, Colors.Yellow, Colors.Magenta,
+        Colors.Orange, Colors.Lime, Colors.Coral, Colors.LightSkyBlue
     };
 
     private Vector2 _velocidadVector;
@@ -35,6 +32,16 @@ public partial class Bala : Area2D
         BodyEntered += OnBodyEntered;
         GetTree().CreateTimer(TiempoDeVida).Timeout += OnTiempoExpirado;
 
+        // Resolución del servicio en el árbol de la escena local si no fue inyectado
+        if (ServicioAudio == null)
+        {
+            ServicioAudio = GetTree().GetFirstNodeInGroup("ServicioAudio") as IServicioAudio;
+        }
+
+        // Notificación de eventos de ciclo de vida
+        ServicioAudio?.ReproducirDisparo();
+        ServicioAudio?.IniciarSonidoVuelo();
+
         ElegirColorAleatorio();
 
         _lineaRastro = new Line2D
@@ -46,8 +53,6 @@ public partial class Bala : Area2D
         
         GetParent()?.CallDeferred("add_child", _lineaRastro);
         _lineaRastro.AddPoint(GlobalPosition);
-
-        ServicioAudio?.IniciarSonidoVuelo();
     }
 
     private void ElegirColorAleatorio()
@@ -97,18 +102,6 @@ public partial class Bala : Area2D
     private void OnTiempoExpirado()
     {
         ServicioAudio?.DetenerSonidoVuelo();
-=======
-        // Si implementa la interfaz de daño (como Player u otro objetivo destructible)
-        if (body is DanoProyectil entidadDestruible)
-        {
-            // Evita destruirlo durante los primeros 0.1s de vuelo (salida del cañón)
-            if (_tiempoEnAire < 0.1f) return;
-
-            GD.Print("¡Objetivo destruido!");
-            entidadDestruible.Destruir();
-        }
-
-        // Se destruye al tocar cualquier superficie sólida o entidad destructible
         QueueFree();
     }
 
@@ -131,4 +124,6 @@ public partial class Bala : Area2D
         GetParent().AddChild(efecto);
         efecto.CrearEfecto(_lineaRastro, puntoImpacto);
     }
+
+    
 }

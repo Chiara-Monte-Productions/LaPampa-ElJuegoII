@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://c5asgasrgp3of" path="res://Scripts/TanqueApuntado.cs" id="5_5hhfp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rtybb"]
-size = Vector2(20.5, 15)
+size = Vector2(20.5, 11)
 
 [sub_resource type="ImageTexture" id="ImageTexture_2khly"]
 
@@ -18,7 +18,7 @@ EscenaBala = ExtResource("2_e80uo")
 ComponenteApuntado = NodePath("apuntado")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=618514344]
-position = Vector2(0, 0.5)
+position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_rtybb")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1157153169]
