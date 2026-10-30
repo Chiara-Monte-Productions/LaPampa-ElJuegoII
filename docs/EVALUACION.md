@@ -10,13 +10,13 @@
 | Aspecto | Resultado |
 |---|---|
 | Índice de calidad POO/SOLID | **6/100** |
-| Código (LOC) | 979 |
-| Archivos de código | 21 |
-| Clases (bien usadas) | 21 (4 OK) |
+| Código (LOC) | 1,157 |
+| Archivos de código | 24 |
+| Clases (bien usadas) | 24 (5 OK) |
 | Código dentro de clases (%POO) | 98% |
 | Funciones fuera de clases | 0 |
-| Duplicación lógica | 1.7% |
-| Señales S/O/L/I/D | 8/4/0/0/2 |
+| Duplicación lógica | 1.5% |
+| Señales S/O/L/I/D | 4/7/0/0/3 |
 
 > Este informe **describe** lo que el análisis midió con los criterios ya establecidos de la materia. No es una nota.
 
@@ -34,30 +34,28 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 | Criterio | Requisito | Tu resultado | Cumple |
 |---|---|---|---|
 | Código dentro de clases (%POO) | ≥ 85% | 98% | sí |
-| Duplicación lógica | ≤ 10% | 1.7% | sí |
+| Duplicación lógica | ≤ 10% | 1.5% | sí |
 | Funciones fuera de clases | ≤ 1 | 0 | sí |
-| Señales POO/SOLID críticas | ninguna | Baja cohesión (LCOM), Acoplamiento alto (CBO) | no |
+| Señales POO/SOLID críticas | ninguna | Acoplamiento alto (CBO), Switch sobre tipos (OCP) | no |
 
 **Criterios para destacar**
 
 | Criterio | Requisito | Tu resultado | Cumple |
 |---|---|---|---|
 | Código dentro de clases (%POO) | ≥ 95% | 98% | sí |
-| Duplicación lógica | ≤ 5% | 1.7% | sí |
+| Duplicación lógica | ≤ 5% | 1.5% | sí |
 | Funciones fuera de clases | ≤ 1 | 0 | sí |
-| Señales POO/SOLID críticas | ninguna | Clase demasiado grande (SRP), Baja cohesión (LCOM), Complejidad alta, Acoplamiento alto (CBO), Switch sobre tipos (OCP) | no |
+| Señales POO/SOLID críticas | ninguna | Clase demasiado grande (SRP), Baja cohesión (LCOM), Acoplamiento alto (CBO), Switch sobre tipos (OCP) | no |
 | Índice de calidad POO/SOLID | ≥ 60 | 6/100 | no |
 
 ## 2. Autoría (RepoSense)
 
 | Autor | Commits | Código (LOC) | Tests (LOC) | Docs (LOC) | Días activos | % del código |
 |---|---:|---:|---:|---:|---:|---:|
-| Apolo Fernández | 6 | 829 | 0 | 0 | 5 | 69% |
-| Bau-ti | 3 | 372 | 0 | 1 | 5 | 31% |
+| Apolo Fernández | 6 | 829 | 0 | 0 | 5 | 58% |
+| Bau-ti | 4 | 596 | 0 | 1 | 6 | 42% |
 
 > _El LOC de autoría lo calcula RepoSense sobre el historial y puede diferir del LOC de código del análisis de calidad (que mira solo el estado de `main`)._
-
-> **Reparto del trabajo:** Apolo Fernández concentra el 69% de las líneas de código. Un reparto muy desigual suele indicar que la integración no fue realmente en equipo; vale la pena reconstruir cómo se coordinó.
 
 ## 3. Aspectos evaluados
 
@@ -73,7 +71,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Porcentaje de bloques de LÓGICA repetidos. Quedan fuera imports/includes, anotaciones, declaraciones de campos y comentarios/Javadoc/docstrings: esos bloques son boilerplate, no lógica.
 - **Por qué importa:** Cada copia de lógica se mantiene por separado: un arreglo hay que repetirlo y los defectos se multiplican.
-- **Tu resultado:** **1.7%** de duplicación lógica
+- **Tu resultado:** **1.5%** de duplicación lógica
 - **Para investigar la causa:**
     - ¿El trabajo se repartió por pantallas o archivos y se integró copiando y pegando bloques?
     - ¿Qué zonas del sistema cambiaron juntas más de una vez (señal de lógica compartida)?
@@ -93,7 +91,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 ### 5. Clase demasiado grande (SRP) (god) — con señales
 
-- **Qué mide:** Clases con muchas líneas, métodos o campos a la vez.
+- **Qué mide:** Clases con demasiadas líneas o métodos de LÓGICA. No cuentan los getters/setters triviales ni la cantidad de campos por sí sola.
 - **Por qué importa:** Una clase que hace de todo cambia por muchos motivos y cuesta entenderla y probarla.
 - **Tu resultado:** **3** clase(s) demasiado grande(s)
 - **Para investigar la causa:**
@@ -105,21 +103,17 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Métodos y campos de una clase que casi no se relacionan entre sí.
 - **Por qué importa:** Una unidad que cambia por motivos distintos y comparte poca información suele esconder más de una responsabilidad.
-- **Tu resultado:** **4** clase(s) con baja cohesión
+- **Tu resultado:** **2** clase(s) con baja cohesión
 - **Para investigar la causa:**
     - ¿Qué métodos de la clase no comparten estado con el resto?
     - ¿Cambian por motivos distintos según la tarea?
     - ¿Se pensó su responsabilidad antes de escribirla, o se fue agregando?
 
-### 7. Complejidad alta (complejidad) — con señales
+### 7. Complejidad alta (complejidad) — sin señales
 
 - **Qué mide:** Complejidad ciclomática: cantidad de caminos posibles dentro de un método o función (condicionales, bucles, casos).
 - **Por qué importa:** Muchos caminos = difícil de seguir y de probar; suelen esconderse casos sin cubrir.
-- **Tu resultado:** **3** método(s)/función(es) con complejidad alta
-- **Para investigar la causa:**
-    - ¿Se agregaron condiciones a medida que aparecían casos nuevos?
-    - ¿Se probaron todos los caminos o solo el caso principal?
-    - ¿Hay reglas de negocio mezcladas con detalles técnicos?
+- **Tu resultado:** **0** método(s)/función(es) con complejidad alta
 
 ### 8. Métodos/funciones largos o con muchos parámetros (tamano) — con señales
 
@@ -135,7 +129,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Cuánto depende una clase de otros tipos del proyecto.
 - **Por qué importa:** Piezas muy enlazadas hacen que un cambio se propague y que sea difícil reemplazar partes.
-- **Tu resultado:** **14** clase(s) muy acoplada(s)
+- **Tu resultado:** **15** clase(s) muy acoplada(s)
 - **Para investigar la causa:**
     - ¿La clase conoce detalles internos de muchas otras?
     - ¿Se puede cambiar una parte sin tocar las demás?
@@ -155,7 +149,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Chequeos repetidos de tipo (`instanceof`/`is`/`typeof`) que equivalen a un switch sobre el tipo.
 - **Por qué importa:** Cada tipo nuevo obliga a tocar varios lugares, en vez de extender con una implementación nueva.
-- **Tu resultado:** **4** clase(s) con switch sobre tipos
+- **Tu resultado:** **7** clase(s) con switch sobre tipos
 - **Para investigar la causa:**
     - ¿Qué operación se resuelve preguntando el tipo?
     - ¿Qué se toca cada vez que aparece un tipo o caso nuevo?
@@ -177,7 +171,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Instanciación directa de clases concretas y ausencia de interfaces o clases abstractas pese al acoplamiento.
 - **Por qué importa:** Depender de implementaciones concretas dificulta cambiar o probar una parte sin arrastrar las demás.
-- **Tu resultado:** **2** dependencia(s) de concretos sin abstracciones
+- **Tu resultado:** **3** dependencia(s) de concretos sin abstracciones
 - **Para investigar la causa:**
     - ¿La clase crea por dentro a sus colaboradores en vez de recibirlos?
     - ¿Hay puntos de variación que convendría expresar como abstracción?
@@ -210,25 +204,18 @@ Archivos donde el análisis encontró cada señal (sin número de línea, a prop
 - `prubea-posta/Scripts/GestorAudio.cs`
 - `prubea-posta/Scripts/Importantes/GameManager.cs`
 
-**Baja cohesión (LCOM) (cohesion)** — 4 archivo(s):
+**Baja cohesión (LCOM) (cohesion)** — 2 archivo(s):
 - `prubea-posta/Scripts/GestorAudio.cs`
 - `prubea-posta/Scripts/Importantes/Bala.cs`
-- `prubea-posta/Scripts/Importantes/GameManager.cs`
-- `prubea-posta/Scripts/Importantes/Player.cs`
-
-**Complejidad alta (complejidad)** — 3 archivo(s):
-- `prubea-posta/Scripts/Importantes/GameManager.cs`
-- `prubea-posta/Scripts/Importantes/Posicionador.cs`
-- `prubea-posta/Scripts/TanqueApuntado.cs`
 
 **Métodos/funciones largos o con muchos parámetros (tamano)** — 1 archivo(s):
 - `prubea-posta/Scripts/Importantes/GestorFondo.cs`
 
-**Acoplamiento alto (CBO) (acoplamiento)** — 14 archivo(s):
+**Acoplamiento alto (CBO) (acoplamiento)** — 15 archivo(s):
 - `prubea-posta/Scripts/BaseGeneradorTerreno.cs`
-- `prubea-posta/Scripts/ControladorNavegacion.cs`
 - `prubea-posta/Scripts/EfectoImpacto.cs`
 - `prubea-posta/Scripts/GestorAudio.cs`
+- `prubea-posta/Scripts/GestorViento.cs`
 - `prubea-posta/Scripts/IServicioAudio.cs`
 - `prubea-posta/Scripts/Importantes/Bala.cs`
 - `prubea-posta/Scripts/Importantes/CalculadorAlturaTerreno.cs`
@@ -238,46 +225,52 @@ Archivos donde el análisis encontró cada señal (sin número de línea, a prop
 - `prubea-posta/Scripts/Importantes/Player.cs`
 - `prubea-posta/Scripts/Importantes/Posicionador.cs`
 - `prubea-posta/Scripts/MenuPrincipal.cs`
+- `prubea-posta/Scripts/RenderVientoVisual.cs`
 - `prubea-posta/Scripts/TanqueApuntado.cs`
 
 **Herencia profunda (DIT) (herencia)** — 2 archivo(s):
 - `prubea-posta/Scripts/GeneradorTerreno.cs`
 - `prubea-posta/Scripts/Importantes/TerrenoAleatorio.cs`
 
-**Switch sobre tipos (OCP) (ocp)** — 4 archivo(s):
+**Switch sobre tipos (OCP) (ocp)** — 7 archivo(s):
 - `prubea-posta/Scripts/Importantes/Bala.cs`
+- `prubea-posta/Scripts/Importantes/GameManager.cs`
+- `prubea-posta/Scripts/Importantes/HUDManager.cs`
 - `prubea-posta/Scripts/Importantes/Player.cs`
 - `prubea-posta/Scripts/Importantes/Posicionador.cs`
 - `prubea-posta/Scripts/MenuPrincipal.cs`
+- `prubea-posta/Scripts/RenderVientoVisual.cs`
 
-**Dependencia de concretos y falta de abstracciones (DIP) (dip)** — 2 archivo(s):
+**Dependencia de concretos y falta de abstracciones (DIP) (dip)** — 3 archivo(s):
 - `prubea-posta/Scripts/BaseGeneradorTerreno.cs`
 - `prubea-posta/Scripts/Importantes/Posicionador.cs`
+- `prubea-posta/Scripts/RenderVientoVisual.cs`
 
 ## 5. Evolución por commit
 
-Métricas calculadas sobre el estado de `main` en **cada commit** (10 commits con trabajo), del primero al último. La calidad usa el perfil `exigente`; el aporte de código lo mide RepoSense. El índice puede **bajar** al crecer el proyecto: se acumulan señales.
+Métricas calculadas sobre el estado de `main` en **cada commit** (11 commits con trabajo), del primero al último. La calidad usa el perfil `exigente`; el aporte de código lo mide RepoSense. El índice puede **bajar** al crecer el proyecto: se acumulan señales.
 
 ```mermaid
 xychart-beta
     title "Índice POO/SOLID a lo largo de los commits"
-    x-axis ["ef6c398", "557cbaf", "044bd9e", "a5c4628", "ae54964", "2bbbdaf", "77ea52d", "e36c61b", "31af37f", "722d4ac"]
+    x-axis ["ef6c398", "557cbaf", "044bd9e", "a5c4628", "ae54964", "2bbbdaf", "77ea52d", "e36c61b", "31af37f", "722d4ac", "836bf74"]
     y-axis "Índice" 0 --> 100
-    line [0, 0, 8, 4, 6, 5, 6, 5, 5, 6]
+    line [0, 0, 9, 6, 8, 7, 7, 7, 6, 7, 6]
 ```
 
 | # | Fecha | Commit | Autor | LOC | Índice | %POO | Duplic. | Sueltas |
 |---|---|---|---|---:|---:|---:|---:|---:|
 | 1 | 2026-08-14 | `ef6c398` | antunez | 0 | 0 | 0% | 0.0% | 0 |
 | 2 | 2026-08-24 | `557cbaf` | dqmdz-etec | 0 | 0 | 0% | 0.0% | 0 |
-| 3 | 2026-09-07 | `044bd9e` | antunez | 394 | 8 | 98% | 0.0% | 0 |
-| 4 | 2026-10-09 | `a5c4628` | antunez | 670 | 4 | 98% | 21.7% | 0 |
-| 5 | 2026-10-09 | `ae54964` | xX-ApoloCool-Xx | 603 | 6 | 98% | 0.0% | 0 |
-| 6 | 2026-10-16 | `2bbbdaf` | xX-ApoloCool-Xx | 709 | 5 | 98% | 18.7% | 0 |
-| 7 | 2026-10-23 | `77ea52d` | xX-ApoloCool-Xx | 936 | 6 | 98% | 14.0% | 0 |
-| 8 | 2026-10-23 | `e36c61b` | xX-ApoloCool-Xx | 971 | 5 | 98% | 15.3% | 0 |
-| 9 | 2026-10-30 | `31af37f` | xX-ApoloCool-Xx | 992 | 5 | 98% | 15.0% | 0 |
-| 10 | 2026-10-30 | `722d4ac` | xX-ApoloCool-Xx | 979 | 6 | 98% | 1.7% | 0 |
+| 3 | 2026-09-07 | `044bd9e` | antunez | 394 | 9 | 98% | 0.0% | 0 |
+| 4 | 2026-10-09 | `a5c4628` | antunez | 670 | 6 | 98% | 21.7% | 0 |
+| 5 | 2026-10-09 | `ae54964` | xX-ApoloCool-Xx | 603 | 8 | 98% | 0.0% | 0 |
+| 6 | 2026-10-16 | `2bbbdaf` | xX-ApoloCool-Xx | 709 | 7 | 98% | 18.7% | 0 |
+| 7 | 2026-10-23 | `77ea52d` | xX-ApoloCool-Xx | 936 | 7 | 98% | 14.0% | 0 |
+| 8 | 2026-10-23 | `e36c61b` | xX-ApoloCool-Xx | 971 | 7 | 98% | 15.3% | 0 |
+| 9 | 2026-10-30 | `31af37f` | xX-ApoloCool-Xx | 992 | 6 | 98% | 15.0% | 0 |
+| 10 | 2026-10-30 | `722d4ac` | xX-ApoloCool-Xx | 979 | 7 | 98% | 1.7% | 0 |
+| 11 | 2026-10-30 | `836bf74` | antunez | 1,157 | 6 | 98% | 1.5% | 0 |
 
 ---
 _Informe generado por la cátedra. Los criterios y umbrales de medición corresponden al perfil `exigente` de `calidad.py`; el semáforo de aprobación, a `CRITERIOS-CALIDAD.md` (ver `README.md`). Ante dudas, revisá el archivo señalado._
