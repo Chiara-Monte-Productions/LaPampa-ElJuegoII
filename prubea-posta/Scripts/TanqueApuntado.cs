@@ -12,10 +12,7 @@ public partial class TanqueApuntado : Node2D
     [ExportGroup("Configuración de Espera")]
     [Export] public float TiempoEsperaNormal { get; set; } = 0.15f;
 
-    // Estado del turno manejado por Player
     public bool EsMiTurno { get; set; } = false;
-
-    // Cada instancia de este script mantiene sus propios valores guardados
     public float AnguloActual { get; private set; } = 45f;
     public float FuerzaActual { get; private set; } = 500f;
 
@@ -29,60 +26,55 @@ public partial class TanqueApuntado : Node2D
 
     public override void _Process(double delta)
     {
-        // SI NO ES EL TURNO DE ESTE TANQUE, NO SE PROCESA EL TECLADO
         if (!EsMiTurno) return;
 
         float dt = (float)delta;
-
-        _timerAngulo -= dt;
-        _timerFuerza -= dt;
+        ActualizarCooldowns(dt);
 
         bool modoRapido = Input.IsActionPressed("modo_rapido") || Input.IsKeyPressed(Key.Shift);
-
-        float pasoAngulo = modoRapido ? 1f : 1f;
-        float pasoFuerza = modoRapido ? 10f : 5f;
         float cooldownRequerido = modoRapido ? 0f : TiempoEsperaNormal;
 
-        // --- CONTROL DE ÁNGULO (0° a 180°) ---
+        ProcesarControlAngulo(modoRapido ? 1f : 1f, cooldownRequerido);
+        ProcesarControlFuerza(modoRapido ? 10f : 5f, cooldownRequerido);
+    }
+
+    private void ActualizarCooldowns(float dt)
+    {
+        _timerAngulo -= dt;
+        _timerFuerza -= dt;
+    }
+
+    private void ProcesarControlAngulo(float paso, float cooldown)
+    {
+        if (_timerAngulo > 0f) return;
+
         if (Input.IsActionPressed("ui_up") || Input.IsKeyPressed(Key.Up) || Input.IsKeyPressed(Key.W))
         {
-            if (_timerAngulo <= 0f)
-            {
-                AnguloActual += pasoAngulo;
-                if (AnguloActual > 180f) AnguloActual = 0f;
-
-                _timerAngulo = cooldownRequerido;
-                ActualizarVisuales();
-            }
+            AnguloActual = (AnguloActual + paso > 180f) ? 0f : AnguloActual + paso;
+            _timerAngulo = cooldown;
+            ActualizarVisuales();
         }
         else if (Input.IsActionPressed("ui_down") || Input.IsKeyPressed(Key.Down) || Input.IsKeyPressed(Key.S))
         {
-            if (_timerAngulo <= 0f)
-            {
-                AnguloActual -= pasoAngulo;
-                if (AnguloActual < 0f) AnguloActual = 180f;
-
-                _timerAngulo = cooldownRequerido;
-                ActualizarVisuales();
-            }
+            AnguloActual = (AnguloActual - paso < 0f) ? 180f : AnguloActual - paso;
+            _timerAngulo = cooldown;
+            ActualizarVisuales();
         }
+    }
 
-        // --- CONTROL DE FUERZA ---
+    private void ProcesarControlFuerza(float paso, float cooldown)
+    {
+        if (_timerFuerza > 0f) return;
+
         if (Input.IsActionPressed("ui_right") || Input.IsKeyPressed(Key.Right) || Input.IsKeyPressed(Key.D))
         {
-            if (_timerFuerza <= 0f)
-            {
-                FuerzaActual = Mathf.Clamp(FuerzaActual + pasoFuerza, FuerzaMinima, FuerzaMaxima);
-                _timerFuerza = cooldownRequerido;
-            }
+            FuerzaActual = Mathf.Clamp(FuerzaActual + paso, FuerzaMinima, FuerzaMaxima);
+            _timerFuerza = cooldown;
         }
         else if (Input.IsActionPressed("ui_left") || Input.IsKeyPressed(Key.Left) || Input.IsKeyPressed(Key.A))
         {
-            if (_timerFuerza <= 0f)
-            {
-                FuerzaActual = Mathf.Clamp(FuerzaActual - pasoFuerza, FuerzaMinima, FuerzaMaxima);
-                _timerFuerza = cooldownRequerido;
-            }
+            FuerzaActual = Mathf.Clamp(FuerzaActual - paso, FuerzaMinima, FuerzaMaxima);
+            _timerFuerza = cooldown;
         }
     }
 

@@ -2,20 +2,26 @@ using Godot;
 
 public partial class Posicionador : Node, PosicionTerreno
 {
-    // Godot no puede exportar interfaces, cambiamos a la clase concreta CalculadorAlturaTerreno
-    [Export] public CalculadorAlturaTerreno Terreno { get; set; }
+    [Export] public Node NodoTerreno { get; set; }
+
+    private PosicionTerreno ServicioTerreno => NodoTerreno as PosicionTerreno;
 
     public float ObtenerAlturaEnX(float x)
     {
-        return Terreno != null ? Terreno.ObtenerAlturaEnX(x) : 450f;
+        return ServicioTerreno != null ? ServicioTerreno.ObtenerAlturaEnX(x) : 450f;
     }
 
     public void AjustarObjetoAlPiso(Node2D objeto, float x)
     {
-        if (objeto == null) return;
+        if (objeto == null || !GodotObject.IsInstanceValid(objeto)) return;
 
-        var espacioFisico = objeto.GetTree().Root.World2D.DirectSpaceState;
-        
+        var espacioFisico = objeto.GetTree()?.Root?.World2D?.DirectSpaceState;
+        if (espacioFisico == null)
+        {
+            AjustarPorCalculoDirecto(objeto, x);
+            return;
+        }
+
         Vector2 desde = new Vector2(x, 0);
         Vector2 hasta = new Vector2(x, 2000);
 
@@ -29,14 +35,22 @@ public partial class Posicionador : Node, PosicionTerreno
 
         var resultado = espacioFisico.IntersectRay(parametrosRayo);
 
-        if (resultado.Count > 0)
+        if (resultado.Count > 0 && resultado.ContainsKey("position"))
         {
             Vector2 puntoImpacto = (Vector2)resultado["position"];
             objeto.GlobalPosition = new Vector2(puntoImpacto.X, puntoImpacto.Y - 20.0f);
         }
-        else if (Terreno != null)
+        else
         {
-            float y = Terreno.ObtenerAlturaEnX(x);
+            AjustarPorCalculoDirecto(objeto, x);
+        }
+    }
+
+    private void AjustarPorCalculoDirecto(Node2D objeto, float x)
+    {
+        if (ServicioTerreno != null)
+        {
+            float y = ServicioTerreno.ObtenerAlturaEnX(x);
             objeto.GlobalPosition = new Vector2(x, y - 20.0f);
         }
     }
