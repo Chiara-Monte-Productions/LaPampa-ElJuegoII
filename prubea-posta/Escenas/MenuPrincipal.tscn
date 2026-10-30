@@ -5,10 +5,12 @@
 [ext_resource type="Texture2D" uid="uid://dp7f7qtwvcykh" path="res://Menu/logo.png" id="3_pi62y"]
 [ext_resource type="Texture2D" uid="uid://bevxdhwgt48ea" path="res://Menu/Buttons/Jugar.png" id="3_shwl5"]
 [ext_resource type="Texture2D" uid="uid://dbh5cbxfy1bxf" path="res://Menu/Buttons/salir.png" id="4_gdyll"]
-[ext_resource type="Texture2D" uid="uid://c5g0g7gk32ow" path="res://Menu/Buttons/Jugar32.png" id="4_jmp4w"]
-[ext_resource type="Texture2D" uid="uid://b1np3dbak7usn" path="res://Menu/Buttons/salir32.png" id="6_vmlkd"]
+[ext_resource type="Script" uid="uid://cstcaen15v2q" path="res://Scripts/GestorAudio.cs" id="6_vmlkd"]
+[ext_resource type="AudioStream" uid="uid://bv44dmftsbwue" path="res://Musica/LapampaIntro.wav" id="7_1dxjv"]
+[ext_resource type="AudioStream" uid="uid://cxj1l6qh760s7" path="res://Musica/LapampaLOOP.wav" id="8_cq8l1"]
+[ext_resource type="AudioStream" uid="uid://bi0gsv0tx7lbv" path="res://SFX/Impacto(1).wav" id="9_1dxjv"]
 
-[node name="Control" type="Control" unique_id=508273805 node_paths=PackedStringArray("BotonJugar", "BotonSalir")]
+[node name="Control" type="Control" unique_id=508273805 node_paths=PackedStringArray("GestorAudioLocal", "BotonJugar", "BotonSalir")]
 layout_mode = 3
 anchor_left = 0.035
 anchor_top = 0.031000001
@@ -19,11 +21,11 @@ offset_top = 139.912
 offset_right = 260.8
 offset_bottom = 169.4
 script = ExtResource("1_0oe1n")
+GestorAudioLocal = NodePath("Node")
 BotonJugar = NodePath("TextureButton")
 BotonSalir = NodePath("TextureButton2")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1464747751]
-modulate = Color(1, 1, 1, 0.92156863)
 position = Vector2(231.00002, 71)
 scale = Vector2(1.4475001, 1.5383333)
 texture = ExtResource("2_5dpk2")
@@ -35,7 +37,6 @@ offset_top = 167.0
 offset_right = 343.0
 offset_bottom = 232.0
 texture_normal = ExtResource("3_shwl5")
-texture_hover = ExtResource("4_jmp4w")
 ignore_texture_size = true
 stretch_mode = 0
 
@@ -46,10 +47,15 @@ offset_top = 273.0
 offset_right = 342.0
 offset_bottom = 338.0
 texture_normal = ExtResource("4_gdyll")
-texture_hover = ExtResource("6_vmlkd")
 ignore_texture_size = true
 stretch_mode = 0
 
 [node name="Sprite2D2" type="Sprite2D" parent="." unique_id=218954682]
 position = Vector2(255, 52)
 texture = ExtResource("3_pi62y")
+
+[node name="Node" type="Node" parent="." unique_id=1388939214]
+script = ExtResource("6_vmlkd")
+MusicaMenuIntro = ExtResource("7_1dxjv")
+MusicaMenuLoop = ExtResource("8_cq8l1")
+SonidoDisparo = ExtResource("9_1dxjv")

@@ -1,9 +1,10 @@
 using Godot;
 
-public partial class GestorAudio : Node
+public partial class GestorAudio : Node, IServicioAudio
 {
-    [ExportGroup("Música de Menú")]
-    [Export] public AudioStream MusicaMenu { get; set; }
+    [ExportGroup("Música de Menú Principal")]
+    [Export] public AudioStream MusicaMenuIntro { get; set; }
+    [Export] public AudioStream MusicaMenuLoop { get; set; }
 
     [ExportGroup("Efectos de Sonido (SFX)")]
     [Export] public AudioStream SonidoDisparo { get; set; }
@@ -11,40 +12,72 @@ public partial class GestorAudio : Node
     [Export] public AudioStream SonidoImpactoTerreno { get; set; }
     [Export] public AudioStream SonidoImpactoJugador { get; set; }
 
-    private AudioStreamPlayer _reproductorMusica;
+    private AudioStreamPlayer _reproductorIntro;
+    private AudioStreamPlayer _reproductorLoop;
     private AudioStreamPlayer _reproductorVuelo;
 
     public override void _Ready()
     {
-        // Canal dedicado a la música de fondo en loop
-        _reproductorMusica = new AudioStreamPlayer { Bus = "Master" };
-        AddChild(_reproductorMusica);
+        // Registrar en el grupo local para que la Bala lo encuentre mediante IServicioAudio
+        AddToGroup("ServicioAudio");
 
-        // Canal dedicado a sonidos continuos/loops de la bala en vuelo
+        _reproductorIntro = new AudioStreamPlayer { Bus = "Master" };
+        _reproductorLoop = new AudioStreamPlayer { Bus = "Master" };
         _reproductorVuelo = new AudioStreamPlayer { Bus = "Master" };
+
+        AddChild(_reproductorIntro);
+        AddChild(_reproductorLoop);
         AddChild(_reproductorVuelo);
+
+        _reproductorIntro.Finished += OnIntroFinalizada;
+        _reproductorLoop.Finished += OnLoopFinalizado;
     }
 
-    // --- MÚSICA DE MENÚ (MP3 EN LOOP) ---
+    // --- MÚSICA DE MENÚ ---
     public void ReproducirMusicaMenu()
     {
-        if (MusicaMenu == null) return;
+        DetenerMusicaMenu();
 
-        _reproductorMusica.Stream = MusicaMenu;
-        _reproductorMusica.Play();
+        if (MusicaMenuIntro != null)
+        {
+            _reproductorIntro.Stream = MusicaMenuIntro;
+            _reproductorIntro.Play();
+        }
+        else if (MusicaMenuLoop != null)
+        {
+            IniciarLoop();
+        }
+    }
+
+    private void OnIntroFinalizada() => IniciarLoop();
+
+    private void IniciarLoop()
+    {
+        if (MusicaMenuLoop == null) return;
+        _reproductorLoop.Stream = MusicaMenuLoop;
+        _reproductorLoop.Play();
+    }
+
+    private void OnLoopFinalizado()
+    {
+        if (MusicaMenuLoop != null) _reproductorLoop.Play();
     }
 
     public void DetenerMusicaMenu()
     {
-        _reproductorMusica.Stop();
+        if (_reproductorIntro.Playing) _reproductorIntro.Stop();
+        if (_reproductorLoop.Playing) _reproductorLoop.Stop();
     }
 
-    // --- EFECTOS DE SONIDO DE LA BALA Y JUEGO ---
+    // --- EFECTOS DE SONIDO (SFX) ---
+
+    // El disparo suena en un reproductor temporal independiente para que NO se corte
     public void ReproducirDisparo()
     {
         ReproducirEfectoPuntual(SonidoDisparo);
     }
 
+    // El sonido de vuelo suena en un canal persistente que se interrumpe al impactar
     public void IniciarSonidoVuelo()
     {
         if (SonidoVueloBala == null) return;
@@ -54,9 +87,13 @@ public partial class GestorAudio : Node
 
     public void DetenerSonidoVuelo()
     {
-        _reproductorVuelo.Stop();
+        if (_reproductorVuelo.Playing)
+        {
+            _reproductorVuelo.Stop();
+        }
     }
 
+    // Cortan el vuelo e inician el impacto en un reproductor puntual
     public void ReproducirImpactoTerreno()
     {
         DetenerSonidoVuelo();
@@ -69,7 +106,7 @@ public partial class GestorAudio : Node
         ReproducirEfectoPuntual(SonidoImpactoJugador);
     }
 
-    // Método privado auxiliar para instanciar SFX independientes (evita corte entre sonidos)
+    // Método auxiliar para canales de audio independientes
     private void ReproducirEfectoPuntual(AudioStream stream)
     {
         if (stream == null) return;
@@ -79,11 +116,11 @@ public partial class GestorAudio : Node
             Stream = stream,
             Bus = "Master"
         };
-        
+
         AddChild(reproductorEfecto);
         reproductorEfecto.Play();
 
-        // Autodestruir el nodo AudioStreamPlayer al finalizar el sonido
+        // Autodestrucción del reproductor cuando el clip finaliza
         reproductorEfecto.Finished += reproductorEfecto.QueueFree;
     }
 }
