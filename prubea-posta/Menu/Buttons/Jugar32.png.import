@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxg0ui3cietdt"
-path="res://.godot/imported/back.bmp-bd60142ee715190cdb2ee59cfdde81b4.ctex"
+uid="uid://dafnq7p6j88iu"
+path="res://.godot/imported/Jugar32.png-b7be9b08429ff07570e1a12c1425b5bb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Menu/back.bmp"
-dest_files=["res://.godot/imported/back.bmp-bd60142ee715190cdb2ee59cfdde81b4.ctex"]
+source_file="res://Menu/Buttons/Jugar32.png"
+dest_files=["res://.godot/imported/Jugar32.png-b7be9b08429ff07570e1a12c1425b5bb.ctex"]
 
 [params]
 

@@ -70,6 +70,12 @@ public partial class GameManager : Node
             return;
         }
 
+        // Variación leve de viento al iniciar cada turno de disparo
+        if (GetTree().GetFirstNodeInGroup("ServicioViento") is IServicioViento viento)
+        {
+            viento.VariarVientoTurno();
+        }
+
         ActualizarEstadoTurnoJugadores();
         ActualizarHUDInicioTurno(jugadorActivo);
     }

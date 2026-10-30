@@ -8,6 +8,7 @@ public partial class Bala : Area2D
     [Export] public PackedScene EscenaEfectoImpacto { get; set; }
 
     public ServicioAudio ServicioAudio { get; set; }
+    public IServicioViento ServicioViento { get; set; }
 
     [Export] 
     public Godot.Collections.Array<Color> PaletaColores { get; set; } = new()
@@ -36,6 +37,14 @@ public partial class Bala : Area2D
             if (GetTree().GetFirstNodeInGroup("ServicioAudio") is ServicioAudio servicio)
             {
                 ServicioAudio = servicio;
+            }
+        }
+
+        if (ServicioViento == null)
+        {
+            if (GetTree().GetFirstNodeInGroup("ServicioViento") is IServicioViento viento)
+            {
+                ServicioViento = viento;
             }
         }
 
@@ -72,7 +81,14 @@ public partial class Bala : Area2D
         float dt = (float)delta;
         _tiempoEnAire += dt;
 
+        // Aplica la gravedad vertical y la aceleración horizontal del viento
         _velocidadVector.Y += Gravedad * dt;
+
+        if (ServicioViento != null)
+        {
+            _velocidadVector += ServicioViento.FuerzaVientoActual * dt;
+        }
+
         Position += _velocidadVector * dt;
         Rotation = _velocidadVector.Angle();
 
