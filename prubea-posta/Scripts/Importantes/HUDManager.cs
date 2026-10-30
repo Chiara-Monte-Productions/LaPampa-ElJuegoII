@@ -11,8 +11,22 @@ public partial class HUDManager : Node
     [Export] public Label LabelFuerza { get; set; }
     [Export] public Label LabelEstado { get; set; }
 
+    // --- NUEVO: Referencia a la etiqueta del viento ---
+    [Export] public Label LabelViento { get; set; }
+
     [Export] public Color ColorJugadorActivo { get; set; } = Colors.Yellow;
     [Export] public Color ColorJugadorInactivo { get; set; } = Colors.Gray;
+
+    private IServicioViento _servicioViento;
+
+    public override void _Ready()
+    {
+        // Buscar el servicio de viento de forma desacoplada
+        if (GetTree().GetFirstNodeInGroup("ServicioViento") is IServicioViento viento)
+        {
+            _servicioViento = viento;
+        }
+    }
 
     public void ActualizarMarcador(int puntosJ1, int puntosJ2)
     {
@@ -25,6 +39,7 @@ public partial class HUDManager : Node
         ActualizarEtiquetaTurno(turnoActual);
         ActualizarColoresNombres(turnoActual);
         ActualizarDatosJugadorActivo(jugadorActivo);
+        ActualizarVientoVisual();
     }
 
     private void ActualizarEtiquetaTurno(int turnoActual)
@@ -47,6 +62,29 @@ public partial class HUDManager : Node
 
         if (LabelAngulo != null) LabelAngulo.Text = $"{Mathf.Round(jugadorActivo.ObtenerAngulo())}°";
         if (LabelFuerza != null) LabelFuerza.Text = $"{Mathf.Round(jugadorActivo.FuerzaDisparo)}";
+    }
+
+    // --- NUEVO: Método para formatear el viento ---
+    private void ActualizarVientoVisual()
+    {
+        if (LabelViento == null) return;
+
+        if (_servicioViento == null)
+        {
+            if (GetTree().GetFirstNodeInGroup("ServicioViento") is IServicioViento viento)
+            {
+                _servicioViento = viento;
+            }
+        }
+
+        if (_servicioViento != null)
+        {
+            float fuerzaX = _servicioViento.FuerzaVientoActual.X;
+            float magnitud = Mathf.Abs(fuerzaX);
+            string flecha = fuerzaX >= 0 ? ">" : "<";
+
+            LabelViento.Text = $"viento: {Mathf.Round(magnitud)} {flecha}";
+        }
     }
 
     public void ActualizarEstado(string mensaje)

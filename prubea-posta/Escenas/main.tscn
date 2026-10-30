@@ -24,6 +24,8 @@
 [ext_resource type="AudioStream" uid="uid://3gstkum1cc0f" path="res://SFX/Disparo.wav" id="21_xgh3l"]
 [ext_resource type="AudioStream" uid="uid://bi0gsv0tx7lbv" path="res://SFX/Impacto(1).wav" id="22_xgh3l"]
 [ext_resource type="AudioStream" uid="uid://ca3tduce4tg3n" path="res://SFX/ImpactoJugador.wav" id="24_eyox0"]
+[ext_resource type="Script" uid="uid://djiyqet7bvq53" path="res://Scripts/GestorViento.cs" id="25_8qua0"]
+[ext_resource type="Script" uid="uid://boduytwpq4bww" path="res://Scripts/RenderVientoVisual.cs" id="26_gy4cw"]
 
 [sub_resource type="Gradient" id="Gradient_4yntb"]
 
@@ -59,6 +61,14 @@ outline_color = Color(0, 0, 0, 1)
 font_size = 26
 outline_size = 9
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7n3fc"]
+font_size = 24
+font_color = Color(1, 0, 0, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
+shadow_color = Color(0, 0, 0, 0.13725491)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wwtk3"]
 size = Vector2(4395, 83)
@@ -111,7 +121,7 @@ position = Vector2(153, 204)
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1868905685]
 anchor_mode = 0
 
-[node name="HUD" type="CanvasLayer" parent="." unique_id=773271717 node_paths=PackedStringArray("LabelNombreJ1", "LabelNombreJ2", "LabelPuntajeJ1", "LabelPuntajeJ2", "LabelAngulo", "LabelFuerza")]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=773271717 node_paths=PackedStringArray("LabelNombreJ1", "LabelNombreJ2", "LabelPuntajeJ1", "LabelPuntajeJ2", "LabelAngulo", "LabelFuerza", "LabelViento")]
 offset = Vector2(1, 0)
 transform = Transform2D(1, 0, 0, 1, 1, 0)
 script = ExtResource("5_272bh")
@@ -121,6 +131,7 @@ LabelPuntajeJ1 = NodePath("puntajej1")
 LabelPuntajeJ2 = NodePath("puntajej2")
 LabelAngulo = NodePath("Angulo")
 LabelFuerza = NodePath("Fuerzza")
+LabelViento = NodePath("Viento")
 ColorJugadorActivo = Color(0.96, 0, 0.015999755, 1)
 ColorJugadorInactivo = Color(1, 1, 1, 1)
 
@@ -183,6 +194,16 @@ offset_bottom = 63.0
 text = "0"
 label_settings = SubResource("LabelSettings_kek77")
 
+[node name="Viento" type="Label" parent="HUD" unique_id=856177517]
+anchors_preset = -1
+anchor_right = 0.035
+offset_left = 52.0
+offset_top = 83.0
+offset_right = 108.68
+offset_bottom = 127.0
+text = "Viento"
+label_settings = SubResource("LabelSettings_7n3fc")
+
 [node name="Piso" type="StaticBody2D" parent="." unique_id=731279113 node_paths=PackedStringArray("PoligonoVisual", "PoligonoColision", "LineaSuperficie")]
 modulate = Color(1, 1, 1, 0.9098039)
 light_mask = 9
@@ -204,16 +225,26 @@ shape = SubResource("RectangleShape2D_wwtk3")
 
 [node name="Line2D" type="Line2D" parent="Piso/Polygon2D" unique_id=46804601]
 
-[node name="Node" type="Node" parent="Piso" unique_id=1285662308 node_paths=PackedStringArray("Terreno")]
+[node name="CalculadorAlturaTerreno" type="Node" parent="Piso" unique_id=1285662308 node_paths=PackedStringArray("Terreno")]
 script = ExtResource("14_7ndum")
 Terreno = NodePath("..")
 
 [node name="ControladorNavegacion" type="Node" parent="." unique_id=1177852346]
 script = ExtResource("19_y8e5y")
 
-[node name="Node" type="Node" parent="." unique_id=1038047470]
+[node name="MusicManager" type="Node" parent="." unique_id=1038047470]
 script = ExtResource("20_le4xx")
 SonidoDisparo = ExtResource("21_xgh3l")
 SonidoVueloBala = ExtResource("21_a165e")
 SonidoImpactoTerreno = ExtResource("22_xgh3l")
 SonidoImpactoJugador = ExtResource("24_eyox0")
+
+[node name="Node" type="Node" parent="." unique_id=1962449498]
+script = ExtResource("25_8qua0")
+FuerzaMaximaRonda = 600.0
+FuerzaMinimaRonda = 100.0
+VariacionMaximaTurno = 50.0
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1171725370]
+script = ExtResource("26_gy4cw")
+ColorViento = Color(1, 1, 1, 0.54901963)
