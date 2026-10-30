@@ -3,7 +3,7 @@ using Godot;
 public partial class MenuPrincipal : Control
 {
     [ExportGroup("Componentes de Audio")]
-    [Export] public GestorAudio GestorAudioLocal { get; set; }
+    [Export] public Node GestorAudioNodo { get; set; }
 
     [ExportGroup("Botones del Menú")]
     [Export] public TextureButton BotonJugar { get; set; }
@@ -13,17 +13,21 @@ public partial class MenuPrincipal : Control
     [Export(PropertyHint.File, "*.tscn")] 
     public string RutaEscenaJuego { get; set; } = "res://Escenas/main.tscn";
 
+    private ServicioAudio _servicioAudio;
+
     public override void _Ready()
     {
-        // 1. Inicializar servicio de audio local
-        if (GestorAudioLocal == null)
+        if (GestorAudioNodo is ServicioAudio servicio)
         {
-            GestorAudioLocal = GetNodeOrNull<GestorAudio>("GestorAudio");
+            _servicioAudio = servicio;
+        }
+        else
+        {
+            _servicioAudio = GetNodeOrNull<ServicioAudio>("GestorAudio");
         }
 
-        GestorAudioLocal?.ReproducirMusicaMenu();
+        (_servicioAudio as GestorAudio)?.ReproducirMusicaMenu();
 
-        // 2. Conectar eventos de la interfaz
         if (BotonJugar != null)
         {
             BotonJugar.Pressed += OnBotonJugarPressed;
@@ -38,10 +42,7 @@ public partial class MenuPrincipal : Control
     private void OnBotonJugarPressed()
     {
         GD.Print("Cargando el nivel principal...");
-        
-        // Detiene la música del menú antes de cambiar de escena
-        GestorAudioLocal?.DetenerMusicaMenu();
-
+        (_servicioAudio as GestorAudio)?.DetenerMusicaMenu();
         GetTree().ChangeSceneToFile(RutaEscenaJuego);
     }
 

@@ -19,7 +19,6 @@ public partial class Player : CharacterBody2D, Angulo, DanoProyectil
         set
         {
             _esMiTurno = value;
-            // Sincroniza el estado del turno con el componente de apuntado
             if (ComponenteApuntado != null)
             {
                 ComponenteApuntado.EsMiTurno = value;
@@ -27,7 +26,7 @@ public partial class Player : CharacterBody2D, Angulo, DanoProyectil
         }
     }
 
-    // --- IMPLEMENTACIÓN DE LA INTERFAZ 'Angulo' ---
+    // --- IMPLEMENTACIÓN DE INTERFAZ Angulo ---
 
     public float ObtenerAngulo()
     {
@@ -39,11 +38,10 @@ public partial class Player : CharacterBody2D, Angulo, DanoProyectil
         get => ComponenteApuntado != null ? ComponenteApuntado.FuerzaActual : 0f;
     }
 
-    // ----------------------------------------------
+    // ----------------------------------------
 
     public override void _Ready()
     {
-        // Aseguramos sincronización inicial al instanciar el objeto
         if (ComponenteApuntado != null)
         {
             ComponenteApuntado.EsMiTurno = EsMiTurno;
@@ -52,7 +50,7 @@ public partial class Player : CharacterBody2D, Angulo, DanoProyectil
 
     public override void _Process(double delta)
     {
-        if (!EsMiTurno) return;
+        if (!_esMiTurno) return;
 
         if (Input.IsActionJustPressed("ui_accept"))
         {
@@ -64,28 +62,34 @@ public partial class Player : CharacterBody2D, Angulo, DanoProyectil
     {
         if (EscenaBala == null || ComponenteApuntado == null) return;
 
-        Vector2 posOrigen = ComponenteApuntado.PivoteCanon != null 
-            ? ComponenteApuntado.PivoteCanon.GlobalPosition 
-            : GlobalPosition;
-
-        float rotOrigen = ComponenteApuntado.PivoteCanon != null 
-            ? ComponenteApuntado.PivoteCanon.GlobalRotation 
-            : GlobalRotation;
-
-        Node instancia = EscenaBala.Instantiate();
-
-        if (instancia is Bala bala)
+        if (EscenaBala.Instantiate() is Bala bala)
         {
-            bala.GlobalPosition = posOrigen;
-            bala.GlobalRotation = rotOrigen;
+            bala.GlobalPosition = ObtenerPosicionOrigenDisparo();
+            bala.GlobalRotation = ObtenerRotacionOrigenDisparo();
             bala.Inicializar(FuerzaDisparo);
 
             GetParent().AddChild(bala);
 
-            EsMiTurno = false; // Al quitar el turno se deshabilita la entrada del componente
+            EsMiTurno = false;
             EmitSignal(SignalName.DisparoRealizado, bala);
         }
     }
+
+    private Vector2 ObtenerPosicionOrigenDisparo()
+    {
+        return ComponenteApuntado.PivoteCanon != null 
+            ? ComponenteApuntado.PivoteCanon.GlobalPosition 
+            : GlobalPosition;
+    }
+
+    private float ObtenerRotacionOrigenDisparo()
+    {
+        return ComponenteApuntado.PivoteCanon != null 
+            ? ComponenteApuntado.PivoteCanon.GlobalRotation 
+            : GlobalRotation;
+    }
+
+    // --- IMPLEMENTACIÓN DE INTERFAZ DanoProyectil ---
 
     public void Destruir()
     {

@@ -7,8 +7,7 @@ public partial class Bala : Area2D
     [Export] public float AnchoRastro { get; set; } = 2.0f;
     [Export] public PackedScene EscenaEfectoImpacto { get; set; }
 
-    // Abstracción inyectada o resuelta localmente (DIP)
-    public IServicioAudio ServicioAudio { get; set; }
+    public ServicioAudio ServicioAudio { get; set; }
 
     [Export] 
     public Godot.Collections.Array<Color> PaletaColores { get; set; } = new()
@@ -32,27 +31,19 @@ public partial class Bala : Area2D
         BodyEntered += OnBodyEntered;
         GetTree().CreateTimer(TiempoDeVida).Timeout += OnTiempoExpirado;
 
-        // Resolución del servicio en el árbol de la escena local si no fue inyectado
         if (ServicioAudio == null)
         {
-            ServicioAudio = GetTree().GetFirstNodeInGroup("ServicioAudio") as IServicioAudio;
+            if (GetTree().GetFirstNodeInGroup("ServicioAudio") is ServicioAudio servicio)
+            {
+                ServicioAudio = servicio;
+            }
         }
 
-        // Notificación de eventos de ciclo de vida
         ServicioAudio?.ReproducirDisparo();
         ServicioAudio?.IniciarSonidoVuelo();
 
         ElegirColorAleatorio();
-
-        _lineaRastro = new Line2D
-        {
-            Width = AnchoRastro,
-            DefaultColor = _colorSeleccionado,
-            TopLevel = true
-        };
-        
-        GetParent()?.CallDeferred("add_child", _lineaRastro);
-        _lineaRastro.AddPoint(GlobalPosition);
+        InicializarRastroVisual();
     }
 
     private void ElegirColorAleatorio()
@@ -62,6 +53,18 @@ public partial class Bala : Area2D
             int indice = GD.RandRange(0, PaletaColores.Count - 1);
             _colorSeleccionado = PaletaColores[indice];
         }
+    }
+
+    private void InicializarRastroVisual()
+    {
+        _lineaRastro = new Line2D
+        {
+            Width = AnchoRastro,
+            DefaultColor = _colorSeleccionado,
+            TopLevel = true
+        };
+        GetParent()?.CallDeferred("add_child", _lineaRastro);
+        _lineaRastro.AddPoint(GlobalPosition);
     }
 
     public override void _Process(double delta)
@@ -81,15 +84,17 @@ public partial class Bala : Area2D
 
     private void OnBodyEntered(Node2D body)
     {
-        if (body is DanoProyectil && _tiempoEnAire < 0.1f) return;
+        var objetivoDañable = body as DanoProyectil;
+
+        // Evita autocolisión con el tirador en el instante inicial
+        if (objetivoDañable != null && _tiempoEnAire < 0.1f) return;
 
         GenerarEfectoImpacto(GlobalPosition);
 
-        if (body is DanoProyectil entidadDestruible)
+        if (objetivoDañable != null)
         {
             ServicioAudio?.ReproducirImpactoJugador();
-            GD.Print("¡Objetivo destruido!");
-            entidadDestruible.Destruir();
+            objetivoDañable.Destruir();
         }
         else
         {
@@ -109,13 +114,11 @@ public partial class Bala : Area2D
     {
         EfectoImpacto efecto = null;
 
-        if (EscenaEfectoImpacto != null)
+        if (EscenaEfectoImpacto != null && EscenaEfectoImpacto.Instantiate() is EfectoImpacto e)
         {
-            Node instancia = EscenaEfectoImpacto.Instantiate();
-            if (instancia is EfectoImpacto e) efecto = e;
+            efecto = e;
         }
-
-        if (efecto == null)
+        else
         {
             efecto = new EfectoImpacto();
         }
@@ -124,6 +127,4 @@ public partial class Bala : Area2D
         GetParent().AddChild(efecto);
         efecto.CrearEfecto(_lineaRastro, puntoImpacto);
     }
-
-    
 }

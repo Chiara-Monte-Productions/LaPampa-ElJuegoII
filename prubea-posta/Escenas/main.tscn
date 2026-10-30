@@ -71,9 +71,8 @@ script = ExtResource("2_5vw27")
 NodoFondo = NodePath("../fondo")
 TexturasFondo = Array[Texture2D]([ExtResource("3_i4rd6"), ExtResource("4_7ndum"), ExtResource("5_c7rjx"), ExtResource("6_3pd83"), ExtResource("7_c8ola")])
 
-[node name="Posicionador" type="Node" parent="." unique_id=1657357469 node_paths=PackedStringArray("Terreno")]
+[node name="Posicionador" type="Node" parent="." unique_id=1657357469]
 script = ExtResource("7_5vw27")
-Terreno = NodePath("../Piso/Node")
 
 [node name="GameManager" type="Node2D" parent="." unique_id=1739410839 node_paths=PackedStringArray("Jugador1", "Jugador2", "HUD", "PosicionadorTerreno", "ServicioFondo")]
 script = ExtResource("4_1bvp3")

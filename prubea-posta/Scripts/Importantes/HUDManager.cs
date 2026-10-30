@@ -22,20 +22,31 @@ public partial class HUDManager : Node
 
     public void ActualizarTurnoVisual(int turnoActual, Angulo jugadorActivo)
     {
-        if (LabelTurno != null) LabelTurno.Text = $"{turnoActual}";
+        ActualizarEtiquetaTurno(turnoActual);
+        ActualizarColoresNombres(turnoActual);
+        ActualizarDatosJugadorActivo(jugadorActivo);
+    }
 
+    private void ActualizarEtiquetaTurno(int turnoActual)
+    {
+        if (LabelTurno != null) LabelTurno.Text = $"{turnoActual}";
+    }
+
+    private void ActualizarColoresNombres(int turnoActual)
+    {
         if (LabelNombreJ1 != null)
             LabelNombreJ1.SelfModulate = (turnoActual == 1) ? ColorJugadorActivo : ColorJugadorInactivo;
 
         if (LabelNombreJ2 != null)
             LabelNombreJ2.SelfModulate = (turnoActual == 2) ? ColorJugadorActivo : ColorJugadorInactivo;
+    }
 
-        // Cumple LSP: Depende únicamente de la interfaz Angulo recibida por parámetro
-        if (jugadorActivo != null)
-        {
-            if (LabelAngulo != null) LabelAngulo.Text = $"{Mathf.Round(jugadorActivo.ObtenerAngulo())}°";
-            if (LabelFuerza != null) LabelFuerza.Text = $"{Mathf.Round(jugadorActivo.FuerzaDisparo)}";
-        }
+    private void ActualizarDatosJugadorActivo(Angulo jugadorActivo)
+    {
+        if (jugadorActivo == null) return;
+
+        if (LabelAngulo != null) LabelAngulo.Text = $"{Mathf.Round(jugadorActivo.ObtenerAngulo())}°";
+        if (LabelFuerza != null) LabelFuerza.Text = $"{Mathf.Round(jugadorActivo.FuerzaDisparo)}";
     }
 
     public void ActualizarEstado(string mensaje)
