@@ -3,7 +3,7 @@
 
 > Documento **generado automáticamente** por la cátedra de Programación II (RepoSense + análisis de calidad POO/SOLID). **No editar a mano**: se regenera en cada evaluación.
 > Rama evaluada: `main`. Análisis **heurístico** (regex + métricas): es una criba para orientar la revisión, **no una nota**.
-> Generado: 2026-10-25.
+> Generado: 2026-10-29.
 
 ## 1. Veredicto
 
@@ -45,7 +45,7 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 |---|---|---|---|
 | Código dentro de clases (%POO) | ≥ 95% | 98% | sí |
 | Duplicación lógica | ≤ 5% | 15.3% | no |
-| Funciones fuera de clases | ≤ 0 | 0 | sí |
+| Funciones fuera de clases | ≤ 1 | 0 | sí |
 | Señales POO/SOLID críticas | ninguna | Clase demasiado grande (SRP), Baja cohesión (LCOM), Complejidad alta, Acoplamiento alto (CBO), Switch sobre tipos (OCP), Override vacío / 'no implementado' (LSP) | no |
 | Índice de calidad POO/SOLID | ≥ 60 | 5/100 | no |
 
