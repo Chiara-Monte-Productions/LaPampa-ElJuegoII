@@ -3,7 +3,7 @@
 
 > Documento **generado automáticamente** por la cátedra de Programación II (RepoSense + análisis de calidad POO/SOLID). **No editar a mano**: se regenera en cada evaluación.
 > Rama evaluada: `main`. Análisis **heurístico** (regex + métricas): es una criba para orientar la revisión, **no una nota**.
-> Generado: 2026-10-30.
+> Generado: 2026-11-01.
 
 ## 1. Veredicto
 
@@ -13,7 +13,7 @@
 | Código (LOC) | 1,157 |
 | Archivos de código | 24 |
 | Clases (bien usadas) | 24 (5 OK) |
-| Código dentro de clases (%POO) | 98% |
+| Código dentro de clases (%POO) | 100% |
 | Funciones fuera de clases | 0 |
 | Duplicación lógica | 1.5% |
 | Señales S/O/L/I/D | 4/7/0/0/3 |
@@ -33,7 +33,7 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 
 | Criterio | Requisito | Tu resultado | Cumple |
 |---|---|---|---|
-| Código dentro de clases (%POO) | ≥ 85% | 98% | sí |
+| Código dentro de clases (%POO) | ≥ 85% | 100% | sí |
 | Duplicación lógica | ≤ 10% | 1.5% | sí |
 | Funciones fuera de clases | ≤ 1 | 0 | sí |
 | Señales POO/SOLID críticas | ninguna | Acoplamiento alto (CBO), Switch sobre tipos (OCP) | no |
@@ -42,11 +42,19 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 
 | Criterio | Requisito | Tu resultado | Cumple |
 |---|---|---|---|
-| Código dentro de clases (%POO) | ≥ 95% | 98% | sí |
+| Código dentro de clases (%POO) | ≥ 95% | 100% | sí |
 | Duplicación lógica | ≤ 5% | 1.5% | sí |
 | Funciones fuera de clases | ≤ 1 | 0 | sí |
 | Señales POO/SOLID críticas | ninguna | Clase demasiado grande (SRP), Baja cohesión (LCOM), Acoplamiento alto (CBO), Switch sobre tipos (OCP) | no |
 | Índice de calidad POO/SOLID | ≥ 60 | 6/100 | no |
+
+### Cómo se calcula el %POO (y por qué no sube solo)
+
+`%POO = líneas de lógica dentro de clases ÷ líneas de lógica totales`.
+
+Se cuentan las líneas de **lógica y campos**; no cuentan `package`/`import`/`using`/anotaciones ni comentarios, Javadoc o docstrings. Es una **proporción**: si agregás código nuevo dentro de una clase, el numerador y el denominador crecen juntos y el porcentaje casi no cambia.
+
+Sube cuando el código que hoy está **fuera** de clases pasa a ser método de una clase (o desaparece): funciones sueltas, `main`, constantes de módulo, scripts y lógica de archivos sueltos. También importa que ese trabajo esté **integrado en `main`**: la evaluación siempre mide `main`, así que lo que sigue en otra rama no se refleja todavía.
 
 ## 2. Autoría (RepoSense)
 
@@ -57,7 +65,19 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 
 > _El LOC de autoría lo calcula RepoSense sobre el historial y puede diferir del LOC de código del análisis de calidad (que mira solo el estado de `main`)._
 
-## 3. Aspectos evaluados
+## 3. Fallas detectadas
+
+Reúne lo que el análisis marcó y lo que todavía falta para cada semáforo. Cuando la señal se puede asociar a archivos, se indican para orientar la revisión. No es una nota.
+
+| Falla | Tu resultado | Requisito | Archivos |
+|---|---|---|---|
+| Señales POO/SOLID críticas | Acoplamiento alto (CBO), Switch sobre tipos (OCP) | Aprobar: ninguna<br>Destacar: ninguna | `prubea-posta/Scripts/BaseGeneradorTerreno.cs`, `prubea-posta/Scripts/EfectoImpacto.cs`, `prubea-posta/Scripts/GestorAudio.cs`, `prubea-posta/Scripts/GestorViento.cs`, `prubea-posta/Scripts/IServicioAudio.cs`, `prubea-posta/Scripts/Importantes/Bala.cs` (+9 más) |
+| Índice de calidad POO/SOLID | 6/100 | Destacar: ≥ 60 | — |
+| Métodos/funciones largos o con muchos parámetros | **1** método(s)/función(es) largos o con muchos parámetros | Sin señales | `prubea-posta/Scripts/Importantes/GestorFondo.cs` |
+| Herencia profunda (DIT) | **2** clase(s) con herencia profunda | Sin señales | `prubea-posta/Scripts/GeneradorTerreno.cs`, `prubea-posta/Scripts/Importantes/TerrenoAleatorio.cs` |
+| Dependencia de concretos y falta de abstracciones (DIP) | **3** dependencia(s) de concretos sin abstracciones | Sin señales | `prubea-posta/Scripts/BaseGeneradorTerreno.cs`, `prubea-posta/Scripts/Importantes/Posicionador.cs`, `prubea-posta/Scripts/RenderVientoVisual.cs` |
+
+## 4. Aspectos evaluados
 
 Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuando el análisis reportó una señal, se agregan preguntas para **investigar la causa** (no hay recetas: entender el porqué es parte de la evaluación).
 
@@ -67,21 +87,18 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 - **Por qué importa:** Ordena y prioriza la revisión: un índice bajo indica varias señales que conviene mirar juntas.
 - **Tu resultado:** índice **6/100**
 
-### 2. Duplicación lógica (DRY) (duplicacion) — con señales
+### 2. Duplicación lógica (DRY) (duplicacion) — sin señales
 
 - **Qué mide:** Porcentaje de bloques de LÓGICA repetidos. Quedan fuera imports/includes, anotaciones, declaraciones de campos y comentarios/Javadoc/docstrings: esos bloques son boilerplate, no lógica.
 - **Por qué importa:** Cada copia de lógica se mantiene por separado: un arreglo hay que repetirlo y los defectos se multiplican.
 - **Tu resultado:** **1.5%** de duplicación lógica
-- **Para investigar la causa:**
-    - ¿El trabajo se repartió por pantallas o archivos y se integró copiando y pegando bloques?
-    - ¿Qué zonas del sistema cambiaron juntas más de una vez (señal de lógica compartida)?
-    - ¿Hubo un lugar común acordado para la lógica repetida antes de empezar, o cada integrante resolvió lo suyo?
 
 ### 3. Adopción de POO (% de código en clases) (poo) — sin señales
 
-- **Qué mide:** Qué porción del código vive dentro de clases (no de funciones sueltas).
+- **Qué mide:** Proporción de las **líneas de lógica** que viven dentro de una clase. Quedan fuera `package`/`import`/`using`/anotaciones y comentarios/Javadoc/docstrings: no son código que pueda estar dentro de una clase y, si contaran, el porcentaje quedaría topado por el boilerplate de cada archivo.
 - **Por qué importa:** El diseño orientado a objetos es el eje de la materia: el comportamiento debería vivir como método de una clase.
-- **Tu resultado:** **98.1%** del código dentro de clases
+- **Tu resultado:** **100.0%** del código dentro de clases
+- **Cómo leerlo:** Es una **proporción**, no un acumulado: agregar código dentro de una clase no la sube por sí solo (numerador y denominador crecen juntos). Sube cuando el código que está **fuera** de clases (funciones sueltas, `main`, constantes de módulo, scripts) pasa a ser método de una clase o deja de existir. La medición se hace sobre `main`: el trabajo que todavía vive en otra rama no se refleja hasta que se integra.
 
 ### 4. Funciones fuera de clases (sueltas) — sin señales
 
@@ -195,57 +212,6 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 - **Por qué importa:** Es comportamiento procedural disfrazado de clase: no se instancia ni participa del modelo de objetos.
 - **Tu resultado:** **0** clase(s) solo con métodos estáticos
 
-## 4. Anexo: dónde mirar
-
-Archivos donde el análisis encontró cada señal (sin número de línea, a propósito):
-
-**Clase demasiado grande (SRP) (god)** — 3 archivo(s):
-- `prubea-posta/Scripts/BaseGeneradorTerreno.cs`
-- `prubea-posta/Scripts/GestorAudio.cs`
-- `prubea-posta/Scripts/Importantes/GameManager.cs`
-
-**Baja cohesión (LCOM) (cohesion)** — 2 archivo(s):
-- `prubea-posta/Scripts/GestorAudio.cs`
-- `prubea-posta/Scripts/Importantes/Bala.cs`
-
-**Métodos/funciones largos o con muchos parámetros (tamano)** — 1 archivo(s):
-- `prubea-posta/Scripts/Importantes/GestorFondo.cs`
-
-**Acoplamiento alto (CBO) (acoplamiento)** — 15 archivo(s):
-- `prubea-posta/Scripts/BaseGeneradorTerreno.cs`
-- `prubea-posta/Scripts/EfectoImpacto.cs`
-- `prubea-posta/Scripts/GestorAudio.cs`
-- `prubea-posta/Scripts/GestorViento.cs`
-- `prubea-posta/Scripts/IServicioAudio.cs`
-- `prubea-posta/Scripts/Importantes/Bala.cs`
-- `prubea-posta/Scripts/Importantes/CalculadorAlturaTerreno.cs`
-- `prubea-posta/Scripts/Importantes/GameManager.cs`
-- `prubea-posta/Scripts/Importantes/GestorFondo.cs`
-- `prubea-posta/Scripts/Importantes/HUDManager.cs`
-- `prubea-posta/Scripts/Importantes/Player.cs`
-- `prubea-posta/Scripts/Importantes/Posicionador.cs`
-- `prubea-posta/Scripts/MenuPrincipal.cs`
-- `prubea-posta/Scripts/RenderVientoVisual.cs`
-- `prubea-posta/Scripts/TanqueApuntado.cs`
-
-**Herencia profunda (DIT) (herencia)** — 2 archivo(s):
-- `prubea-posta/Scripts/GeneradorTerreno.cs`
-- `prubea-posta/Scripts/Importantes/TerrenoAleatorio.cs`
-
-**Switch sobre tipos (OCP) (ocp)** — 7 archivo(s):
-- `prubea-posta/Scripts/Importantes/Bala.cs`
-- `prubea-posta/Scripts/Importantes/GameManager.cs`
-- `prubea-posta/Scripts/Importantes/HUDManager.cs`
-- `prubea-posta/Scripts/Importantes/Player.cs`
-- `prubea-posta/Scripts/Importantes/Posicionador.cs`
-- `prubea-posta/Scripts/MenuPrincipal.cs`
-- `prubea-posta/Scripts/RenderVientoVisual.cs`
-
-**Dependencia de concretos y falta de abstracciones (DIP) (dip)** — 3 archivo(s):
-- `prubea-posta/Scripts/BaseGeneradorTerreno.cs`
-- `prubea-posta/Scripts/Importantes/Posicionador.cs`
-- `prubea-posta/Scripts/RenderVientoVisual.cs`
-
 ## 5. Evolución por commit
 
 Métricas calculadas sobre el estado de `main` en **cada commit** (11 commits con trabajo), del primero al último. La calidad usa el perfil `exigente`; el aporte de código lo mide RepoSense. El índice puede **bajar** al crecer el proyecto: se acumulan señales.
@@ -262,15 +228,15 @@ xychart-beta
 |---|---|---|---|---:|---:|---:|---:|---:|
 | 1 | 2026-08-14 | `ef6c398` | antunez | 0 | 0 | 0% | 0.0% | 0 |
 | 2 | 2026-08-24 | `557cbaf` | dqmdz-etec | 0 | 0 | 0% | 0.0% | 0 |
-| 3 | 2026-09-07 | `044bd9e` | antunez | 394 | 9 | 98% | 0.0% | 0 |
-| 4 | 2026-10-09 | `a5c4628` | antunez | 670 | 6 | 98% | 21.7% | 0 |
-| 5 | 2026-10-09 | `ae54964` | xX-ApoloCool-Xx | 603 | 8 | 98% | 0.0% | 0 |
-| 6 | 2026-10-16 | `2bbbdaf` | xX-ApoloCool-Xx | 709 | 7 | 98% | 18.7% | 0 |
-| 7 | 2026-10-23 | `77ea52d` | xX-ApoloCool-Xx | 936 | 7 | 98% | 14.0% | 0 |
-| 8 | 2026-10-23 | `e36c61b` | xX-ApoloCool-Xx | 971 | 7 | 98% | 15.3% | 0 |
-| 9 | 2026-10-30 | `31af37f` | xX-ApoloCool-Xx | 992 | 6 | 98% | 15.0% | 0 |
-| 10 | 2026-10-30 | `722d4ac` | xX-ApoloCool-Xx | 979 | 7 | 98% | 1.7% | 0 |
-| 11 | 2026-10-30 | `836bf74` | antunez | 1,157 | 6 | 98% | 1.5% | 0 |
+| 3 | 2026-09-07 | `044bd9e` | antunez | 394 | 9 | 100% | 0.0% | 0 |
+| 4 | 2026-10-09 | `a5c4628` | antunez | 670 | 6 | 100% | 21.7% | 0 |
+| 5 | 2026-10-09 | `ae54964` | xX-ApoloCool-Xx | 603 | 8 | 100% | 0.0% | 0 |
+| 6 | 2026-10-16 | `2bbbdaf` | xX-ApoloCool-Xx | 709 | 7 | 100% | 18.7% | 0 |
+| 7 | 2026-10-23 | `77ea52d` | xX-ApoloCool-Xx | 936 | 7 | 100% | 14.0% | 0 |
+| 8 | 2026-10-23 | `e36c61b` | xX-ApoloCool-Xx | 971 | 7 | 100% | 15.3% | 0 |
+| 9 | 2026-10-30 | `31af37f` | xX-ApoloCool-Xx | 992 | 6 | 100% | 15.0% | 0 |
+| 10 | 2026-10-30 | `722d4ac` | xX-ApoloCool-Xx | 979 | 7 | 100% | 1.7% | 0 |
+| 11 | 2026-10-30 | `836bf74` | antunez | 1,157 | 6 | 100% | 1.5% | 0 |
 
 ---
 _Informe generado por la cátedra. Los criterios y umbrales de medición corresponden al perfil `exigente` de `calidad.py`; el semáforo de aprobación, a `CRITERIOS-CALIDAD.md` (ver `README.md`). Ante dudas, revisá el archivo señalado._
