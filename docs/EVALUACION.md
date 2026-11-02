@@ -3,20 +3,20 @@
 
 > Documento **generado automáticamente** por la cátedra de Programación II (RepoSense + análisis de calidad POO/SOLID). **No editar a mano**: se regenera en cada evaluación.
 > Rama evaluada: `main`. Análisis **heurístico** (regex + métricas): es una criba para orientar la revisión, **no una nota**.
-> Generado: 2026-11-01.
+> Generado: 2026-11-02.
 
 ## 1. Veredicto
 
 | Aspecto | Resultado |
 |---|---|
-| Índice de calidad POO/SOLID | **6/100** |
-| Código (LOC) | 1,157 |
-| Archivos de código | 24 |
-| Clases (bien usadas) | 24 (5 OK) |
+| Índice de calidad POO/SOLID | **7/100** |
+| Código (LOC) | 1,165 |
+| Archivos de código | 21 |
+| Clases (bien usadas) | 21 (5 OK) |
 | Código dentro de clases (%POO) | 100% |
 | Funciones fuera de clases | 0 |
-| Duplicación lógica | 1.5% |
-| Señales S/O/L/I/D | 4/7/0/0/3 |
+| Duplicación lógica | 0.0% |
+| Señales S/O/L/I/D | 4/8/0/0/3 |
 
 > Este informe **describe** lo que el análisis midió con los criterios ya establecidos de la materia. No es una nota.
 
@@ -34,7 +34,7 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 | Criterio | Requisito | Tu resultado | Cumple |
 |---|---|---|---|
 | Código dentro de clases (%POO) | ≥ 85% | 100% | sí |
-| Duplicación lógica | ≤ 10% | 1.5% | sí |
+| Duplicación lógica | ≤ 10% | 0.0% | sí |
 | Funciones fuera de clases | ≤ 1 | 0 | sí |
 | Señales POO/SOLID críticas | ninguna | Acoplamiento alto (CBO), Switch sobre tipos (OCP) | no |
 
@@ -43,10 +43,10 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 | Criterio | Requisito | Tu resultado | Cumple |
 |---|---|---|---|
 | Código dentro de clases (%POO) | ≥ 95% | 100% | sí |
-| Duplicación lógica | ≤ 5% | 1.5% | sí |
+| Duplicación lógica | ≤ 5% | 0.0% | sí |
 | Funciones fuera de clases | ≤ 1 | 0 | sí |
 | Señales POO/SOLID críticas | ninguna | Clase demasiado grande (SRP), Baja cohesión (LCOM), Acoplamiento alto (CBO), Switch sobre tipos (OCP) | no |
-| Índice de calidad POO/SOLID | ≥ 60 | 6/100 | no |
+| Índice de calidad POO/SOLID | ≥ 60 | 7/100 | no |
 
 ### Cómo se calcula el %POO (y por qué no sube solo)
 
@@ -60,8 +60,8 @@ Sube cuando el código que hoy está **fuera** de clases pasa a ser método de u
 
 | Autor | Commits | Código (LOC) | Tests (LOC) | Docs (LOC) | Días activos | % del código |
 |---|---:|---:|---:|---:|---:|---:|
-| Apolo Fernández | 6 | 829 | 0 | 0 | 5 | 58% |
-| Bau-ti | 4 | 596 | 0 | 1 | 6 | 42% |
+| Bau-ti | 5 | 794 | 0 | 1 | 7 | 55% |
+| Apolo Fernández | 6 | 638 | 0 | 0 | 5 | 45% |
 
 > _El LOC de autoría lo calcula RepoSense sobre el historial y puede diferir del LOC de código del análisis de calidad (que mira solo el estado de `main`)._
 
@@ -71,11 +71,9 @@ Reúne lo que el análisis marcó y lo que todavía falta para cada semáforo. C
 
 | Falla | Tu resultado | Requisito | Archivos |
 |---|---|---|---|
-| Señales POO/SOLID críticas | Acoplamiento alto (CBO), Switch sobre tipos (OCP) | Aprobar: ninguna<br>Destacar: ninguna | `prubea-posta/Scripts/BaseGeneradorTerreno.cs`, `prubea-posta/Scripts/EfectoImpacto.cs`, `prubea-posta/Scripts/GestorAudio.cs`, `prubea-posta/Scripts/GestorViento.cs`, `prubea-posta/Scripts/IServicioAudio.cs`, `prubea-posta/Scripts/Importantes/Bala.cs` (+9 más) |
-| Índice de calidad POO/SOLID | 6/100 | Destacar: ≥ 60 | — |
-| Métodos/funciones largos o con muchos parámetros | **1** método(s)/función(es) largos o con muchos parámetros | Sin señales | `prubea-posta/Scripts/Importantes/GestorFondo.cs` |
-| Herencia profunda (DIT) | **2** clase(s) con herencia profunda | Sin señales | `prubea-posta/Scripts/GeneradorTerreno.cs`, `prubea-posta/Scripts/Importantes/TerrenoAleatorio.cs` |
-| Dependencia de concretos y falta de abstracciones (DIP) | **3** dependencia(s) de concretos sin abstracciones | Sin señales | `prubea-posta/Scripts/BaseGeneradorTerreno.cs`, `prubea-posta/Scripts/Importantes/Posicionador.cs`, `prubea-posta/Scripts/RenderVientoVisual.cs` |
+| Señales POO/SOLID críticas | Acoplamiento alto (CBO), Switch sobre tipos (OCP) | Aprobar: ninguna<br>Destacar: ninguna | `prubea-posta/Scripts/EfectoImpacto.cs`, `prubea-posta/Scripts/GeneradorTerreno.cs`, `prubea-posta/Scripts/GestorAudio.cs`, `prubea-posta/Scripts/GestorViento.cs`, `prubea-posta/Scripts/IServicioAudio.cs`, `prubea-posta/Scripts/Importantes/Bala.cs` (+9 más) |
+| Índice de calidad POO/SOLID | 7/100 | Destacar: ≥ 60 | — |
+| Dependencia de concretos y falta de abstracciones (DIP) | **3** dependencia(s) de concretos sin abstracciones | Sin señales | `prubea-posta/Scripts/GeneradorTerreno.cs`, `prubea-posta/Scripts/Importantes/Posicionador.cs`, `prubea-posta/Scripts/RenderVientoVisual.cs` |
 
 ## 4. Aspectos evaluados
 
@@ -85,13 +83,13 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Un resumen numérico (0-100) que combina la riqueza de clases bien usadas con la penalización por señales POO/SOLID y duplicación, y luego aplica topes duros.
 - **Por qué importa:** Ordena y prioriza la revisión: un índice bajo indica varias señales que conviene mirar juntas.
-- **Tu resultado:** índice **6/100**
+- **Tu resultado:** índice **7/100**
 
 ### 2. Duplicación lógica (DRY) (duplicacion) — sin señales
 
 - **Qué mide:** Porcentaje de bloques de LÓGICA repetidos. Quedan fuera imports/includes, anotaciones, declaraciones de campos y comentarios/Javadoc/docstrings: esos bloques son boilerplate, no lógica.
 - **Por qué importa:** Cada copia de lógica se mantiene por separado: un arreglo hay que repetirlo y los defectos se multiplican.
-- **Tu resultado:** **1.5%** de duplicación lógica
+- **Tu resultado:** **0.0%** de duplicación lógica
 
 ### 3. Adopción de POO (% de código en clases) (poo) — sin señales
 
@@ -132,41 +130,33 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 - **Por qué importa:** Muchos caminos = difícil de seguir y de probar; suelen esconderse casos sin cubrir.
 - **Tu resultado:** **0** método(s)/función(es) con complejidad alta
 
-### 8. Métodos/funciones largos o con muchos parámetros (tamano) — con señales
+### 8. Métodos/funciones largos o con muchos parámetros (tamano) — sin señales
 
 - **Qué mide:** Tamaño de los métodos/funciones y cantidad de parámetros.
 - **Por qué importa:** Una función que hace varias cosas cuesta leerla, nombrarla y reutilizarla.
-- **Tu resultado:** **1** método(s)/función(es) largos o con muchos parámetros
-- **Para investigar la causa:**
-    - ¿La función creció por acumulación de pasos?
-    - ¿Agrupa operaciones que podrían describirse por separado?
-    - ¿Los parámetros representan una misma idea (un objeto) o cosas sueltas?
+- **Tu resultado:** **0** método(s)/función(es) largos o con muchos parámetros
 
 ### 9. Acoplamiento alto (CBO) (acoplamiento) — con señales
 
 - **Qué mide:** Cuánto depende una clase de otros tipos del proyecto.
 - **Por qué importa:** Piezas muy enlazadas hacen que un cambio se propague y que sea difícil reemplazar partes.
-- **Tu resultado:** **15** clase(s) muy acoplada(s)
+- **Tu resultado:** **14** clase(s) muy acoplada(s)
 - **Para investigar la causa:**
     - ¿La clase conoce detalles internos de muchas otras?
     - ¿Se puede cambiar una parte sin tocar las demás?
     - ¿Los colaboradores llegan como parámetros o se crean por dentro?
 
-### 10. Herencia profunda (DIT) (herencia) — con señales
+### 10. Herencia profunda (DIT) (herencia) — sin señales
 
 - **Qué mide:** Profundidad de la cadena de herencia de una clase.
 - **Por qué importa:** Jerarquías muy profundas vuelven difícil saber de dónde viene cada comportamiento.
-- **Tu resultado:** **2** clase(s) con herencia profunda
-- **Para investigar la causa:**
-    - ¿La jerarquía creció para reutilizar código o para modelar una relación real 'es-un'?
-    - ¿Qué comportamiento cambia entre niveles de la jerarquía?
-    - ¿Se evaluó la composición como alternativa?
+- **Tu resultado:** **0** clase(s) con herencia profunda
 
 ### 11. Switch sobre tipos (OCP) (ocp) — con señales
 
 - **Qué mide:** Chequeos repetidos de tipo (`instanceof`/`is`/`typeof`) que equivalen a un switch sobre el tipo.
 - **Por qué importa:** Cada tipo nuevo obliga a tocar varios lugares, en vez de extender con una implementación nueva.
-- **Tu resultado:** **7** clase(s) con switch sobre tipos
+- **Tu resultado:** **8** clase(s) con switch sobre tipos
 - **Para investigar la causa:**
     - ¿Qué operación se resuelve preguntando el tipo?
     - ¿Qué se toca cada vez que aparece un tipo o caso nuevo?
@@ -214,14 +204,14 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 ## 5. Evolución por commit
 
-Métricas calculadas sobre el estado de `main` en **cada commit** (11 commits con trabajo), del primero al último. La calidad usa el perfil `exigente`; el aporte de código lo mide RepoSense. El índice puede **bajar** al crecer el proyecto: se acumulan señales.
+Métricas calculadas sobre el estado de `main` en **cada commit** (12 commits con trabajo), del primero al último. La calidad usa el perfil `exigente`; el aporte de código lo mide RepoSense. El índice puede **bajar** al crecer el proyecto: se acumulan señales.
 
 ```mermaid
 xychart-beta
     title "Índice POO/SOLID a lo largo de los commits"
-    x-axis ["ef6c398", "557cbaf", "044bd9e", "a5c4628", "ae54964", "2bbbdaf", "77ea52d", "e36c61b", "31af37f", "722d4ac", "836bf74"]
+    x-axis ["ef6c398", "557cbaf", "044bd9e", "a5c4628", "ae54964", "2bbbdaf", "77ea52d", "e36c61b", "31af37f", "722d4ac", "836bf74", "a08105a"]
     y-axis "Índice" 0 --> 100
-    line [0, 0, 9, 6, 8, 7, 7, 7, 6, 7, 6]
+    line [0, 0, 9, 6, 8, 7, 7, 7, 6, 7, 6, 7]
 ```
 
 | # | Fecha | Commit | Autor | LOC | Índice | %POO | Duplic. | Sueltas |
@@ -237,6 +227,7 @@ xychart-beta
 | 9 | 2026-10-30 | `31af37f` | xX-ApoloCool-Xx | 992 | 6 | 100% | 15.0% | 0 |
 | 10 | 2026-10-30 | `722d4ac` | xX-ApoloCool-Xx | 979 | 7 | 100% | 1.7% | 0 |
 | 11 | 2026-10-30 | `836bf74` | antunez | 1,157 | 6 | 100% | 1.5% | 0 |
+| 12 | 2026-11-02 | `a08105a` | antunez | 1,165 | 7 | 100% | 0.0% | 0 |
 
 ---
 _Informe generado por la cátedra. Los criterios y umbrales de medición corresponden al perfil `exigente` de `calidad.py`; el semáforo de aprobación, a `CRITERIOS-CALIDAD.md` (ver `README.md`). Ante dudas, revisá el archivo señalado._
