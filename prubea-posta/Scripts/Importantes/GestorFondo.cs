@@ -7,44 +7,65 @@ public partial class GestorFondo : Node
 
     public void CambiarFondoAleatorio()
     {
+        if (!ValidarConfiguracion()) return;
+
+        ResetearTransformaciones();
+        Texture2D textura = ObtenerTexturaAleatoria();
+        NodoFondo.Texture = textura;
+
+        Vector2 tamanoPantalla = GetViewport().GetVisibleRect().Size;
+        Vector2 tamanoTextura = AjustarOrientacionTextura(textura);
+
+        AplicarPosicionYEscala(tamanoPantalla, tamanoTextura);
+    }
+
+    private bool ValidarConfiguracion()
+    {
         if (NodoFondo == null)
         {
             GD.PrintErr("!!! GestorFondo: NodoFondo no está asignado.");
-            return;
+            return false;
         }
 
         if (TexturasFondo == null || TexturasFondo.Count == 0)
         {
             GD.PrintErr("!!! GestorFondo: No hay imágenes agregadas en TexturasFondo.");
-            return;
+            return false;
         }
 
-        // 1. Resetear transformaciones previas del nodo
+        return true;
+    }
+
+    private void ResetearTransformaciones()
+    {
         NodoFondo.Rotation = 0f;
         NodoFondo.Scale = Vector2.One;
+    }
 
-        // 2. Asignar imagen aleatoria
+    private Texture2D ObtenerTexturaAleatoria()
+    {
         int indiceAleatorio = GD.RandRange(0, TexturasFondo.Count - 1);
-        Texture2D textura = TexturasFondo[indiceAleatorio];
-        NodoFondo.Texture = textura;
+        return TexturasFondo[indiceAleatorio];
+    }
 
-        Vector2 tamanoPantalla = GetViewport().GetVisibleRect().Size;
+    private Vector2 AjustarOrientacionTextura(Texture2D textura)
+    {
         Vector2 tamanoTextura = textura.GetSize();
 
-        if (tamanoTextura.X <= 0 || tamanoTextura.Y <= 0) return;
-
-        // 3. Si la imagen es vertical (más alta que ancha), la rotamos 90 grados para apaisarla
         if (tamanoTextura.Y > tamanoTextura.X)
         {
             NodoFondo.Rotation = Mathf.DegToRad(90f);
-            // Al rotar 90°, los ejes X e Y se invierten para el cálculo del escalado
-            tamanoTextura = new Vector2(tamanoTextura.Y, tamanoTextura.X);
+            return new Vector2(tamanoTextura.Y, tamanoTextura.X);
         }
 
-        // 4. Centrar en pantalla
-        NodoFondo.GlobalPosition = tamanoPantalla / 2.0f;
+        return tamanoTextura;
+    }
 
-        // 5. Escalar exactamente para cubrir el Viewport
+    private void AplicarPosicionYEscala(Vector2 tamanoPantalla, Vector2 tamanoTextura)
+    {
+        if (tamanoTextura.X <= 0 || tamanoTextura.Y <= 0) return;
+
+        NodoFondo.GlobalPosition = tamanoPantalla / 2.0f;
         NodoFondo.Scale = new Vector2(
             tamanoPantalla.X / tamanoTextura.X,
             tamanoPantalla.Y / tamanoTextura.Y
