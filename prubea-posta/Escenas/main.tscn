@@ -63,9 +63,9 @@ outline_size = 9
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_7n3fc"]
-font_size = 24
+font_size = 26
 font_color = Color(1, 0, 0, 1)
-outline_size = 2
+outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
 shadow_color = Color(0, 0, 0, 0.13725491)
@@ -116,7 +116,7 @@ rotation = 3.1415927
 scale = Vector2(1, -1)
 
 [node name="CharacterBody2D" parent="." unique_id=1095276273 instance=ExtResource("2_lquwl")]
-position = Vector2(153, 204)
+position = Vector2(154.00002, 204.00002)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1868905685]
 anchor_mode = 0
@@ -218,7 +218,7 @@ EscalaTextura = Vector2(2, 2)
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Piso" unique_id=1427621876]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Piso" unique_id=650608864]
-position = Vector2(937.5, 644)
+position = Vector2(634, 612)
 shape = SubResource("RectangleShape2D_wwtk3")
 
 [node name="Polygon2D" type="Polygon2D" parent="Piso" unique_id=812656660]
@@ -239,12 +239,10 @@ SonidoVueloBala = ExtResource("21_a165e")
 SonidoImpactoTerreno = ExtResource("22_xgh3l")
 SonidoImpactoJugador = ExtResource("24_eyox0")
 
-[node name="Node" type="Node" parent="." unique_id=1962449498]
+[node name="GestorViento" type="Node" parent="." unique_id=1962449498]
 script = ExtResource("25_8qua0")
-FuerzaMaximaRonda = 600.0
-FuerzaMinimaRonda = 100.0
 VariacionMaximaTurno = 50.0
 
-[node name="Node2D" type="Node2D" parent="." unique_id=1171725370]
+[node name="VientoVisual" type="Node2D" parent="." unique_id=1171725370]
 script = ExtResource("26_gy4cw")
 ColorViento = Color(1, 1, 1, 0.54901963)

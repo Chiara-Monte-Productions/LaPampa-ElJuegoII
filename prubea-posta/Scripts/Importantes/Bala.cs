@@ -32,27 +32,25 @@ public partial class Bala : Area2D
         BodyEntered += OnBodyEntered;
         GetTree().CreateTimer(TiempoDeVida).Timeout += OnTiempoExpirado;
 
-        if (ServicioAudio == null)
+        ObtenerServicios();
+        ElegirColorAleatorio();
+        InicializarRastroVisual();
+    }
+
+    private void ObtenerServicios()
+    {
+        if (ServicioAudio == null && GetTree().GetFirstNodeInGroup("ServicioAudio") is ServicioAudio audio)
         {
-            if (GetTree().GetFirstNodeInGroup("ServicioAudio") is ServicioAudio servicio)
-            {
-                ServicioAudio = servicio;
-            }
+            ServicioAudio = audio;
         }
 
-        if (ServicioViento == null)
+        if (ServicioViento == null && GetTree().GetFirstNodeInGroup("ServicioViento") is IServicioViento viento)
         {
-            if (GetTree().GetFirstNodeInGroup("ServicioViento") is IServicioViento viento)
-            {
-                ServicioViento = viento;
-            }
+            ServicioViento = viento;
         }
 
         ServicioAudio?.ReproducirDisparo();
         ServicioAudio?.IniciarSonidoVuelo();
-
-        ElegirColorAleatorio();
-        InicializarRastroVisual();
     }
 
     private void ElegirColorAleatorio()
@@ -81,7 +79,6 @@ public partial class Bala : Area2D
         float dt = (float)delta;
         _tiempoEnAire += dt;
 
-        // Aplica la gravedad vertical y la aceleración horizontal del viento
         _velocidadVector.Y += Gravedad * dt;
 
         if (ServicioViento != null)
@@ -100,17 +97,16 @@ public partial class Bala : Area2D
 
     private void OnBodyEntered(Node2D body)
     {
-        var objetivoDañable = body as DanoProyectil;
-
-        // Evita autocolisión con el tirador en el instante inicial
-        if (objetivoDañable != null && _tiempoEnAire < 0.1f) return;
+        // Evita autocolisión inmediata al salir del cañón
+        if (_tiempoEnAire < 0.1f && body is Player) return;
 
         GenerarEfectoImpacto(GlobalPosition);
 
-        if (objetivoDañable != null)
+        // Polimorfismo: Si el objetivo implementa DanoProyectil (o destruible), se delega sin switch sobre tipos
+        if (body is DanoProyectil objetivoDanable)
         {
             ServicioAudio?.ReproducirImpactoJugador();
-            objetivoDañable.Destruir();
+            objetivoDanable.Destruir();
         }
         else
         {
