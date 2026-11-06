@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="PrubeaPosta"
+config/name="LaPampa"
 run/main_scene="uid://b4qvoilm5lx8n"
 config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://dfdj4vhtq3iin"
 
 [audio]
 

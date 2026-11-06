@@ -81,8 +81,9 @@ script = ExtResource("2_5vw27")
 NodoFondo = NodePath("../fondo")
 TexturasFondo = Array[Texture2D]([ExtResource("3_i4rd6"), ExtResource("4_7ndum"), ExtResource("5_c7rjx"), ExtResource("6_3pd83"), ExtResource("7_c8ola")])
 
-[node name="Posicionador" type="Node" parent="." unique_id=1657357469]
+[node name="Posicionador" type="Node" parent="." unique_id=1657357469 node_paths=PackedStringArray("NodoTerreno")]
 script = ExtResource("7_5vw27")
+NodoTerreno = NodePath("../Piso")
 
 [node name="GameManager" type="Node2D" parent="." unique_id=1739410839 node_paths=PackedStringArray("Jugador1", "Jugador2", "HUD", "PosicionadorTerreno", "ServicioFondo")]
 script = ExtResource("4_1bvp3")
@@ -225,9 +226,8 @@ shape = SubResource("RectangleShape2D_wwtk3")
 
 [node name="Line2D" type="Line2D" parent="Piso/Polygon2D" unique_id=46804601]
 
-[node name="CalculadorAlturaTerreno" type="Node" parent="Piso" unique_id=1285662308 node_paths=PackedStringArray("Terreno")]
+[node name="CalculadorAlturaTerreno" type="Node" parent="Piso" unique_id=1285662308]
 script = ExtResource("14_7ndum")
-Terreno = NodePath("..")
 
 [node name="ControladorNavegacion" type="Node" parent="." unique_id=1177852346]
 script = ExtResource("19_y8e5y")

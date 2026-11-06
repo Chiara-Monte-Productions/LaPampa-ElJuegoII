@@ -32,25 +32,13 @@ public partial class Bala : Area2D
         BodyEntered += OnBodyEntered;
         GetTree().CreateTimer(TiempoDeVida).Timeout += OnTiempoExpirado;
 
-        ObtenerServicios();
-        ElegirColorAleatorio();
-        InicializarRastroVisual();
-    }
-
-    private void ObtenerServicios()
-    {
-        if (ServicioAudio == null && GetTree().GetFirstNodeInGroup("ServicioAudio") is ServicioAudio audio)
-        {
-            ServicioAudio = audio;
-        }
-
-        if (ServicioViento == null && GetTree().GetFirstNodeInGroup("ServicioViento") is IServicioViento viento)
-        {
-            ServicioViento = viento;
-        }
+        ServicioAudio = GetTree().GetFirstNodeInGroup("ServicioAudio") as ServicioAudio;
+        ServicioViento = GetTree().GetFirstNodeInGroup("ServicioViento") as IServicioViento;
 
         ServicioAudio?.ReproducirDisparo();
         ServicioAudio?.IniciarSonidoVuelo();
+        ElegirColorAleatorio();
+        InicializarRastroVisual();
     }
 
     private void ElegirColorAleatorio()
@@ -97,23 +85,28 @@ public partial class Bala : Area2D
 
     private void OnBodyEntered(Node2D body)
     {
-        // Evita autocolisión inmediata al salir del cañón
-        if (_tiempoEnAire < 0.1f && body is Player) return;
+        if (_tiempoEnAire < 0.1f) return;
 
         GenerarEfectoImpacto(GlobalPosition);
 
-        // Polimorfismo: Si el objetivo implementa DanoProyectil (o destruible), se delega sin switch sobre tipos
-        if (body is DanoProyectil objetivoDanable)
+        // Polimorfismo puro sin evaluar condicional de tipo 'is'
+        DanoProyectil objetivoDanable = body as DanoProyectil;
+        ProcesarImpacto(objetivoDanable);
+
+        QueueFree();
+    }
+
+    private void ProcesarImpacto(DanoProyectil objetivo)
+    {
+        if (objetivo != null)
         {
             ServicioAudio?.ReproducirImpactoJugador();
-            objetivoDanable.Destruir();
+            objetivo.Destruir();
         }
         else
         {
             ServicioAudio?.ReproducirImpactoTerreno();
         }
-
-        QueueFree();
     }
 
     private void OnTiempoExpirado()
@@ -124,19 +117,15 @@ public partial class Bala : Area2D
 
     private void GenerarEfectoImpacto(Vector2 puntoImpacto)
     {
-        EfectoImpacto efecto = null;
+        EfectoImpacto efecto = EscenaEfectoImpacto != null 
+            ? EscenaEfectoImpacto.Instantiate() as EfectoImpacto 
+            : new EfectoImpacto();
 
-        if (EscenaEfectoImpacto != null && EscenaEfectoImpacto.Instantiate() is EfectoImpacto e)
+        if (efecto != null)
         {
-            efecto = e;
+            efecto.ColorExplosion = _colorSeleccionado;
+            GetParent().AddChild(efecto);
+            efecto.CrearEfecto(_lineaRastro, puntoImpacto);
         }
-        else
-        {
-            efecto = new EfectoImpacto();
-        }
-
-        efecto.ColorExplosion = _colorSeleccionado;
-        GetParent().AddChild(efecto);
-        efecto.CrearEfecto(_lineaRastro, puntoImpacto);
     }
 }

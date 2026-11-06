@@ -21,28 +21,21 @@ public partial class MenuPrincipal : Control
         {
             _servicioAudio = servicio;
         }
-        else
+        else if (GetTree().GetFirstNodeInGroup("ServicioAudio") is ServicioAudio servicioGrupo)
         {
-            _servicioAudio = GetNodeOrNull<ServicioAudio>("GestorAudio");
+            _servicioAudio = servicioGrupo;
         }
 
-        (_servicioAudio as GestorAudio)?.ReproducirMusicaMenu();
+        _servicioAudio?.ReproducirMusicaMenu();
 
-        if (BotonJugar != null)
-        {
-            BotonJugar.Pressed += OnBotonJugarPressed;
-        }
-
-        if (BotonSalir != null)
-        {
-            BotonSalir.Pressed += OnBotonSalirPressed;
-        }
+        if (BotonJugar != null) BotonJugar.Pressed += OnBotonJugarPressed;
+        if (BotonSalir != null) BotonSalir.Pressed += OnBotonSalirPressed;
     }
 
     private void OnBotonJugarPressed()
     {
         GD.Print("Cargando el nivel principal...");
-        (_servicioAudio as GestorAudio)?.DetenerMusicaMenu();
+        _servicioAudio?.DetenerMusicaMenu();
         GetTree().ChangeSceneToFile(RutaEscenaJuego);
     }
 
