@@ -3,20 +3,20 @@
 
 > Documento **generado automáticamente** por la cátedra de Programación II (RepoSense + análisis de calidad POO/SOLID). **No editar a mano**: se regenera en cada evaluación.
 > Rama evaluada: `main`. Análisis **heurístico** (regex + métricas): es una criba para orientar la revisión, **no una nota**.
-> Generado: 2026-11-02.
+> Generado: 2026-11-06.
 
 ## 1. Veredicto
 
 | Aspecto | Resultado |
 |---|---|
-| Índice de calidad POO/SOLID | **7/100** |
+| Índice de calidad POO/SOLID | **85/100** |
 | Código (LOC) | 1,165 |
 | Archivos de código | 21 |
-| Clases (bien usadas) | 21 (5 OK) |
+| Clases (bien usadas) | 21 (13 OK) |
 | Código dentro de clases (%POO) | 100% |
 | Funciones fuera de clases | 0 |
 | Duplicación lógica | 0.0% |
-| Señales S/O/L/I/D | 4/8/0/0/3 |
+| Señales S/O/L/I/D | 2/0/0/1/0 |
 
 > Este informe **describe** lo que el análisis midió con los criterios ya establecidos de la materia. No es una nota.
 
@@ -26,8 +26,8 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 
 | Semáforo | Resultado |
 |---|---|
-| Aprobar (`estandar`) | **no cumple** — 3/4 |
-| Destacar (`exigente`) | **no cumple** — 3/5 |
+| Aprobar (`estandar`) | **cumple** — 4/4 |
+| Destacar (`exigente`) | **no cumple** — 4/5 |
 
 **Criterios para aprobar**
 
@@ -36,7 +36,7 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 | Código dentro de clases (%POO) | ≥ 85% | 100% | sí |
 | Duplicación lógica | ≤ 10% | 0.0% | sí |
 | Funciones fuera de clases | ≤ 1 | 0 | sí |
-| Señales POO/SOLID críticas | ninguna | Acoplamiento alto (CBO), Switch sobre tipos (OCP) | no |
+| Señales POO/SOLID críticas | ninguna | ninguna | sí |
 
 **Criterios para destacar**
 
@@ -45,8 +45,8 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 | Código dentro de clases (%POO) | ≥ 95% | 100% | sí |
 | Duplicación lógica | ≤ 5% | 0.0% | sí |
 | Funciones fuera de clases | ≤ 1 | 0 | sí |
-| Señales POO/SOLID críticas | ninguna | Clase demasiado grande (SRP), Baja cohesión (LCOM), Acoplamiento alto (CBO), Switch sobre tipos (OCP) | no |
-| Índice de calidad POO/SOLID | ≥ 60 | 7/100 | no |
+| Señales POO/SOLID críticas | ninguna | Baja cohesión (LCOM), Interfaz con demasiados métodos (ISP) | no |
+| Índice de calidad POO/SOLID | ≥ 60 | 85/100 | sí |
 
 ### Cómo se calcula el %POO (y por qué no sube solo)
 
@@ -71,9 +71,7 @@ Reúne lo que el análisis marcó y lo que todavía falta para cada semáforo. C
 
 | Falla | Tu resultado | Requisito | Archivos |
 |---|---|---|---|
-| Señales POO/SOLID críticas | Acoplamiento alto (CBO), Switch sobre tipos (OCP) | Aprobar: ninguna<br>Destacar: ninguna | `prubea-posta/Scripts/EfectoImpacto.cs`, `prubea-posta/Scripts/GeneradorTerreno.cs`, `prubea-posta/Scripts/GestorAudio.cs`, `prubea-posta/Scripts/GestorViento.cs`, `prubea-posta/Scripts/IServicioAudio.cs`, `prubea-posta/Scripts/Importantes/Bala.cs` (+9 más) |
-| Índice de calidad POO/SOLID | 7/100 | Destacar: ≥ 60 | — |
-| Dependencia de concretos y falta de abstracciones (DIP) | **3** dependencia(s) de concretos sin abstracciones | Sin señales | `prubea-posta/Scripts/GeneradorTerreno.cs`, `prubea-posta/Scripts/Importantes/Posicionador.cs`, `prubea-posta/Scripts/RenderVientoVisual.cs` |
+| Señales POO/SOLID críticas | Baja cohesión (LCOM), Interfaz con demasiados métodos (ISP) | Destacar: ninguna | `prubea-posta/Scripts/GestorAudio.cs`, `prubea-posta/Scripts/IServicioAudio.cs`, `prubea-posta/Scripts/Importantes/Bala.cs` |
 
 ## 4. Aspectos evaluados
 
@@ -83,7 +81,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Un resumen numérico (0-100) que combina la riqueza de clases bien usadas con la penalización por señales POO/SOLID y duplicación, y luego aplica topes duros.
 - **Por qué importa:** Ordena y prioriza la revisión: un índice bajo indica varias señales que conviene mirar juntas.
-- **Tu resultado:** índice **7/100**
+- **Tu resultado:** índice **85/100**
 
 ### 2. Duplicación lógica (DRY) (duplicacion) — sin señales
 
@@ -104,15 +102,11 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 - **Por qué importa:** Son la forma más directa de código procedural en un proyecto que debería ser orientado a objetos.
 - **Tu resultado:** **0** función(es) fuera de clases
 
-### 5. Clase demasiado grande (SRP) (god) — con señales
+### 5. Clase demasiado grande (SRP) (god) — sin señales
 
 - **Qué mide:** Clases con demasiadas líneas o métodos de LÓGICA. No cuentan los getters/setters triviales ni la cantidad de campos por sí sola.
 - **Por qué importa:** Una clase que hace de todo cambia por muchos motivos y cuesta entenderla y probarla.
-- **Tu resultado:** **3** clase(s) demasiado grande(s)
-- **Para investigar la causa:**
-    - ¿La clase creció por acumulación de responsabilidades?
-    - ¿Qué partes de la clase se usan siempre juntas y cuáles no?
-    - ¿Se podría describir su responsabilidad en una sola frase?
+- **Tu resultado:** **0** clase(s) demasiado grande(s)
 
 ### 6. Baja cohesión (LCOM) (cohesion) — con señales
 
@@ -136,15 +130,11 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 - **Por qué importa:** Una función que hace varias cosas cuesta leerla, nombrarla y reutilizarla.
 - **Tu resultado:** **0** método(s)/función(es) largos o con muchos parámetros
 
-### 9. Acoplamiento alto (CBO) (acoplamiento) — con señales
+### 9. Acoplamiento alto (CBO) (acoplamiento) — sin señales
 
-- **Qué mide:** Cuánto depende una clase de otros tipos del proyecto.
+- **Qué mide:** Cuánto depende una clase de otros tipos del proyecto. No cuentan los tipos de la plataforma (biblioteca estándar, DOM, motor Godot) ni los métodos/propiedades propias.
 - **Por qué importa:** Piezas muy enlazadas hacen que un cambio se propague y que sea difícil reemplazar partes.
-- **Tu resultado:** **14** clase(s) muy acoplada(s)
-- **Para investigar la causa:**
-    - ¿La clase conoce detalles internos de muchas otras?
-    - ¿Se puede cambiar una parte sin tocar las demás?
-    - ¿Los colaboradores llegan como parámetros o se crean por dentro?
+- **Tu resultado:** **0** clase(s) muy acoplada(s)
 
 ### 10. Herencia profunda (DIT) (herencia) — sin señales
 
@@ -152,21 +142,21 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 - **Por qué importa:** Jerarquías muy profundas vuelven difícil saber de dónde viene cada comportamiento.
 - **Tu resultado:** **0** clase(s) con herencia profunda
 
-### 11. Switch sobre tipos (OCP) (ocp) — con señales
+### 11. Switch sobre tipos (OCP) (ocp) — sin señales
 
-- **Qué mide:** Chequeos repetidos de tipo (`instanceof`/`is`/`typeof`) que equivalen a un switch sobre el tipo.
+- **Qué mide:** Cadenas de dispatch por tipo (`else if ... is` / `else if ... instanceof`, `switch` sobre tipo o `typeof`). Un `is Tipo variable` aislado (pattern matching / cast seguro) NO cuenta como switch.
 - **Por qué importa:** Cada tipo nuevo obliga a tocar varios lugares, en vez de extender con una implementación nueva.
-- **Tu resultado:** **8** clase(s) con switch sobre tipos
-- **Para investigar la causa:**
-    - ¿Qué operación se resuelve preguntando el tipo?
-    - ¿Qué se toca cada vez que aparece un tipo o caso nuevo?
-    - ¿El comportamiento podría vivir en la propia jerarquía de tipos?
+- **Tu resultado:** **0** clase(s) con switch sobre tipos
 
-### 12. Interfaz con demasiados métodos (ISP) (isp) — sin señales
+### 12. Interfaz con demasiados métodos (ISP) (isp) — con señales
 
 - **Qué mide:** Interfaces o clases abstractas con muchos métodos declarados.
 - **Por qué importa:** Obliga a implementar operaciones que no se usan y acopla a los clientes a métodos que no necesitan.
-- **Tu resultado:** **0** interfaz(es) con demasiados métodos
+- **Tu resultado:** **1** interfaz(es) con demasiados métodos
+- **Para investigar la causa:**
+    - ¿Qué subconjunto de métodos usa realmente cada implementación?
+    - ¿Se agruparon métodos de necesidades distintas en la misma interfaz?
+    - ¿Hay implementaciones que dejan métodos sin uso?
 
 ### 13. Override vacío o 'no implementado' (LSP) (lsp) — sin señales
 
@@ -174,15 +164,11 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 - **Por qué importa:** Suele indicar que la jerarquía no representa bien el problema y rompe la sustitución entre clases.
 - **Tu resultado:** **0** override(s) vacío(s) o 'no implementado'
 
-### 14. Dependencia de concretos y falta de abstracciones (DIP) (dip) — con señales
+### 14. Dependencia de concretos y falta de abstracciones (DIP) (dip) — sin señales
 
-- **Qué mide:** Instanciación directa de clases concretas y ausencia de interfaces o clases abstractas pese al acoplamiento.
+- **Qué mide:** Instanciación directa de clases **propias** concretas y ausencia de interfaces o clases abstractas pese al acoplamiento. No cuentan los structs ni los nodos/tipos del motor.
 - **Por qué importa:** Depender de implementaciones concretas dificulta cambiar o probar una parte sin arrastrar las demás.
-- **Tu resultado:** **3** dependencia(s) de concretos sin abstracciones
-- **Para investigar la causa:**
-    - ¿La clase crea por dentro a sus colaboradores en vez de recibirlos?
-    - ¿Hay puntos de variación que convendría expresar como abstracción?
-    - ¿Cómo se probaría esa clase cambiando una implementación?
+- **Tu resultado:** **0** dependencia(s) de concretos sin abstracciones
 
 ### 15. Clase sin métodos (solo datos) (data) — sin señales
 
