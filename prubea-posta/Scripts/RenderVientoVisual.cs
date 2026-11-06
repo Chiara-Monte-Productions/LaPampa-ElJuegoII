@@ -11,8 +11,10 @@ public partial class RenderVientoVisual : Node2D
     [ExportGroup("Sensibilidad de Velocidad")]
     [Export] public float FactorVelocidad { get; set; } = 1.2f;
 
-    // DIP: Dependemos de la abstracción IServicioViento, no de una clase concreta
-    public IServicioViento ServicioViento { get; set; }
+    [ExportGroup("Servicios")]
+    [Export] public Node NodoServicioViento { get; set; }
+
+    private IServicioViento _servicioViento;
 
     private float[] _posicionesX;
     private float[] _posicionesY;
@@ -22,18 +24,19 @@ public partial class RenderVientoVisual : Node2D
     public override void _Ready()
     {
         _tamanoPantalla = GetViewport().GetVisibleRect().Size;
-        ObtenerServicioViento();
+        ResolverServicioViento();
         InicializarParticulas();
     }
 
-    private void ObtenerServicioViento()
+    private void ResolverServicioViento()
     {
-        if (ServicioViento == null)
+        if (NodoServicioViento is IServicioViento servicioExportado)
         {
-            if (GetTree().GetFirstNodeInGroup("ServicioViento") is IServicioViento viento)
-            {
-                ServicioViento = viento;
-            }
+            _servicioViento = servicioExportado;
+        }
+        else if (GetTree().GetFirstNodeInGroup("ServicioViento") is IServicioViento servicioGrupo)
+        {
+            _servicioViento = servicioGrupo;
         }
     }
 
@@ -53,13 +56,13 @@ public partial class RenderVientoVisual : Node2D
 
     public override void _Process(double delta)
     {
-        if (ServicioViento == null)
+        if (_servicioViento == null)
         {
-            ObtenerServicioViento();
-            if (ServicioViento == null) return;
+            ResolverServicioViento();
+            if (_servicioViento == null) return;
         }
 
-        float fuerzaX = ServicioViento.FuerzaVientoActual.X;
+        float fuerzaX = _servicioViento.FuerzaVientoActual.X;
         if (Mathf.Abs(fuerzaX) < 1.0f) return;
 
         ActualizarPosiciones((float)delta, fuerzaX);
@@ -89,9 +92,9 @@ public partial class RenderVientoVisual : Node2D
 
     public override void _Draw()
     {
-        if (ServicioViento == null) return;
+        if (_servicioViento == null) return;
 
-        float fuerzaX = ServicioViento.FuerzaVientoActual.X;
+        float fuerzaX = _servicioViento.FuerzaVientoActual.X;
         if (Mathf.Abs(fuerzaX) < 1.0f) return;
 
         float direccion = Mathf.Sign(fuerzaX);

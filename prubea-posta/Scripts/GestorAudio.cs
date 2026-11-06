@@ -17,8 +17,8 @@ public partial class GestorAudio : Node, ServicioAudio
 
     private AudioStreamPlayer _reproductorIntro;
     private AudioStreamPlayer _reproductorLoop;
-    private AudioStreamPlayer _reproductorVuelo;
     private AudioStreamPlayer _reproductorMusicaJuego;
+    private AudioStreamPlayer _reproductorVuelo;
 
     public override void _Ready()
     {
@@ -37,8 +37,6 @@ public partial class GestorAudio : Node, ServicioAudio
         _reproductorIntro.Finished += OnIntroFinalizada;
         _reproductorLoop.Finished += OnLoopFinalizado;
 
-        // Auto-detección: si la escena asignó pistas de menú, reproduce el menú. 
-        // De lo contrario, si asignó música de juego, reproduce la música de juego.
         if (MusicaMenuIntro != null || MusicaMenuLoop != null)
         {
             ReproducirMusicaMenu();
@@ -48,8 +46,6 @@ public partial class GestorAudio : Node, ServicioAudio
             ReproducirMusicaJuego();
         }
     }
-
-    // --- MÚSICA DE MENÚ ---
 
     public void ReproducirMusicaMenu()
     {
@@ -87,8 +83,6 @@ public partial class GestorAudio : Node, ServicioAudio
         if (_reproductorLoop.Playing) _reproductorLoop.Stop();
     }
 
-    // --- MÚSICA DE JUEGO ---
-
     public void ReproducirMusicaJuego()
     {
         DetenerMusicaMenu();
@@ -104,8 +98,6 @@ public partial class GestorAudio : Node, ServicioAudio
     {
         if (_reproductorMusicaJuego.Playing) _reproductorMusicaJuego.Stop();
     }
-
-    // --- EFECTOS DE SONIDO (SFX) ---
 
     public void ReproducirDisparo() => ReproducirEfectoPuntual(SonidoDisparo);
 
