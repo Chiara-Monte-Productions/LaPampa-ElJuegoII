@@ -252,13 +252,13 @@ xychart-beta
 | 2026-10-23 | **Sí** | LaPampa-ElJuegoII | 1 / 2 |
 | 2026-10-26 | **Sí** | LaPampa-ElJuegoII | 1 / 0 |
 
-#### Aportes fuera del calendario de clases
+#### Aportes fuera del calendario de clases — Apolo Fernández
 
-**1 fecha fuera del calendario** · 1 commit · 3 merges
+**Apolo Fernández — 1 fecha fuera del calendario** · 1 commit · 3 merges
 
-| Fecha | Repositorios | Commits / merges |
-|---|---|--:|
-| 2026-10-30 | LaPampa-ElJuegoII | 1 / 3 |
+| Alumno | Fecha | Repositorios | Commits / merges |
+|---|---|---|---|
+| Apolo Fernández (`xX-ApoloCool-Xx`) | 2026-10-30 | LaPampa-ElJuegoII | 1 / 3 |
 
 ### Bau-ti
 
@@ -284,15 +284,15 @@ xychart-beta
 | 2026-10-23 | No | sin actividad | 0 / 0 |
 | 2026-10-26 | No | sin actividad | 0 / 0 |
 
-#### Aportes fuera del calendario de clases
+#### Aportes fuera del calendario de clases — Bau-ti
 
-**3 fechas fuera del calendario** · 3 commits · 3 merges
+**Bau-ti — 3 fechas fuera del calendario** · 3 commits · 3 merges
 
-| Fecha | Repositorios | Commits / merges |
-|---|---|--:|
-| 2026-10-30 | LaPampa-ElJuegoII | 1 / 1 |
-| 2026-11-02 | LaPampa-ElJuegoII | 1 / 1 |
-| 2026-11-06 | LaPampa-ElJuegoII | 1 / 1 |
+| Alumno | Fecha | Repositorios | Commits / merges |
+|---|---|---|---|
+| Bau-ti (`Bau-ti`) | 2026-10-30 | LaPampa-ElJuegoII | 1 / 1 |
+| Bau-ti (`Bau-ti`) | 2026-11-02 | LaPampa-ElJuegoII | 1 / 1 |
+| Bau-ti (`Bau-ti`) | 2026-11-06 | LaPampa-ElJuegoII | 1 / 1 |
 
 <!-- actividad-clases:fin -->
 
