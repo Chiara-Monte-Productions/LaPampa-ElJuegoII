@@ -32,26 +32,26 @@ public partial class Bala : Area2D
         BodyEntered += OnBodyEntered;
         GetTree().CreateTimer(TiempoDeVida).Timeout += OnTiempoExpirado;
 
-        ServicioAudio = GetTree().GetFirstNodeInGroup("ServicioAudio") as ServicioAudio;
-        ServicioViento = GetTree().GetFirstNodeInGroup("ServicioViento") as IServicioViento;
+        ConfigurarServicios();
+        ConfigurarVisuales();
+    }
+
+    private void ConfigurarServicios()
+    {
+        ServicioAudio ??= GetTree().GetFirstNodeInGroup("ServicioAudio") as ServicioAudio;
+        ServicioViento ??= GetTree().GetFirstNodeInGroup("ServicioViento") as IServicioViento;
 
         ServicioAudio?.ReproducirDisparo();
         ServicioAudio?.IniciarSonidoVuelo();
-        ElegirColorAleatorio();
-        InicializarRastroVisual();
     }
 
-    private void ElegirColorAleatorio()
+    private void ConfigurarVisuales()
     {
         if (PaletaColores != null && PaletaColores.Count > 0)
         {
-            int indice = GD.RandRange(0, PaletaColores.Count - 1);
-            _colorSeleccionado = PaletaColores[indice];
+            _colorSeleccionado = PaletaColores[GD.RandRange(0, PaletaColores.Count - 1)];
         }
-    }
 
-    private void InicializarRastroVisual()
-    {
         _lineaRastro = new Line2D
         {
             Width = AnchoRastro,
@@ -68,7 +68,6 @@ public partial class Bala : Area2D
         _tiempoEnAire += dt;
 
         _velocidadVector.Y += Gravedad * dt;
-
         if (ServicioViento != null)
         {
             _velocidadVector += ServicioViento.FuerzaVientoActual * dt;
@@ -87,17 +86,9 @@ public partial class Bala : Area2D
     {
         if (_tiempoEnAire < 0.1f) return;
 
-        GenerarEfectoImpacto(GlobalPosition);
+        CrearExplosion(GlobalPosition);
 
-        // Polimorfismo puro sin evaluar condicional de tipo 'is'
-        DanoProyectil objetivoDanable = body as DanoProyectil;
-        ProcesarImpacto(objetivoDanable);
-
-        QueueFree();
-    }
-
-    private void ProcesarImpacto(DanoProyectil objetivo)
-    {
+        DanoProyectil objetivo = body as DanoProyectil;
         if (objetivo != null)
         {
             ServicioAudio?.ReproducirImpactoJugador();
@@ -107,6 +98,8 @@ public partial class Bala : Area2D
         {
             ServicioAudio?.ReproducirImpactoTerreno();
         }
+
+        QueueFree();
     }
 
     private void OnTiempoExpirado()
@@ -115,7 +108,7 @@ public partial class Bala : Area2D
         QueueFree();
     }
 
-    private void GenerarEfectoImpacto(Vector2 puntoImpacto)
+    private void CrearExplosion(Vector2 puntoImpacto)
     {
         EfectoImpacto efecto = EscenaEfectoImpacto != null 
             ? EscenaEfectoImpacto.Instantiate() as EfectoImpacto 
