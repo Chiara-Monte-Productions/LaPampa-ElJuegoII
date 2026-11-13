@@ -13,20 +13,14 @@ public partial class MenuPrincipal : Control
     [Export(PropertyHint.File, "*.tscn")] 
     public string RutaEscenaJuego { get; set; } = "res://Escenas/main.tscn";
 
-    private ServicioAudio _servicioAudio;
+    private ServicioMusicaMenu _servicioMusica;
 
     public override void _Ready()
     {
-        if (GestorAudioNodo is ServicioAudio servicio)
-        {
-            _servicioAudio = servicio;
-        }
-        else if (GetTree().GetFirstNodeInGroup("ServicioAudio") is ServicioAudio servicioGrupo)
-        {
-            _servicioAudio = servicioGrupo;
-        }
+        _servicioMusica = (GestorAudioNodo as ServicioMusicaMenu) 
+            ?? (GetTree().GetFirstNodeInGroup("ServicioAudio") as ServicioMusicaMenu);
 
-        _servicioAudio?.ReproducirMusicaMenu();
+        _servicioMusica?.ReproducirMusicaMenu();
 
         if (BotonJugar != null) BotonJugar.Pressed += OnBotonJugarPressed;
         if (BotonSalir != null) BotonSalir.Pressed += OnBotonSalirPressed;
@@ -35,7 +29,7 @@ public partial class MenuPrincipal : Control
     private void OnBotonJugarPressed()
     {
         GD.Print("Cargando el nivel principal...");
-        _servicioAudio?.DetenerMusicaMenu();
+        _servicioMusica?.DetenerMusicaMenu();
         GetTree().ChangeSceneToFile(RutaEscenaJuego);
     }
 

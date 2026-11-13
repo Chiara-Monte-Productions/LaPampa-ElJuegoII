@@ -19,9 +19,9 @@ EscenaBala = ExtResource("2_e80uo")
 ComponenteApuntado = NodePath("apuntado")
 
 [node name="Sprite2D2" type="Sprite2D" parent="." unique_id=453240264]
-modulate = Color(0.5647059, 0.41960785, 0.3764706, 0.45882353)
-position = Vector2(1, 0)
-scale = Vector2(0.165, 0.16656251)
+modulate = Color(0.5647059, 0.41960785, 0.3764706, 0.21960784)
+position = Vector2(-1, -4)
+scale = Vector2(0.1675, 0.16656251)
 texture = ExtResource("3_kwdw2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=618514344]
