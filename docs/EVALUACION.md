@@ -221,6 +221,85 @@ xychart-beta
 | 17 | 2026-11-07 | `0c3639f` | dqmdz-etec | 1,093 | 81 | 100% | 0.0% | 0 |
 | 18 | 2026-11-13 | `334d55d` | antunez | 1,084 | 85 | 100% | 0.0% | 0 |
 
+<!-- actividad-clases:inicio -->
+## Actividad en días de clase
+
+> Período evaluado **2026-08-14 → 2026-11-13** · **21 clases** (lunes, viernes) · días de clase del calendario, extendidos hasta la fecha de corte.
+>
+> `Commits` = commits de trabajo (no-merge); `Merges` = merges de PR (también son push). Los días sin actividad dicen **sin actividad**. El cuadro principal usa sólo las fechas de clase del calendario oficial.
+>
+> **Aportes fuera del calendario:** cada alumno tiene un cuadro aparte con las fechas no lectivas con actividad, desde **2026-08-14** hasta **2026-11-13** (ventana de aportes). Esas fechas no forman parte del cuadro principal, pero se muestran para no perder trabajo hecho en fines de semana, feriados o después del período.
+>
+> Se recorre `git log --all` sobre un mirror (todas las ramas y `refs/pull/*`), con deduplicación por commit. Fecha = fecha de autor en UTC-3. Los commits locales no pusheados no se ven. Si el trabajo fue en pareja y el commit es de otra persona, figura a nombre del autor del commit; para reflejarlo, usar `Co-authored-by` o una nota manual.
+>
+> Sección informativa: no modifica el semáforo de aprobación.
+
+### Apolo Fernández
+
+**5/21 clases con actividad** · 6 commits · 8 merges
+
+| Fecha | Marca | Repositorios | Commits / merges |
+|---|:--:|---|--:|
+| 2026-08-14 | No | sin actividad | 0 / 0 |
+| 2026-08-21 | No | sin actividad | 0 / 0 |
+| 2026-08-24 | No | sin actividad | 0 / 0 |
+| 2026-08-28 | No | sin actividad | 0 / 0 |
+| 2026-08-31 | No | sin actividad | 0 / 0 |
+| 2026-09-04 | No | sin actividad | 0 / 0 |
+| 2026-09-07 | No | sin actividad | 0 / 0 |
+| 2026-09-14 | No | sin actividad | 0 / 0 |
+| 2026-09-25 | No | sin actividad | 0 / 0 |
+| 2026-09-28 | No | sin actividad | 0 / 0 |
+| 2026-10-02 | No | sin actividad | 0 / 0 |
+| 2026-10-05 | No | sin actividad | 0 / 0 |
+| 2026-10-09 | **Sí** | LaPampa-ElJuegoII | 2 / 1 |
+| 2026-10-16 | **Sí** | LaPampa-ElJuegoII | 1 / 2 |
+| 2026-10-19 | No | sin actividad | 0 / 0 |
+| 2026-10-23 | **Sí** | LaPampa-ElJuegoII | 1 / 2 |
+| 2026-10-26 | **Sí** | LaPampa-ElJuegoII | 1 / 0 |
+| 2026-10-30 | **Sí** | LaPampa-ElJuegoII | 1 / 3 |
+| 2026-11-02 | No | sin actividad | 0 / 0 |
+| 2026-11-06 | No | sin actividad | 0 / 0 |
+| 2026-11-13 | No | sin actividad | 0 / 0 |
+
+#### Aportes fuera del calendario de clases — Apolo Fernández
+
+_Sin aportes fuera del calendario de clases para Apolo Fernández._
+
+### Bau-ti
+
+**10/21 clases con actividad** · 9 commits · 6 merges
+
+| Fecha | Marca | Repositorios | Commits / merges |
+|---|:--:|---|--:|
+| 2026-08-14 | **Sí** | LaPampa-ElJuegoII | 2 / 0 |
+| 2026-08-21 | No | sin actividad | 0 / 0 |
+| 2026-08-24 | No | sin actividad | 0 / 0 |
+| 2026-08-28 | No | sin actividad | 0 / 0 |
+| 2026-08-31 | No | sin actividad | 0 / 0 |
+| 2026-09-04 | **Sí** | LaPampa-ElJuegoII | 1 / 0 |
+| 2026-09-07 | **Sí** | LaPampa-ElJuegoII | 0 / 1 |
+| 2026-09-14 | No | sin actividad | 0 / 0 |
+| 2026-09-25 | **Sí** | LaPampa-ElJuegoII | 1 / 0 |
+| 2026-09-28 | No | sin actividad | 0 / 0 |
+| 2026-10-02 | **Sí** | LaPampa-ElJuegoII | 1 / 0 |
+| 2026-10-05 | No | sin actividad | 0 / 0 |
+| 2026-10-09 | **Sí** | LaPampa-ElJuegoII | 0 / 1 |
+| 2026-10-16 | No | sin actividad | 0 / 0 |
+| 2026-10-19 | No | sin actividad | 0 / 0 |
+| 2026-10-23 | No | sin actividad | 0 / 0 |
+| 2026-10-26 | No | sin actividad | 0 / 0 |
+| 2026-10-30 | **Sí** | LaPampa-ElJuegoII | 1 / 1 |
+| 2026-11-02 | **Sí** | LaPampa-ElJuegoII | 1 / 1 |
+| 2026-11-06 | **Sí** | LaPampa-ElJuegoII | 1 / 1 |
+| 2026-11-13 | **Sí** | LaPampa-ElJuegoII | 1 / 1 |
+
+#### Aportes fuera del calendario de clases — Bau-ti
+
+_Sin aportes fuera del calendario de clases para Bau-ti._
+
+<!-- actividad-clases:fin -->
+
 ---
 _Informe generado por la cátedra. Los criterios y umbrales de medición corresponden al perfil `exigente` de `calidad.py`; el semáforo de aprobación, a `CRITERIOS-CALIDAD.md` (ver `README.md`). Ante dudas, revisá el archivo señalado._
 <!-- evaluacion:fin -->
