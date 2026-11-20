@@ -4,5 +4,3 @@
 **Calidad POO/SOLID (heurístico):** índice **85/100** · %POO **100%** · funciones sueltas **0** · clases OK **13** · aprobar **sí (4/4)** · destacar **no**
 Detalle completo en [`docs/EVALUACION.md`](docs/EVALUACION.md).
 <!-- calidad:fin -->
-
-# lapruebamistica
