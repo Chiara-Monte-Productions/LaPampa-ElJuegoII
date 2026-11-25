@@ -3,13 +3,14 @@
 
 > Documento **generado automáticamente** por la cátedra de Programación II (RepoSense + análisis de calidad POO/SOLID). **No editar a mano**: se regenera en cada evaluación.
 > Rama evaluada: `main`. Análisis **heurístico** (regex + métricas): es una criba para orientar la revisión, **no una nota**.
-> Generado: 2026-11-20.
+> Generado: 2026-11-25.
 
 ## 1. Veredicto
 
 | Aspecto | Resultado |
 |---|---|
 | Índice de calidad POO/SOLID | **85/100** |
+| Commit evaluado | `96e8ef135dad` (2026-11-20) |
 | Código (LOC) | 1,084 |
 | Archivos de código | 22 |
 | Clases (bien usadas) | 22 (13 OK) |
@@ -182,6 +183,23 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 - **Por qué importa:** Es comportamiento procedural disfrazado de clase: no se instancia ni participa del modelo de objetos.
 - **Tu resultado:** **0** clase(s) solo con métodos estáticos
 
+### Resumen de señales por tipo
+
+| Señal | Cantidad | Principio | Archivos |
+|---|---:|---|---:|
+| baja cohesión | 2 | S | 2 |
+| interfaz grande | 1 | I | 1 |
+
+### Resumen por archivo
+
+> Archivos ordenados por cantidad de señales. Se excluyen **0** señal(es) de nivel repositorio sin archivo propio.
+
+| Archivo | Señales | Aspectos | Líneas |
+|---|---:|---|---|
+| `prubea-posta/Scripts/EfectoImpacto.cs` | 1 | cohesión | 3 |
+| `prubea-posta/Scripts/GestorAudio.cs` | 1 | cohesión | 3 |
+| `prubea-posta/Scripts/IServicioAudio.cs` | 1 | ISP | 1 |
+
 ### Archivos donde se originan las señales
 
 > Se listan **3** hallazgo(s) localizados en **3** archivo(s). La columna `Línea` es la línea del archivo donde el análisis detectó la señal; `—` indica una señal de nivel repositorio (sin archivo propio).
@@ -191,6 +209,35 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 | Baja cohesión (LCOM) | `prubea-posta/Scripts/EfectoImpacto.cs` | 3 | clase 'EfectoImpacto' con baja cohesión (30%) |
 | Baja cohesión (LCOM) | `prubea-posta/Scripts/GestorAudio.cs` | 3 | clase 'GestorAudio' con baja cohesión (39%) |
 | Interfaz con demasiados métodos (ISP) | `prubea-posta/Scripts/IServicioAudio.cs` | 1 | interfaz 'ServicioAudio' con 7 métodos |
+
+### Clases señaladas — métricas
+
+> Solo clases con al menos una señal. `LOC lóg.` y `Mét. lóg.` descuentan getters/setters; `LCOM` es la cantidad de pares de métodos sin campos en común.
+
+| Clase | Archivo | Línea | LOC lóg. | Mét. lóg. | Campos | CBO | LCOM | Cohesión | WMC | RFC | Señales |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| `GestorAudio` | `prubea-posta/Scripts/GestorAudio.cs` | 3 | 96 | 12 | 4 | 0 | 22 | 39% | 25 | 31 | baja cohesión×1 |
+| `EfectoImpacto` | `prubea-posta/Scripts/EfectoImpacto.cs` | 3 | 43 | 5 | 3 | 1 | 7 | 30% | 8 | 18 | baja cohesión×1 |
+| `ServicioAudio` | `prubea-posta/Scripts/IServicioAudio.cs` | 1 | 0 | 7 | 1 | 0 | 0 | 100% | 0 | 14 | interfaz grande×1 |
+
+### Umbrales aplicados (perfil exigente)
+
+| Señal | Regla |
+|---|---|
+| Clase grande (SRP) | ≥ 200 LOC lógico, o ≥ 15 métodos con lógica y ≥ 100 LOC lógico; no cuentan getters/setters. |
+| Baja cohesión (LCOM) | < 50 % de pares de métodos comparten algún campo, con ≥ 4 métodos con lógica y ≥ 3 campos. |
+| Complejidad alta | algún método con complejidad ciclomática ≥ 10. |
+| Método largo | ≥ 30 líneas. |
+| Muchos parámetros | > 4 parámetros (5 o más). |
+| Acoplamiento alto (CBO) | CBO ≥ 8. |
+| Herencia profunda | DIT ≥ 3. |
+| Type-check / switch de tipos | ≥ 1 cadena de type-check. |
+| Interfaz demasiado grande (ISP) | > 6 métodos (7 o más). |
+| Override vacío (LSP) | método vacío o marcado como 'no implementado'. |
+| Clase solo de datos | 0 métodos y ≥ 3 campos. |
+| Campos mutables públicos | ≥ 4 campos mutables públicos y ≥ 4 campos. |
+| Clase estática | ≥ 2 métodos y todos estáticos. |
+| Duplicación lógica | ventana de 8 líneas; solo lógica; se informa desde 1 %. |
 
 ### Desglose de la columna S (SRP)
 
@@ -209,14 +256,14 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 ## 5. Evolución por commit
 
-Métricas calculadas sobre el estado de `main` en **cada commit** (25 commits con trabajo), del primero al último. La calidad usa el perfil `exigente`; el aporte de código lo mide RepoSense. El índice puede **bajar** al crecer el proyecto: se acumulan señales.
+Métricas calculadas sobre el estado de `main` en **cada commit** (26 commits con trabajo), del primero al último. La calidad usa el perfil `exigente`; el aporte de código lo mide RepoSense. El índice puede **bajar** al crecer el proyecto: se acumulan señales.
 
 ```mermaid
 xychart-beta
     title "Índice POO/SOLID a lo largo de los commits"
-    x-axis ["ef6c398", "557cbaf", "044bd9e", "a5c4628", "ae54964", "2bbbdaf", "77ea52d", "e36c61b", "31af37f", "722d4ac", "836bf74", "a08105a", "4ab1cdc", "09ab103", "28ad72a", "c37596b", "0c3639f", "334d55d", "58dbf7f", "5fe2546", "bd50d53", "115c1eb", "67002a4", "1087072", "f8cbb88"]
+    x-axis ["ef6c398", "557cbaf", "044bd9e", "a5c4628", "ae54964", "2bbbdaf", "77ea52d", "e36c61b", "31af37f", "722d4ac", "836bf74", "a08105a", "4ab1cdc", "09ab103", "28ad72a", "c37596b", "0c3639f", "334d55d", "58dbf7f", "5fe2546", "bd50d53", "115c1eb", "67002a4", "1087072", "f8cbb88", "96e8ef1"]
     y-axis "Índice" 0 --> 100
-    line [0, 0, 48, 29, 58, 35, 43, 39, 40, 75, 80, 85, 81, 81, 81, 81, 81, 85, 85, 85, 85, 85, 85, 85, 85]
+    line [0, 0, 48, 29, 58, 35, 43, 39, 40, 75, 80, 85, 81, 81, 81, 81, 81, 85, 85, 85, 85, 85, 85, 85, 85, 85]
 ```
 
 | # | Fecha | Commit | Autor | LOC | Índice | %POO | Duplic. | Sueltas |
@@ -246,89 +293,7 @@ xychart-beta
 | 23 | 2026-11-20 | `67002a4` | dqmdz-etec | 1,084 | 85 | 100% | 0.0% | 0 |
 | 24 | 2026-11-20 | `1087072` | dqmdz-etec | 1,084 | 85 | 100% | 0.0% | 0 |
 | 25 | 2026-11-20 | `f8cbb88` | dqmdz-etec | 1,084 | 85 | 100% | 0.0% | 0 |
-
-<!-- actividad-clases:inicio -->
-## Actividad en días de clase
-
-> Período evaluado **2026-08-14 → 2026-11-20** · **23 clases** (lunes, viernes) · días de clase del calendario, extendidos hasta la fecha de corte.
->
-> `Commits` = commits de trabajo (no-merge); `Merges` = merges de PR (también son push). Los días sin actividad dicen **sin actividad**. El cuadro principal usa sólo las fechas de clase del calendario oficial.
->
-> **Aportes fuera del calendario:** cada alumno tiene un cuadro aparte con las fechas no lectivas con actividad, desde **2026-08-14** hasta **2026-11-20** (ventana de aportes). Esas fechas no forman parte del cuadro principal, pero se muestran para no perder trabajo hecho en fines de semana, feriados o después del período.
->
-> Se recorre `git log --all` sobre un mirror (todas las ramas y `refs/pull/*`), con deduplicación por commit. Fecha = fecha de autor en UTC-3. Los commits locales no pusheados no se ven. Si el trabajo fue en pareja y el commit es de otra persona, figura a nombre del autor del commit; para reflejarlo, usar `Co-authored-by` o una nota manual.
->
-> Sección informativa: no modifica el semáforo de aprobación.
-
-### Apolo Fernández
-
-**5/23 clases con actividad** · 6 commits · 8 merges
-
-| Fecha | Marca | Repositorios | Commits / merges |
-|---|:--:|---|--:|
-| 2026-08-14 | No | sin actividad | 0 / 0 |
-| 2026-08-21 | No | sin actividad | 0 / 0 |
-| 2026-08-24 | No | sin actividad | 0 / 0 |
-| 2026-08-28 | No | sin actividad | 0 / 0 |
-| 2026-08-31 | No | sin actividad | 0 / 0 |
-| 2026-09-04 | No | sin actividad | 0 / 0 |
-| 2026-09-07 | No | sin actividad | 0 / 0 |
-| 2026-09-14 | No | sin actividad | 0 / 0 |
-| 2026-09-25 | No | sin actividad | 0 / 0 |
-| 2026-09-28 | No | sin actividad | 0 / 0 |
-| 2026-10-02 | No | sin actividad | 0 / 0 |
-| 2026-10-05 | No | sin actividad | 0 / 0 |
-| 2026-10-09 | **Sí** | LaPampa-ElJuegoII | 2 / 1 |
-| 2026-10-16 | **Sí** | LaPampa-ElJuegoII | 1 / 2 |
-| 2026-10-19 | No | sin actividad | 0 / 0 |
-| 2026-10-23 | **Sí** | LaPampa-ElJuegoII | 1 / 2 |
-| 2026-10-26 | **Sí** | LaPampa-ElJuegoII | 1 / 0 |
-| 2026-10-30 | **Sí** | LaPampa-ElJuegoII | 1 / 3 |
-| 2026-11-02 | No | sin actividad | 0 / 0 |
-| 2026-11-06 | No | sin actividad | 0 / 0 |
-| 2026-11-13 | No | sin actividad | 0 / 0 |
-| 2026-11-16 | No | sin actividad | 0 / 0 |
-| 2026-11-20 | No | sin actividad | 0 / 0 |
-
-#### Aportes fuera del calendario de clases — Apolo Fernández
-
-_Sin aportes fuera del calendario de clases para Apolo Fernández._
-
-### Bau-ti
-
-**10/23 clases con actividad** · 9 commits · 6 merges
-
-| Fecha | Marca | Repositorios | Commits / merges |
-|---|:--:|---|--:|
-| 2026-08-14 | **Sí** | LaPampa-ElJuegoII | 2 / 0 |
-| 2026-08-21 | No | sin actividad | 0 / 0 |
-| 2026-08-24 | No | sin actividad | 0 / 0 |
-| 2026-08-28 | No | sin actividad | 0 / 0 |
-| 2026-08-31 | No | sin actividad | 0 / 0 |
-| 2026-09-04 | **Sí** | LaPampa-ElJuegoII | 1 / 0 |
-| 2026-09-07 | **Sí** | LaPampa-ElJuegoII | 0 / 1 |
-| 2026-09-14 | No | sin actividad | 0 / 0 |
-| 2026-09-25 | **Sí** | LaPampa-ElJuegoII | 1 / 0 |
-| 2026-09-28 | No | sin actividad | 0 / 0 |
-| 2026-10-02 | **Sí** | LaPampa-ElJuegoII | 1 / 0 |
-| 2026-10-05 | No | sin actividad | 0 / 0 |
-| 2026-10-09 | **Sí** | LaPampa-ElJuegoII | 0 / 1 |
-| 2026-10-16 | No | sin actividad | 0 / 0 |
-| 2026-10-19 | No | sin actividad | 0 / 0 |
-| 2026-10-23 | No | sin actividad | 0 / 0 |
-| 2026-10-26 | No | sin actividad | 0 / 0 |
-| 2026-10-30 | **Sí** | LaPampa-ElJuegoII | 1 / 1 |
-| 2026-11-02 | **Sí** | LaPampa-ElJuegoII | 1 / 1 |
-| 2026-11-06 | **Sí** | LaPampa-ElJuegoII | 1 / 1 |
-| 2026-11-13 | **Sí** | LaPampa-ElJuegoII | 1 / 1 |
-| 2026-11-16 | No | sin actividad | 0 / 0 |
-| 2026-11-20 | No | sin actividad | 0 / 0 |
-
-#### Aportes fuera del calendario de clases — Bau-ti
-
-_Sin aportes fuera del calendario de clases para Bau-ti._
-
-<!-- actividad-clases:fin -->
+| 26 | 2026-11-20 | `96e8ef1` | dqmdz-etec | 1,084 | 85 | 100% | 0.0% | 0 |
 
 ---
 _Informe generado por la cátedra. Los criterios y umbrales de medición corresponden al perfil `exigente` de `calidad.py`; el semáforo de aprobación, a `CRITERIOS-CALIDAD.md` (ver `README.md`). Ante dudas, revisá el archivo señalado._
